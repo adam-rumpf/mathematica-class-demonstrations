@@ -12,7 +12,7 @@ A large collection of _Mathematica_ demonstrations written by Adam Rumpf, sorted
 
 * [Number Theory](#number-theory)
 
-  * [Recamán's Sequence](#recamans-sequence)
+  * [Recamán's Sequence](#recamáns-sequence)
 
 ## Overview
 
