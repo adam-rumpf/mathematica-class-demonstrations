@@ -9,6 +9,7 @@ A large collection of _Mathematica_ demonstrations written by Adam Rumpf, sorted
   * [Complex Newton's Method](#complex-newtons-method)
 * [Number Theory](#number-theory)
   * [Recamán's Sequence](#recamáns-sequence)
+  * [Remainder Graphs](#remainder-graphs)
 * [Just for Fun](#just-for-fun)
   * [Domino and Tromino Tiling](#domino-and-tromino-tiling)
   * [Spirograph](#spirograph)
@@ -54,6 +55,24 @@ Number theory is not really my area, so most of the files in this folder are rel
 Recamán's Sequence (sequence [A005132](https://oeis.org/A005132) in the [OEIS](oeis.org)) is defined by an iterative process beginning at _0_, at step _n=0_. In step _n_, we either take _n_ steps backward or _n_ steps forward. We go backward if doing so would take us to a nonnegative number that has not yet been visited, and otherwise we go forward. It is conjectured that this sequence includes every nonnegative integer exactly once.
 
 This program is mostly meant for drawing pictures of Recamán's Sequence. Because each step is _1_ unit larger than the preceding step, the most common way to draw it is using semicircular arcs to trace the path of the sequence on the number line. Doing so leads to interesting spiral patterns that illustrate the phases of rapid increase and of repeatedly bouncing back and forth to fill in areas that were previously unexplored.
+
+### Remainder Graphs
+
+<img src="images/remainder-graph-1.png" alt="Remainder Graph Image 1" height="300"/>
+
+10/10/2017
+
+[Notebook](../master/number-theory/remainder-graph.nb)
+
+[Demonstration](http://demonstrations.wolfram.com/AnimatedRemainderGraph/)
+
+I was inspired to write this program by an [article](https://mindyourdecisions.com/blog/2015/07/26/divisibility-by-7-test-using-a-graph-why-does-it-work-sunday-puzzle/) by Presh Talwalkar. It demonstrates a cool trick for determining remainders after dividing a large number by a small number. Because this also allows calculating remainders of 0, this also encompasses the topic of divisibility tests. Testing for divisibility by 7 is famously tricky compared to the other small numbers, but this graphical method gives a fairly easy solution.
+
+As an example, suppose we wish to know whether 42,959 is divisible by 7. The process begins by writing the numbers 0, 1, ..., 6 in a circle and connecting them in a cycle with black arrows. Next, for each of these numbers, we multiply it by 10 and then evaluate the remainder after division by 7, and draw a green arrow from the original number to the result. For example, for 2, we multiply by 10 to get 20, then divide by 7 to get 14 with remainder 6, which means that we should draw an arrow from 2 to 6. At the end of the process we will have 7 black arrows and 7 green arrows.
+
+With this graph in place, we begin at position 0 and then read the digits of 42,959 from left to right. Each time we read a digit, we advance around the black circuit that number of steps. Between each digit, we follow the green arrow that leads out of the current position. In this case, we begin at 0 and read the first digit, "4". Then we advance 4 places to position 4, and then follow the green arrow to position 5. The next digit is "2", so we advance 2 to arrive at 0, and then follow the green arrow to remain at 0. Next we take "9" steps to 2, follow the green arrow to 6, advance "5" digits to 4, follow the green arrow to 5, and finally advance "9" digits to arrive back at 0. The final position is the remainder after division by 7. In this case it is 0, indicating that 42,959 is, indeed, divisible by 7.
+
+The reasons for why this method works are worth figuring out for oneself (see the article linked above). It also generalizes to any base besides 7, and doing so produces some interesting graphical representations of why the well-known divisibility tests that students learn in basic arithmetic work. For example, the graphs resulting from 2, 5, and 10 all have the property that every green arrow points to 0, indicating that, no matter where the black arrows take us, we will always reset our position to 0 between steps. As a result, only the final digit matters, which is exactly what students learn for 2, 5, and 10. The graphs resulting from 3 and 9 both have the property that every green arrow is a loop, making them essentially meaningless. As a result, only the total number of steps taken on the black arrows (which is the sum of all digits) matters, and that is exactly what students learn for 3 and 9. 11 is also rather interesting.
 
 ## Just for Fun
 
