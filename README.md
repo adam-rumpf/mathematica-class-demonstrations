@@ -1,4 +1,4 @@
-# Mathematica Class Demonstrations
+﻿# Mathematica Class Demonstrations
 
 A large collection of _Mathematica_ demonstrations written by Adam Rumpf, sorted according to the class that they are most likely to be useful for.
 
@@ -14,7 +14,7 @@ This repository contains a large collection of _Mathematica_ notebook files writ
 
 Some of these projects have been uploaded to the [_Wolfram Demonstrations Project_](http://demonstrations.wolfram.com/). My creator page can be found at http://demonstrations.wolfram.com/author.html?author=Adam+Rumpf.
 
-Most of these files are meant to be used by evaluating the entire notebook and then interacting with the resulting Manipulate environments or other functions. All of the individual notebook files are completely standalone and meant to be downloaded � la carte depending on your interests. In order to make that easier to do, each section of this README includes a link to the raw version of the corresponding notebook.
+Most of these files are meant to be used by evaluating the entire notebook and then interacting with the resulting Manipulate environments or other functions. All of the individual notebook files are completely standalone and meant to be downloaded à la carte depending on your interests. In order to make that easier to do, each section of this README includes a link to the raw version of the corresponding notebook.
 
 ## Calculus, Differential Equations, and Analysis
 
@@ -22,7 +22,7 @@ Many of the files in this folder are things that I wrote to show my calculus stu
 
 ### Complex Newton's Method
 
-![Complex Newton's Method](images/complex-newtons-method.png)
+![Complex Newton's Method Image 1](images/complex-newtons-method-1.png) ![Complex Newton's Method Image 2](images/complex-newtons-method-2.png)
 
 This is a demonstration of how [Newton's Method](https://en.wikipedia.org/wiki/Newton%27s_method) works for complex-valued functions. Most Calculus students will learn about Newton's Method for finding roots of real-valued functions, and may be surprised to learn that it also works for complex numbers. They may also learn that the method does not necessarily always converge to the root nearest the initial guess due to "overshooting" in unexpected ways. For real numbers this phenomenon is not very interesting to look at, but for the complex numbers we can generate fascinating and beautiful fractal basins of attraction.
 
