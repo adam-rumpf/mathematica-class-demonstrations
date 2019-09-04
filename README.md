@@ -10,6 +10,7 @@ A large collection of _Mathematica_ demonstrations written by Adam Rumpf, sorted
 * [Number Theory](#number-theory)
   * [Recamán's Sequence](#recamáns-sequence)
 * [Just for Fun](#just-for-fun)
+  * [Domino and Tromino Tiling](#domino-and-tromino-tiling)
   * [Spirograph](#spirograph)
 
 ## Overview
@@ -30,9 +31,9 @@ Many of the files in this folder are things that I wrote to show my calculus stu
 
 <img src="images/complex-newtons-method-1.png" alt="Complex Newton's Method Image 1" width="300"/> <img src="images/complex-newtons-method-2.png" alt="Complex Newton's Method Image 2" width="300"/>
 
-[Notebook](../master/calc-diffeq-analysis/complex-newtons-method.nb)
-
 2/23/2016
+
+[Notebook](../master/calc-diffeq-analysis/complex-newtons-method.nb)
 
 This is a demonstration of how [Newton's Method](https://en.wikipedia.org/wiki/Newton%27s_method) works for complex-valued functions. Most Calculus students will learn about Newton's Method for finding roots of real-valued functions, and may be surprised to learn that it also works for complex numbers. They may also learn that the method does not necessarily always converge to the root nearest the initial guess due to "overshooting" in unexpected ways. For real numbers this phenomenon is not very interesting to look at, but for the complex numbers we can generate fascinating and beautiful fractal basins of attraction.
 
@@ -40,15 +41,15 @@ The main function of this demonstration allows the user to specify a function an
 
 ## Number Theory
 
-Most of the files in this folder are related to interesting number sequences which give rise to interesting graphics.
+Number theory is not really my area, so most of the files in this folder are related to number sequences which give rise to interesting graphics that anybody can appreciate.
 
 ### Recamán's Sequence
 
 <img src="images/recaman-1.png" alt="Recamán's Sequence Image 1" width="300"/> <img src="images/recaman-2.png" alt="Recamán's Sequence Image 2" width="300"/>
 
-[Notebook](../master/number-theory/recamans-sequence.nb)
-
 8/25/2018
+
+[Notebook](../master/number-theory/recamans-sequence.nb)
 
 Recamán's Sequence (sequence [A005132](https://oeis.org/A005132) in the [OEIS](oeis.org)) is defined by an iterative process beginning at _0_, at step _n=0_. In step _n_, we either take _n_ steps backward or _n_ steps forward. We go backward if doing so would take us to a nonnegative number that has not yet been visited, and otherwise we go forward. It is conjectured that this sequence includes every nonnegative integer exactly once.
 
@@ -58,14 +59,34 @@ This program is mostly meant for drawing pictures of Recamán's Sequence. Becaus
 
 The files in this folder were simply made out of personal interest. Many of them are not serious attempts to demonstrate any mathematical concept, and are instead just made to solve an interesting puzzle or generate an interesting figure. I have still shown a few to my students, however, as demonstration of some things that can be done in _Mathematica_.
 
+### Domino and Tromino Tiling
+
+<img src="images/domino-tiling-1.png" alt="Domino Tiling Image 1" width="300"/> <img src="images/tromino-tiling-1.png" alt="Tromino Tiling Image 1" width="300"/>
+
+10/16/2017
+
+[Notebook](../master/fun/domino-tromino-tiling.nb)
+
+[Demonstration](http://demonstrations.wolfram.com/DominoAndTriominoTilingsOfAChessboard/)
+
+This file combines two related puzzles that involve tiling a chess board. The main purpose of the puzzles is to figure out for yourself whether tilings exist under certain circumstances, and how you could go about finding these tilings. The tromino puzzle, in particular, is often used as an introduction to proof by induction. This program makes use of the puzzles' solutions to compute tilings and display the results.
+
+**Domino Puzzle:** Consider the problem of attempting to tile a chess board with dominos, each of which covers two adjacent squares. The goal is to cover the entire chess board with no gaps, no overlap, and nothing hanging over the edges. Obviously this can be done since the dominos can be laid out in rows like bricks.
+
+What if we remove some squares from the chess board? If we just remove one square then the tiling is obviously impossible. A chess board contains 64 squares, so removing 1 leaves 63, and there is no way to cover an odd number of total squares if each domino covers exactly two squares. What if we remove two squares? That leaves 62, which is even and thus not immediately ruled out. To make things simple, suppose we remove the opposite corners of the chess board. Can it be tiled with dominos? What pairs of squares could be removed while still allowing a domino tiling?
+
+**Tromino Puzzle:** Consider the problem of attempting to tile a chess board with L-shaped _trominos_, each of which covers _three_ adjacent squares. This is impossible on a standard chess board because 64 is not divisible by 3.
+
+What if we remove a single square from the board? Then we would have 63 squares, which is divisible by 3, and thus might be possible. Suppose, for simplicity, that we remove a corner from the board. Can it be tiled with trominos? What squares could be removed while still allowing a tromino tiling?
+
 ### Spirograph
 
 <img src="images/spirograph-1.png" alt="Spirograph Image 1" width="150"/> <img src="images/spirograph-2.png" alt="Spirograph Image 2" width="150"/>
 <img src="images/spirograph-3.png" alt="Spirograph Image 3" width="150"/> <img src="images/spirograph-4.png" alt="Spirograph Image 4" width="150"/>
 
-[Notebook](../master/fun/spirograph.nb)
-
 10/27/2016
+
+[Notebook](../master/fun/spirograph.nb)
 
 This is an interactive version of a [Spirograph](https://en.wikipedia.org/wiki/Spirograph) which displays the path of a pen attached to a disk rolling around a larger disk. There are controls to adjust the relative sizes of the disks, whether the small disk is inside or outside the larger disk, and where the pen is positioned (even allowing it to be outside of the disk). There is also a feature that displays a disk rolling on its edge around in circles.
 
