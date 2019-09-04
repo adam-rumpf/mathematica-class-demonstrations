@@ -1,0 +1,634 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     24959,        626]
+NotebookOptionsPosition[     23974,        586]
+NotebookOutlinePosition[     24319,        601]
+CellTagsIndexPosition[     24276,        598]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Spirograph", "Title",
+ CellChangeTimes->{{3.776592640153948*^9, 3.7765926431733794`*^9}}],
+
+Cell["Adam Rumpf, 10/27/2016", "Text",
+ CellChangeTimes->{{3.7765926492843437`*^9, 3.776592676036085*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section",
+ CellChangeTimes->{{3.7765926829196377`*^9, 3.7765926846748543`*^9}}],
+
+Cell[TextData[{
+ "This Notebook contains a variety of Manipulate environments that display \
+interactive version of a ",
+ StyleBox["Spirograph",
+  FontSlant->"Italic"],
+ ". A ",
+ StyleBox["Spirograph",
+  FontSlant->"Italic"],
+ " is a toy consisting of a small gear that can be rotated inside of a larger \
+gear, while a pen attached to the smaller gear draws its path on a piece of \
+paper. This process can be used to define some important plane curves like \
+the hypocycloid."
+}], "Text",
+ CellChangeTimes->{{3.7765926968484497`*^9, 3.7765927208325577`*^9}, {
+   3.7765928076115484`*^9, 3.776592915727019*^9}, {3.7765929699380684`*^9, 
+   3.7765929717144775`*^9}, 3.77659303519951*^9}],
+
+Cell[TextData[{
+ "With a physical ",
+ StyleBox["Spirograph",
+  FontSlant->"Italic"],
+ " the small gear can only ever rotate inside the large gear, but in this \
+program we can also move the small gear outside of the large gear to get \
+other plane curves, like the cardioid. We can even extend the pen\
+\[CloseCurlyQuote]s position outside of the small gear."
+}], "Text",
+ CellChangeTimes->{{3.77659291861847*^9, 3.7765929656844096`*^9}, {
+  3.77659304292667*^9, 3.776593056018096*^9}}],
+
+Cell["\<\
+Two separate Manipulate tools are included below. The first displays the top \
+view of a small disk rolling around a large disk, while the second displays \
+the side view of a disk rolling on its edge around in a circle. Both trace \
+the path of a pen attached to the disk.\
+\>", "Text",
+ CellChangeTimes->{{3.7765936490864463`*^9, 3.776593730717204*^9}}],
+
+Cell["\<\
+The \[OpenCurlyDoubleQuote]roll angle\[CloseCurlyDoubleQuote] option controls \
+the current position of the small disk, and can be used to display an \
+animation of the small disk rolling. The \[OpenCurlyDoubleQuote]max roll \
+angle\[CloseCurlyDoubleQuote] option is simply an upper bound for the roll \
+angle, and can be increased to allow the animation to play for longer before \
+restarting, or to allow more of a curve to be drawn. The \
+\[OpenCurlyDoubleQuote]disk radius\[CloseCurlyDoubleQuote] controls the \
+radius of the small disk. It can be made positive to place the disk on the \
+outside, or negative to place it on the inside. The \
+\[OpenCurlyDoubleQuote]pen arm\[CloseCurlyDoubleQuote] option controls the \
+length of the imaginary arm holding a pen from the center of the disk.\
+\>", "Text",
+ CellChangeTimes->{{3.7765937353287263`*^9, 3.7765938047247615`*^9}, {
+  3.7765938665434837`*^9, 3.7765939137597795`*^9}, {3.7765941452239428`*^9, 
+  3.7765941533903265`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Code", "Section",
+ CellChangeTimes->{{3.7765926897905283`*^9, 3.776592690662249*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Interactive Spirograph", "Subsection",
+ CellChangeTimes->{{3.776593408417226*^9, 3.7765934137227573`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"g1", ",", 
+       RowBox[{"g2", "=", 
+        RowBox[{"{", "}"}]}], ",", "c", ",", "f", ",", "g"}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"c", "[", "t_", "]"}], ":=", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"1", "+", "r"}], ")"}], 
+          RowBox[{"Cos", "[", "t", "]"}]}], ",", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"1", "+", "r"}], ")"}], 
+          RowBox[{"Sin", "[", "t", "]"}]}]}], "}"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"f", "[", "t_", "]"}], ":=", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"d", " ", 
+          RowBox[{"Cos", "[", 
+           RowBox[{"Pi", "+", 
+            RowBox[{
+             FractionBox[
+              RowBox[{"1", "+", "r"}], "r"], "t"}]}], "]"}]}], ",", 
+         RowBox[{"d", " ", 
+          RowBox[{"Sin", "[", 
+           RowBox[{"Pi", "+", 
+            RowBox[{
+             FractionBox[
+              RowBox[{"1", "+", "r"}], "r"], "t"}]}], "]"}]}]}], "}"}]}], ";",
+       "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"g", "[", "t_", "]"}], ":=", 
+       RowBox[{
+        RowBox[{"c", "[", "t", "]"}], "+", 
+        RowBox[{"f", "[", "t", "]"}]}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"g1", "=", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"Graphics", "[", 
+          RowBox[{"{", 
+           RowBox[{"White", ",", 
+            RowBox[{"Rectangle", "[", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"-", "1"}], "-", "r", "-", "d"}], ",", 
+                RowBox[{
+                 RowBox[{"-", "1"}], "-", "r", "-", "d"}]}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"1", "+", "r", "+", "d"}], ",", 
+                RowBox[{"1", "+", "r", "+", "d"}]}], "}"}]}], "]"}]}], "}"}], 
+          "]"}], ",", 
+         RowBox[{"ParametricPlot", "[", 
+          RowBox[{
+           RowBox[{"g", "[", "t", "]"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"t", ",", "0", ",", "a"}], "}"}], ",", 
+           RowBox[{"PlotStyle", "\[Rule]", "Red"}]}], "]"}]}], "}"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"lines", "\[Equal]", "True"}], ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"g2", "=", 
+          RowBox[{"{", 
+           RowBox[{"Graphics", "[", 
+            RowBox[{"{", 
+             RowBox[{"Blue", ",", "Thick", ",", 
+              RowBox[{"Circle", "[", 
+               RowBox[{
+                RowBox[{"{", 
+                 RowBox[{"0", ",", "0"}], "}"}], ",", "1"}], "]"}], ",", 
+              "Black", ",", 
+              RowBox[{"Circle", "[", 
+               RowBox[{
+                RowBox[{"c", "[", "a", "]"}], ",", 
+                RowBox[{"Abs", "[", "r", "]"}]}], "]"}], ",", "Thin", ",", 
+              RowBox[{"Line", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"c", "[", "a", "]"}], ",", 
+                 RowBox[{"g", "[", "a", "]"}]}], "}"}], "]"}], ",", 
+              RowBox[{"PointSize", "[", "Large", "]"}], ",", 
+              RowBox[{"Point", "[", 
+               RowBox[{"c", "[", "a", "]"}], "]"}], ",", "Red", ",", 
+              RowBox[{"Point", "[", 
+               RowBox[{"g", "[", "a", "]"}], "]"}]}], "}"}], "]"}], "}"}]}], 
+         ";"}]}], "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"Show", "[", 
+       RowBox[{"Join", "[", 
+        RowBox[{"g1", ",", "g2"}], "]"}], "]"}]}]}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"b", ",", 
+       RowBox[{"2", "Pi"}], ",", "\"\<max roll angle\>\""}], "}"}], ",", 
+     RowBox[{"2", "Pi"}], ",", 
+     RowBox[{"16", "Pi"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"a", ",", 
+       RowBox[{"2", "Pi"}], ",", "\"\<roll angle\>\""}], "}"}], ",", "0.001", 
+     ",", "b"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"r", ",", "1", ",", "\"\<disk radius\>\""}], "}"}], ",", 
+     RowBox[{"-", "5"}], ",", "5"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"d", ",", "1", ",", "\"\<pen arm\>\""}], "}"}], ",", 
+     RowBox[{"-", "10"}], ",", "10"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"lines", ",", 
+     RowBox[{"{", 
+      RowBox[{"True", ",", "False"}], "}"}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.776593470085857*^9, 3.776593512038608*^9}, {
+  3.7765936088637395`*^9, 3.7765936279242973`*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`a$$ = 2 Pi, $CellContext`b$$ = 2 
+    Pi, $CellContext`d$$ = 1, $CellContext`lines$$ = True, $CellContext`r$$ = 
+    1, Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`b$$], 2 Pi, "max roll angle"}, 2 Pi, 16 Pi}, {{
+       Hold[$CellContext`a$$], 2 Pi, "roll angle"}, 0.001, 
+      Dynamic[$CellContext`b$$]}, {{
+       Hold[$CellContext`r$$], 1, "disk radius"}, -5, 5}, {{
+       Hold[$CellContext`d$$], 1, "pen arm"}, -10, 10}, {
+      Hold[$CellContext`lines$$], {True, False}}}, Typeset`size$$ = {
+    360., {177., 182.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`b$31532$$ = 
+    0, $CellContext`a$31533$$ = 0, $CellContext`r$31534$$ = 
+    0, $CellContext`d$31535$$ = 0, $CellContext`lines$31536$$ = False}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`a$$ = 2 Pi, $CellContext`b$$ = 
+        2 Pi, $CellContext`d$$ = 1, $CellContext`lines$$ = 
+        True, $CellContext`r$$ = 1}, "ControllerVariables" :> {
+        Hold[$CellContext`b$$, $CellContext`b$31532$$, 0], 
+        Hold[$CellContext`a$$, $CellContext`a$31533$$, 0], 
+        Hold[$CellContext`r$$, $CellContext`r$31534$$, 0], 
+        Hold[$CellContext`d$$, $CellContext`d$31535$$, 0], 
+        Hold[$CellContext`lines$$, $CellContext`lines$31536$$, False]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`g1$, $CellContext`g2$ = {}, $CellContext`c$, \
+$CellContext`f$, $CellContext`g$}, $CellContext`c$[
+           Pattern[$CellContext`t$, 
+            Blank[]]] := {(1 + $CellContext`r$$) 
+           Cos[$CellContext`t$], (1 + $CellContext`r$$) 
+           Sin[$CellContext`t$]}; $CellContext`f$[
+           Pattern[$CellContext`t$, 
+            Blank[]]] := {$CellContext`d$$ 
+           Cos[Pi + ((
+                1 + $CellContext`r$$)/$CellContext`r$$) $CellContext`t$], \
+$CellContext`d$$ 
+           Sin[Pi + ((
+                1 + $CellContext`r$$)/$CellContext`r$$) $CellContext`t$]}; \
+$CellContext`g$[
+           Pattern[$CellContext`t$, 
+            
+            Blank[]]] := $CellContext`c$[$CellContext`t$] + \
+$CellContext`f$[$CellContext`t$]; $CellContext`g1$ = {
+           Graphics[{White, 
+             
+             Rectangle[{-1 - $CellContext`r$$ - $CellContext`d$$, -1 - \
+$CellContext`r$$ - $CellContext`d$$}, {
+              1 + $CellContext`r$$ + $CellContext`d$$, 
+               1 + $CellContext`r$$ + $CellContext`d$$}]}], 
+           ParametricPlot[
+            $CellContext`g$[$CellContext`t], {$CellContext`t, 
+             0, $CellContext`a$$}, PlotStyle -> Red]}; 
+        If[$CellContext`lines$$ == True, $CellContext`g2$ = {
+             Graphics[{Blue, Thick, 
+               Circle[{0, 0}, 1], Black, 
+               Circle[
+                $CellContext`c$[$CellContext`a$$], 
+                Abs[$CellContext`r$$]], Thin, 
+               Line[{
+                 $CellContext`c$[$CellContext`a$$], 
+                 $CellContext`g$[$CellContext`a$$]}], 
+               PointSize[Large], 
+               Point[
+                $CellContext`c$[$CellContext`a$$]], Red, 
+               Point[
+                $CellContext`g$[$CellContext`a$$]]}]}; Null]; Show[
+          Join[$CellContext`g1$, $CellContext`g2$]]], 
+      "Specifications" :> {{{$CellContext`b$$, 2 Pi, "max roll angle"}, 2 Pi, 
+         16 Pi}, {{$CellContext`a$$, 2 Pi, "roll angle"}, 0.001, 
+         Dynamic[$CellContext`b$$]}, {{$CellContext`r$$, 1, 
+          "disk radius"}, -5, 5}, {{$CellContext`d$$, 1, "pen arm"}, -10, 
+         10}, {$CellContext`lines$$, {True, False}}}, "Options" :> {}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{411., {275., 281.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{
+  3.6865417448386106`*^9, 3.7765934426718655`*^9, {3.7765935141339364`*^9, 
+   3.7765935234320726`*^9}, 3.776593628786277*^9, 3.776594043439539*^9, 
+   3.776594230319319*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Rolling Disk from Side", "Subsection",
+ CellChangeTimes->{{3.776593429129202*^9, 3.776593438198296*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"g1", ",", 
+       RowBox[{"g2", "=", 
+        RowBox[{"{", "}"}]}], ",", "g3", ",", "f"}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"f", "[", "t_", "]"}], ":=", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Sin", "[", "t", "]"}], "+", 
+          RowBox[{"d", " ", 
+           RowBox[{"Cos", "[", "t", "]"}], 
+           RowBox[{"Sin", "[", 
+            RowBox[{"t", "/", "r"}], "]"}]}]}], ",", 
+         RowBox[{"r", "+", 
+          RowBox[{"d", " ", 
+           RowBox[{"Cos", "[", 
+            RowBox[{"t", "/", "r"}], "]"}]}]}]}], "}"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"g1", "=", 
+       RowBox[{"{", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{"White", ",", 
+           RowBox[{"Rectangle", "[", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"-", "1.1"}], "-", "r"}], ",", "0"}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"1.1", "+", "r"}], ",", 
+               RowBox[{"r", "+", "0.1"}]}], "}"}]}], "]"}]}], "}"}], "]"}], 
+        "}"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"g3", "=", 
+       RowBox[{"{", 
+        RowBox[{"ParametricPlot", "[", 
+         RowBox[{
+          RowBox[{"f", "[", "t", "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"t", ",", "0", ",", "a"}], "}"}], ",", 
+          RowBox[{"PlotStyle", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{"Thick", ",", "Red"}], "}"}]}]}], "]"}], "}"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"disk", "\[Equal]", "True"}], ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"g2", "=", 
+          RowBox[{"{", 
+           RowBox[{"Graphics", "[", 
+            RowBox[{"{", 
+             RowBox[{"Black", ",", 
+              RowBox[{"Line", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"-", "1"}], ",", "0"}], "}"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"1", ",", "0"}], "}"}]}], "}"}], "]"}], ",", 
+              RowBox[{"If", "[", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"Cos", "[", "a", "]"}], "\[GreaterEqual]", "0"}], 
+                ",", "Gray", ",", "LightGray"}], "]"}], ",", 
+              RowBox[{"Disk", "[", 
+               RowBox[{
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"Sin", "[", "a", "]"}], ",", "r"}], "}"}], ",", 
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"Abs", "[", 
+                   RowBox[{"r", " ", 
+                    RowBox[{"Cos", "[", "a", "]"}]}], "]"}], ",", "r"}], 
+                 "}"}]}], "]"}], ",", "Black", ",", 
+              RowBox[{"Line", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"Sin", "[", "a", "]"}], ",", "r"}], "}"}], ",", 
+                 RowBox[{"f", "[", "a", "]"}]}], "}"}], "]"}], ",", "Red", 
+              ",", 
+              RowBox[{"PointSize", "[", "Large", "]"}], ",", 
+              RowBox[{"Point", "[", 
+               RowBox[{"f", "[", "a", "]"}], "]"}]}], "}"}], "]"}], "}"}]}], 
+         ";"}]}], "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"Show", "[", 
+       RowBox[{"Join", "[", 
+        RowBox[{"g1", ",", "g2", ",", "g3"}], "]"}], "]"}]}]}], 
+    "\[IndentingNewLine]", "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"b", ",", 
+       RowBox[{"2", "Pi"}], ",", "\"\<max roll angle\>\""}], "}"}], ",", 
+     RowBox[{"2", "Pi"}], ",", 
+     RowBox[{"16", "Pi"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"a", ",", 
+       RowBox[{"2", "Pi"}], ",", "\"\<roll angle\>\""}], "}"}], ",", "0.001", 
+     ",", "b"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"r", ",", 
+       FractionBox["1", "2"], ",", "\"\<disk radius\>\""}], "}"}], ",", 
+     FractionBox["1", "4"], ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"d", ",", 
+       FractionBox["1", "2"], ",", "\"\<pen arm\>\""}], "}"}], ",", "0", ",", 
+     "6"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"disk", ",", 
+     RowBox[{"{", 
+      RowBox[{"True", ",", "False"}], "}"}]}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGAQBmIQfSr0Kktz+WvHdPtaERCt93QRXyuQFtCJlALRUkmm
+ciC6SPuoJoie+y7bFkTH7I62A9FrMrY4gegN5xWDQfSirJgoEP3Lf0oaiJaR
+SM8C0Q1p+xtB9PLs7A4QvSPJrAusb82ufhC9xCd+CYj2MClcBaIvHzmyFkS/
+Ek7eDKLDJm0A0yc0PHeA6C0zlA6CaJVs2fcg+jlT6QcQvWzy7B8gen8Mxx8Q
+XeCXxdIGpJ8s3QKmF+gZcIJoz2OpPCC6KMHaEUQH2bz1BNEWPO8DQPSRPs9A
+EO3Rl3TeXfmNo6XJqhsgGgCKpJhx
+  "]],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`a$$ = 2 Pi, $CellContext`b$$ = 2 
+    Pi, $CellContext`d$$ = Rational[1, 2], $CellContext`disk$$ = 
+    True, $CellContext`r$$ = Rational[1, 2], Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`b$$], 2 Pi, "max roll angle"}, 2 Pi, 16 Pi}, {{
+       Hold[$CellContext`a$$], 2 Pi, "roll angle"}, 0.001, 
+      Dynamic[$CellContext`b$$]}, {{
+       Hold[$CellContext`r$$], 
+       Rational[1, 2], "disk radius"}, 
+      Rational[1, 4], 4}, {{
+       Hold[$CellContext`d$$], 
+       Rational[1, 2], "pen arm"}, 0, 6}, {
+      Hold[$CellContext`disk$$], {True, False}}}, Typeset`size$$ = {
+    360., {59., 63.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`b$14297$$ = 
+    0, $CellContext`a$14298$$ = 0, $CellContext`r$14299$$ = 
+    0, $CellContext`d$14300$$ = 0, $CellContext`disk$14301$$ = False}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`a$$ = 2 Pi, $CellContext`b$$ = 
+        2 Pi, $CellContext`d$$ = Rational[1, 2], $CellContext`disk$$ = 
+        True, $CellContext`r$$ = Rational[1, 2]}, "ControllerVariables" :> {
+        Hold[$CellContext`b$$, $CellContext`b$14297$$, 0], 
+        Hold[$CellContext`a$$, $CellContext`a$14298$$, 0], 
+        Hold[$CellContext`r$$, $CellContext`r$14299$$, 0], 
+        Hold[$CellContext`d$$, $CellContext`d$14300$$, 0], 
+        Hold[$CellContext`disk$$, $CellContext`disk$14301$$, False]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`g1$, $CellContext`g2$ = {}, $CellContext`g3$, \
+$CellContext`f$}, $CellContext`f$[
+           Pattern[$CellContext`t$, 
+            Blank[]]] := {
+          Sin[$CellContext`t$] + $CellContext`d$$ Cos[$CellContext`t$] 
+            Sin[$CellContext`t$/$CellContext`r$$], $CellContext`r$$ + \
+$CellContext`d$$ Cos[$CellContext`t$/$CellContext`r$$]}; $CellContext`g1$ = {
+           Graphics[{White, 
+             
+             Rectangle[{-1.1 - $CellContext`r$$, 0}, {
+              1.1 + $CellContext`r$$, $CellContext`r$$ + 
+               0.1}]}]}; $CellContext`g3$ = {
+           ParametricPlot[
+            $CellContext`f$[$CellContext`t], {$CellContext`t, 
+             0, $CellContext`a$$}, PlotStyle -> {Thick, Red}]}; 
+        If[$CellContext`disk$$ == True, $CellContext`g2$ = {
+             Graphics[{Black, 
+               Line[{{-1, 0}, {1, 0}}], 
+               If[Cos[$CellContext`a$$] >= 0, Gray, LightGray], 
+               Disk[{
+                 Sin[$CellContext`a$$], $CellContext`r$$}, {
+                 
+                 Abs[$CellContext`r$$ 
+                  Cos[$CellContext`a$$]], $CellContext`r$$}], Black, 
+               Line[{{
+                  Sin[$CellContext`a$$], $CellContext`r$$}, 
+                 $CellContext`f$[$CellContext`a$$]}], Red, 
+               PointSize[Large], 
+               Point[
+                $CellContext`f$[$CellContext`a$$]]}]}; Null]; Show[
+          Join[$CellContext`g1$, $CellContext`g2$, $CellContext`g3$]]], 
+      "Specifications" :> {{{$CellContext`b$$, 2 Pi, "max roll angle"}, 2 Pi, 
+         16 Pi}, {{$CellContext`a$$, 2 Pi, "roll angle"}, 0.001, 
+         Dynamic[$CellContext`b$$]}, {{$CellContext`r$$, 
+          Rational[1, 2], "disk radius"}, 
+         Rational[1, 4], 4}, {{$CellContext`d$$, 
+          Rational[1, 2], "pen arm"}, 0, 6}, {$CellContext`disk$$, {
+         True, False}}}, "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{411., {156., 162.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{
+  3.686537311382182*^9, {3.686537342503066*^9, 3.6865373537628784`*^9}, {
+   3.6865414662730007`*^9, 3.6865414804982758`*^9}, 3.6865415328856106`*^9, {
+   3.686541573724204*^9, 3.6865416137246284`*^9}, 3.6865416498638134`*^9, 
+   3.6865419784955215`*^9, {3.6865421165313625`*^9, 3.6865421340150876`*^9}, 
+   3.6865421646058025`*^9, {3.686542264994899*^9, 3.686542304333129*^9}, 
+   3.686542350419221*^9, {3.6865424662965174`*^9, 3.6865425176206465`*^9}, {
+   3.6865425549578924`*^9, 3.6865425650098605`*^9}, {3.686542605087549*^9, 
+   3.686542627958533*^9}, 3.6865427033485546`*^9, 3.6865427501679916`*^9, 
+   3.686542797106501*^9, {3.6865428304096017`*^9, 3.686542858650151*^9}, 
+   3.6865430603125706`*^9, 3.686543140699279*^9, 3.686543179843509*^9, 
+   3.686543236719101*^9, {3.686543303330283*^9, 3.686543329011444*^9}, 
+   3.68654339847244*^9, {3.6865434351808476`*^9, 3.686543460162218*^9}, 
+   3.6865438392423115`*^9, 3.6865438875278263`*^9, 3.686543952990671*^9, 
+   3.6865440115204916`*^9, 3.7765934450630975`*^9, 3.7765936309327297`*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{767, 738},
+WindowMargins->{{Automatic, 264}, {109, Automatic}},
+FrontEndVersion->"10.4 for Microsoft Windows (64-bit) (April 11, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 95, 1, 90, "Title"],
+Cell[678, 25, 106, 1, 30, "Text"],
+Cell[CellGroupData[{
+Cell[809, 30, 101, 1, 63, "Section"],
+Cell[913, 33, 687, 15, 87, "Text"],
+Cell[1603, 50, 486, 10, 68, "Text"],
+Cell[2092, 62, 365, 6, 68, "Text"],
+Cell[2460, 70, 994, 15, 125, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[3491, 90, 91, 1, 63, "Section"],
+Cell[CellGroupData[{
+Cell[3607, 95, 112, 1, 43, "Subsection"],
+Cell[CellGroupData[{
+Cell[3744, 100, 4787, 132, 343, "Input"],
+Cell[8534, 234, 4743, 95, 573, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13326, 335, 110, 1, 43, "Subsection"],
+Cell[CellGroupData[{
+Cell[13461, 340, 5059, 138, 328, "Input"],
+Cell[18523, 480, 5399, 100, 335, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

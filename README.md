@@ -9,6 +9,8 @@ A large collection of _Mathematica_ demonstrations written by Adam Rumpf, sorted
   * [Complex Newton's Method](#complex-newtons-method)
 * [Number Theory](#number-theory)
   * [Recamán's Sequence](#recamáns-sequence)
+* [Just for Fun](#just-for-fun)
+  * [Spirograph](#spirograph)
 
 ## Overview
 
@@ -55,3 +57,16 @@ This program is mostly meant for drawing pictures of Recamán's Sequence. Becaus
 ## Just for Fun
 
 The files in this folder were simply made out of personal interest. Many of them are not serious attempts to demonstrate any mathematical concept, and are instead just made to solve an interesting puzzle or generate an interesting figure. I have still shown a few to my students, however, as demonstration of some things that can be done in _Mathematica_.
+
+### Spirograph
+
+<img src="images/spirograph-1.png" alt="Spirograph Image 1" width="150"/> <img src="images/spirograph-2.png" alt="Spirograph Image 2" width="150"/>
+<img src="images/spirograph-3.png" alt="Spirograph Image 3" width="150"/> <img src="images/spirograph-4.png" alt="Spirograph Image 4" width="150"/>
+
+[Notebook](../master/fun/spirograph.nb)
+
+10/27/2016
+
+This is an interactive version of a [Spirograph](https://en.wikipedia.org/wiki/Spirograph) which displays the path of a pen attached to a disk rolling around a larger disk. There are controls to adjust the relative sizes of the disks, whether the small disk is inside or outside the larger disk, and where the pen is positioned (even allowing it to be outside of the disk). There is also a feature that displays a disk rolling on its edge around in circles.
+
+This was originally written while teaching Calculus, which is when many students are introduced to the concept of polar and parametric coordinates. Part of the course material mentions [epicycloids](https://en.wikipedia.org/wiki/Epicycloid) and [hypocycloids](https://en.wikipedia.org/wiki/Hypocycloid), both of which are interesting in their own right and both of which show up in nature in some unexpected places, but I thought that it would be more impactful to show how they can all be generalized using this type of rolling mechanism.
