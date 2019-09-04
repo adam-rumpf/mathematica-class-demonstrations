@@ -5,13 +5,9 @@ A large collection of _Mathematica_ demonstrations written by Adam Rumpf, sorted
 ## Table of Contents
 
 * [Overview](#overview)
-
 * [Calculus, Differential Equations, and Analysis](#calculus-differential-equations-and-analysis)
-
   * [Complex Newton's Method](#complex-newtons-method)
-
 * [Number Theory](#number-theory)
-
   * [Recamán's Sequence](#recamáns-sequence)
 
 ## Overview
@@ -20,7 +16,9 @@ This repository contains a large collection of _Mathematica_ notebook files writ
 
 Some of these projects have been uploaded to the [_Wolfram Demonstrations Project_](http://demonstrations.wolfram.com/). My creator page can be found at http://demonstrations.wolfram.com/author.html?author=Adam+Rumpf.
 
-Most of these files are meant to be used by evaluating the entire notebook and then interacting with the resulting Manipulate environments or other functions. All of the individual notebook files are completely standalone and meant to be downloaded à la carte depending on your interests. In order to make that easier to do, each section of this README includes a link to the raw version of the corresponding notebook.
+Most of these files are meant to be used by evaluating the entire notebook and then interacting with the resulting Manipulate environments or other functions. All of the individual notebook files are completely standalone and meant to be downloaded à la carte depending on your interests.
+
+In order to download just a single file, navigate to its section below and click on the **Notebook** link. The `.nb` file can then be downloaded by right clicking the **Raw** link. Alternatively, you can find the file in the directories in this repository.
 
 ## Calculus, Differential Equations, and Analysis
 
@@ -29,6 +27,8 @@ Many of the files in this folder are things that I wrote to show my calculus stu
 ### Complex Newton's Method
 
 <img src="images/complex-newtons-method-1.png" alt="Complex Newton's Method Image 1" width="300"/> <img src="images/complex-newtons-method-2.png" alt="Complex Newton's Method Image 2" width="300"/>
+
+[Notebook](../master/calc-diffeq-analysis/complex-newtons-method.nb)
 
 2/23/2016
 
@@ -43,6 +43,8 @@ Most of the files in this folder are related to interesting number sequences whi
 ### Recamán's Sequence
 
 <img src="images/recaman-1.png" alt="Recamán's Sequence Image 1" width="300"/> <img src="images/recaman-2.png" alt="Recamán's Sequence Image 2" width="300"/>
+
+[Notebook](../master/number-theory/recamans-sequence.nb)
 
 8/25/2018
 
