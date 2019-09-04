@@ -1,0 +1,534 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.4' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     17741,        526]
+NotebookOptionsPosition[     16562,        480]
+NotebookOutlinePosition[     16906,        495]
+CellTagsIndexPosition[     16863,        492]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Recam\[AAcute]n\[CloseCurlyQuote]s Sequence", "Title",
+ CellChangeTimes->{{3.7765904995543933`*^9, 3.7765905136720357`*^9}}],
+
+Cell["Adam Rumpf, 8/25/2018", "Text",
+ CellChangeTimes->{{3.7765905248474903`*^9, 3.776590541701131*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section",
+ CellChangeTimes->{{3.7765908131251736`*^9, 3.776590816785983*^9}}],
+
+Cell[TextData[{
+ "Recam\[AAcute]n\[CloseCurlyQuote]s sequence starts at index ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"n", "=", "0"}], TraditionalForm]]],
+ " with element ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["a", "0"], "=", "0"}], TraditionalForm]]],
+ ". To find ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["a", 
+    RowBox[{"n", "+", "1"}]], TraditionalForm]]],
+ " given ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["a", "n"], TraditionalForm]]],
+ ", we either take ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]]],
+ " steps backward or ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]]],
+ " steps forward. We go backward if ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["a", "n"], "-", "n"}], TraditionalForm]]],
+ " is (a) nonnegative and (b) not already part of the sequence. Otherwise we \
+go forward."
+}], "Text",
+ CellChangeTimes->{{3.7442324030080566`*^9, 3.7442329422873044`*^9}, {
+   3.744232974096304*^9, 3.7442329947321434`*^9}, 3.7765906679017487`*^9}],
+
+Cell[TextData[{
+ "Starting from ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["a", "0"], "=", "0"}], TraditionalForm]]],
+ ", our choices for ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["a", "1"], TraditionalForm]]],
+ " are to go backward to ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"-", "1"}], TraditionalForm]]],
+ " or forward to ",
+ Cell[BoxData[
+  FormBox["1", TraditionalForm]]],
+ ". We only allow nonnegative entries, so we take ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["a", "1"], "=", "1"}], TraditionalForm]]],
+ ". Next we go either 2 steps backward to ",
+ Cell[BoxData[
+  FormBox["0", TraditionalForm]]],
+ " or 2 steps forward to ",
+ Cell[BoxData[
+  FormBox["3", TraditionalForm]]],
+ ". ",
+ Cell[BoxData[
+  FormBox["0", TraditionalForm]]],
+ " is already on our list, so we go forward to get ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["a", "2"], "=", "3"}], TraditionalForm]]],
+ ". For ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["a", "3"], TraditionalForm]]],
+ " our choices are ",
+ Cell[BoxData[
+  FormBox["0", TraditionalForm]]],
+ " or ",
+ Cell[BoxData[
+  FormBox["6", TraditionalForm]]],
+ ", so we take ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["a", "3"], "=", "6"}], TraditionalForm]]],
+ ". For ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["a", "4"], TraditionalForm]]],
+ " our choices are ",
+ Cell[BoxData[
+  FormBox["2", TraditionalForm]]],
+ " or ",
+ Cell[BoxData[
+  FormBox["10", TraditionalForm]]],
+ ", and since ",
+ Cell[BoxData[
+  FormBox["2", TraditionalForm]]],
+ " is not yet on our list, we go backwards to ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["a", "4"], "=", "2"}], TraditionalForm]]],
+ ". The first 10 elements are:"
+}], "Text",
+ CellChangeTimes->{{3.7442324030080566`*^9, 3.7442329422873044`*^9}, {
+  3.744232974096304*^9, 3.7442329947321434`*^9}, {3.7765906679017487`*^9, 
+  3.7765906742287025`*^9}}],
+
+Cell[TextData[Cell[BoxData[
+ FormBox[
+  RowBox[{
+  "0", ",", " ", "1", ",", " ", "3", ",", " ", "6", ",", " ", "2", ",", " ", 
+   "7", ",", " ", "13", ",", " ", "20", ",", " ", "12", ",", " ", "21", ",", 
+   " ", "..."}], TraditionalForm]],
+ FormatType->"TraditionalForm"]], "Text",
+ CellChangeTimes->{{3.7442324030080566`*^9, 3.7442329422873044`*^9}, {
+  3.744232974096304*^9, 3.7442329947321434`*^9}, {3.7765906679017487`*^9, 
+  3.7765906855611153`*^9}}],
+
+Cell["\<\
+The common way to \"picture\" Recam\[AAcute]n's sequence is to draw \
+semicircles on the number line, alternating over/under to connect pairs of \
+consecutive values. Given the values in the sequence, we can generate the \
+shapes with the Circle function.\
+\>", "Text",
+ CellChangeTimes->{{3.7442324030080566`*^9, 3.7442329422873044`*^9}, {
+  3.744232974096304*^9, 3.7442329947321434`*^9}, {3.7765906679017487`*^9, 
+  3.7765906835077677`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Code", "Section",
+ CellChangeTimes->{{3.776590828273492*^9, 3.776590841577402*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Initialization", "Subsection",
+ CellChangeTimes->{{3.776590850848407*^9, 3.7765908530267057`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Generate", " ", "the", " ", "first", " ", "n", " ", "elements", " ", "of",
+     " ", 
+    RowBox[{"Recam\[AAcute]n", "'"}], "s", " ", 
+    RowBox[{"sequence", "."}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"recaman", "[", "n_", "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"out", "=", 
+       RowBox[{"ConstantArray", "[", 
+        RowBox[{
+         RowBox[{"-", "1"}], ",", "n"}], "]"}]}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"out", "[", 
+        RowBox[{"[", "1", "]"}], "]"}], "=", "0"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Do", "[", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{
+            RowBox[{"i", "-", "1"}], ">", 
+            RowBox[{"out", "[", 
+             RowBox[{"[", 
+              RowBox[{"i", "-", "1"}], "]"}], "]"}]}], "||", 
+           RowBox[{"MemberQ", "[", 
+            RowBox[{"out", ",", 
+             RowBox[{
+              RowBox[{"out", "[", 
+               RowBox[{"[", 
+                RowBox[{"i", "-", "1"}], "]"}], "]"}], "-", "i", "+", "1"}]}],
+             "]"}]}], ",", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"out", "[", 
+            RowBox[{"[", "i", "]"}], "]"}], "=", 
+           RowBox[{
+            RowBox[{"out", "[", 
+             RowBox[{"[", 
+              RowBox[{"i", "-", "1"}], "]"}], "]"}], "+", "i", "-", "1"}]}], 
+          ",", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"out", "[", 
+             RowBox[{"[", "i", "]"}], "]"}], "=", 
+            RowBox[{
+             RowBox[{"out", "[", 
+              RowBox[{"[", 
+               RowBox[{"i", "-", "1"}], "]"}], "]"}], "-", "i", "+", "1"}]}], 
+           ";"}]}], "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"{", 
+         RowBox[{"i", ",", "2", ",", "n"}], "}"}]}], "]"}], ";", 
+      "\[IndentingNewLine]", "out"}]}], "\[IndentingNewLine]", 
+    "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.7442330056289673`*^9, 3.7442330994125185`*^9}, {
+  3.7442393624630013`*^9, 3.7442395277059183`*^9}, {3.7442395682113776`*^9, 
+  3.744239579582741*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"Given", " ", "a", " ", "list", " ", "of", " ", "values"}], ",", 
+    " ", 
+    RowBox[{"draws", " ", "alternating", " ", 
+     RowBox[{"over", "/", "under"}], " ", "semicircles", " ", "on", " ", 
+     "the", " ", "number", " ", "line", " ", "linking", " ", "consecutive", 
+     " ", 
+     RowBox[{"values", "."}]}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"rdraw", "[", "list_", "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"g", "=", 
+        RowBox[{"{", "}"}]}], ",", 
+       RowBox[{"p", "=", "1"}], ",", "c", ",", "r"}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"(*", " ", 
+      RowBox[{"g", " ", "=", " ", 
+       RowBox[{
+        RowBox[{
+        "list", " ", "of", " ", "graphics", " ", "objects", " ", "to", " ", 
+         "display", "\[IndentingNewLine]", "p"}], " ", "=", " ", 
+        RowBox[{
+         RowBox[{
+         "parity", " ", "of", " ", "current", " ", "list", " ", "entry", " ", 
+          RowBox[{"(", 
+           RowBox[{"\[PlusMinus]", "1"}], ")"}], "\[IndentingNewLine]", "c"}],
+          " ", "=", " ", 
+         RowBox[{
+          RowBox[{
+          "center", " ", "of", " ", "new", " ", "semicircle", 
+           "\[IndentingNewLine]", "r"}], " ", "=", " ", 
+          RowBox[{
+          "radius", " ", "of", " ", "new", " ", "semicircle"}]}]}]}]}], " ", 
+      "*)"}], "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"Do", "[", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"c", "=", 
+          FractionBox[
+           RowBox[{
+            RowBox[{"list", "[", 
+             RowBox[{"[", "i", "]"}], "]"}], "+", 
+            RowBox[{"list", "[", 
+             RowBox[{"[", 
+              RowBox[{"i", "+", "1"}], "]"}], "]"}]}], "2"]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"r", "=", 
+          FractionBox[
+           RowBox[{"Abs", "[", 
+            RowBox[{
+             RowBox[{"list", "[", 
+              RowBox[{"[", "i", "]"}], "]"}], "-", 
+             RowBox[{"list", "[", 
+              RowBox[{"[", 
+               RowBox[{"i", "+", "1"}], "]"}], "]"}]}], "]"}], "2"]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"g", "=", 
+          RowBox[{"Append", "[", 
+           RowBox[{"g", ",", 
+            RowBox[{"Circle", "[", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{"c", ",", "0"}], "}"}], ",", "r", ",", 
+              RowBox[{"If", "[", 
+               RowBox[{
+                RowBox[{"p", ">", "0"}], ",", 
+                RowBox[{"{", 
+                 RowBox[{"0", ",", "Pi"}], "}"}], ",", 
+                RowBox[{"{", 
+                 RowBox[{"Pi", ",", 
+                  RowBox[{"2", "Pi"}]}], "}"}]}], "]"}]}], "]"}]}], "]"}]}], 
+         ";", "\[IndentingNewLine]", 
+         RowBox[{"p", "*=", 
+          RowBox[{"-", "1"}]}]}], ",", "\[IndentingNewLine]", 
+        RowBox[{"{", 
+         RowBox[{"i", ",", "1", ",", 
+          RowBox[{
+           RowBox[{"Length", "[", "list", "]"}], "-", "1"}]}], "}"}]}], "]"}],
+       ";", "\[IndentingNewLine]", 
+      RowBox[{"Graphics", "[", "g", "]"}]}]}], "\[IndentingNewLine]", 
+    "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.7442396489621964`*^9, 3.7442396878727245`*^9}, {
+  3.744239718849804*^9, 3.744240132943098*^9}}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Demonstration", "Subsection",
+ CellChangeTimes->{{3.776590877179969*^9, 3.776590878772458*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"recaman", "[", "20", "]"}]], "Input",
+ CellChangeTimes->{{3.744239485976697*^9, 3.744239489691038*^9}, {
+  3.7442395314040203`*^9, 3.744239539586299*^9}, {3.7442395852249513`*^9, 
+  3.744239585938708*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0", ",", "1", ",", "3", ",", "6", ",", "2", ",", "7", ",", "13", ",", "20",
+    ",", "12", ",", "21", ",", "11", ",", "22", ",", "10", ",", "23", ",", 
+   "9", ",", "24", ",", "8", ",", "25", ",", "43", ",", "62"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{{3.7442394879317155`*^9, 3.7442395865105467`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"rdraw", "[", 
+  RowBox[{"recaman", "[", "10", "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.744240064007079*^9, 3.7442400661813836`*^9}, {
+  3.7442401231879654`*^9, 3.744240125653216*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{
+   CircleBox[NCache[{Rational[1, 2], 0}, {0.5, 0}], NCache[
+    Rational[1, 2], 0.5], NCache[{0, Pi}, {0, 3.141592653589793}]], 
+   CircleBox[{2, 0}, 1, 
+    NCache[{Pi, 2 Pi}, {3.141592653589793, 6.283185307179586}]], 
+   CircleBox[NCache[{Rational[9, 2], 0}, {4.5, 0}], NCache[
+    Rational[3, 2], 1.5], NCache[{0, Pi}, {0, 3.141592653589793}]], 
+   CircleBox[{4, 0}, 2, 
+    NCache[{Pi, 2 Pi}, {3.141592653589793, 6.283185307179586}]], 
+   CircleBox[NCache[{Rational[9, 2], 0}, {4.5, 0}], NCache[
+    Rational[5, 2], 2.5], NCache[{0, Pi}, {0, 3.141592653589793}]], 
+   CircleBox[{10, 0}, 3, 
+    NCache[{Pi, 2 Pi}, {3.141592653589793, 6.283185307179586}]], 
+   CircleBox[NCache[{Rational[33, 2], 0}, {16.5, 0}], NCache[
+    Rational[7, 2], 3.5], NCache[{0, Pi}, {0, 3.141592653589793}]], 
+   CircleBox[{16, 0}, 4, 
+    NCache[{Pi, 2 Pi}, {3.141592653589793, 6.283185307179586}]], 
+   CircleBox[NCache[{Rational[33, 2], 0}, {16.5, 0}], NCache[
+    Rational[9, 2], 4.5], 
+    NCache[{0, Pi}, {0, 3.141592653589793}]]}]], "Output",
+ CellChangeTimes->{{3.744240066704217*^9, 3.7442401347849693`*^9}, {
+  3.776591054169651*^9, 3.7765910581853857`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Manipulate", " ", "to", " ", "generate", " ", "a", " ", "long", " ", 
+    "Recam\[AAcute]n", " ", "sequence", " ", "and", " ", "animate", " ", 
+    "the", " ", "drawing", " ", 
+    RowBox[{"process", "."}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"nmax", "=", "100"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"rlist", "=", 
+     RowBox[{"recaman", "[", "nmax", "]"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"Manipulate", "[", 
+    RowBox[{
+     RowBox[{"Show", "[", 
+      RowBox[{
+       RowBox[{"rdraw", "[", 
+        RowBox[{"rlist", "[", 
+         RowBox[{"[", 
+          RowBox[{"1", ";;", "n"}], "]"}], "]"}], "]"}], ",", 
+       RowBox[{"PlotRange", "\[Rule]", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"-", "1"}], ",", 
+            RowBox[{
+             RowBox[{"Max", "[", "rlist", "]"}], "+", "1"}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"-", "nmax"}], "-", "1"}], ",", 
+            RowBox[{"nmax", "+", "1"}]}], "}"}]}], "}"}]}]}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"n", ",", "2", ",", "nmax", ",", "1"}], "}"}]}], 
+    "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.7442401408959684`*^9, 3.7442401766210194`*^9}, {
+  3.744240354392541*^9, 3.744240440955964*^9}, {3.744240482992465*^9, 
+  3.7442404834353294`*^9}, {3.744240708961824*^9, 3.744240957278532*^9}, {
+  3.7442409908046117`*^9, 3.7442409908785863`*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`n$$ = 100, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{
+      Hold[$CellContext`n$$], 2, 100, 1}}, Typeset`size$$ = {
+    360., {156., 160.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`n$64662$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`n$$ = 2}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`n$$, $CellContext`n$64662$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> Show[
+        $CellContext`rdraw[
+         Part[$CellContext`rlist, 
+          Span[1, $CellContext`n$$]]], 
+        PlotRange -> {{-1, Max[$CellContext`rlist] + 1}, {-$CellContext`nmax - 
+           1, $CellContext`nmax + 1}}], 
+      "Specifications" :> {{$CellContext`n$$, 2, 100, 1}}, "Options" :> {}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{411., {202., 208.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.744240710709268*^9, 3.7442407417829285`*^9}, {
+   3.7442408124253116`*^9, 3.744240817789596*^9}, {3.7442408487867656`*^9, 
+   3.74424087012694*^9}, 3.7442409595598*^9, 3.7442409914119277`*^9, 
+   3.7442431841989555`*^9, 3.7765910642354493`*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{759, 833},
+WindowMargins->{{420, Automatic}, {Automatic, 76}},
+FrontEndVersion->"10.4 for Microsoft Windows (64-bit) (April 11, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 130, 1, 90, "Title"],
+Cell[713, 25, 105, 1, 30, "Text"],
+Cell[CellGroupData[{
+Cell[843, 30, 99, 1, 63, "Section"],
+Cell[945, 33, 1002, 34, 68, "Text"],
+Cell[1950, 69, 1907, 73, 106, "Text"],
+Cell[3860, 144, 456, 9, 30, "Text"],
+Cell[4319, 155, 453, 8, 68, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4809, 168, 89, 1, 63, "Section"],
+Cell[CellGroupData[{
+Cell[4923, 173, 104, 1, 43, "Subsection"],
+Cell[5030, 176, 2315, 63, 232, "Input"],
+Cell[7348, 241, 3382, 89, 419, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[10767, 335, 101, 1, 35, "Subsection"],
+Cell[CellGroupData[{
+Cell[10893, 340, 229, 4, 31, "Input"],
+Cell[11125, 346, 349, 7, 31, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11511, 358, 212, 4, 31, "Input"],
+Cell[11726, 364, 1179, 22, 169, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12942, 391, 1574, 41, 132, "Input"],
+Cell[14519, 434, 1991, 40, 427, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
