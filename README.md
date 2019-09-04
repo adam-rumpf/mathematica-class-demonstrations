@@ -6,7 +6,9 @@ A large collection of _Mathematica_ demonstrations written by Adam Rumpf, sorted
 
 * [Overview](#overview)
 
-* **TBD**
+* [Calculus, Differential Equations, and Analysis](#calculus-differential-equations-and-analysis)
+
+  * [Complex Newton's Method](#complex-newtons-method)
 
 ## Overview
 
@@ -22,7 +24,7 @@ Many of the files in this folder are things that I wrote to show my calculus stu
 
 ### Complex Newton's Method
 
-![Complex Newton's Method Image 1](images/complex-newtons-method-1.png) ![Complex Newton's Method Image 2](images/complex-newtons-method-2.png)
+<img src="images/complex-newtons-method-1.png" alt="Complex Newton's Method Image 1" width="300"/> <img src="images/complex-newtons-method-2.png" alt="Complex Newton's Method Image 2" width="300"/>
 
 This is a demonstration of how [Newton's Method](https://en.wikipedia.org/wiki/Newton%27s_method) works for complex-valued functions. Most Calculus students will learn about Newton's Method for finding roots of real-valued functions, and may be surprised to learn that it also works for complex numbers. They may also learn that the method does not necessarily always converge to the root nearest the initial guess due to "overshooting" in unexpected ways. For real numbers this phenomenon is not very interesting to look at, but for the complex numbers we can generate fascinating and beautiful fractal basins of attraction.
 
