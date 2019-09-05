@@ -101,7 +101,7 @@ What if we remove a single square from the board? Then we would have 63 squares,
 
 ### Dragon Curve
 
-<img src="images/dragon-curve-1.png" alt="Dragon Curve Image 1" height="300"/>
+<img src="images/dragon-curve-1.png" alt="Dragon Curve Image 1" height="180"/>
 
 Created 5/6/2016
 
