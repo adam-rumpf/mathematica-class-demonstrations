@@ -15,6 +15,7 @@ A large collection of _Mathematica_ demonstrations written by Adam Rumpf, sorted
 * [Just for Fun](#just-for-fun)
   * [Domino and Tromino Tiling](#domino-and-tromino-tiling)
   * [Dragon Curve](#dragon-curve)
+  * [Pythagoras Tree](#pythagoras-tree)
   * [Spirograph](#spirograph)
 
 ## Overview
@@ -140,6 +141,18 @@ The [dragon curve](https://en.wikipedia.org/wiki/Dragon_curve) is my favorite fr
 One of the several equivalent constructions of the dragon curve involves taking a thin strip of paper and folding it in half, end-to-end, several times (the number of folds corresponds to the generation number). Then unfold the paper, open each crease to form a 90 degree angle, and look at the edge of the strip. The first fold simply creates an "L" shape. Starting over and adding a second fold creates a roughly "?" shape. Including additional folds one-at-a-time and observing the resulting curve produces shapes that are not very interesting, but after around 6 or 7 folds the shape begins to become incredibly intricate and complex.
 
 This Notebook defines a function that applies a recursive algorithm to draw a specified generation of dragon curve. Due to the recursive nature, the computational time increases exponentially as the generation number increases, so I would not recommend trying to draw anything past approximately 18 generations. I would also not recomment running the entire notebook at once, and instead running only specific blocks one-at-a-time.
+
+### Pythagoras Tree
+
+<img src="images/pythagoras-tree-1.png" alt="Pythagoras Tree Image 1" width="300"/> <img src="images/pythagoras-tree-2.png" alt="Pythagoras Tree Image 1" width="300"/>
+
+Created 1/6/2016
+
+[Notebook Link](../master/fun/pythagoras-tree.nb)
+
+This is a simple program containing a variety of Manipulate environments to generate [Pythagoras tree](https://en.wikipedia.org/wiki/Pythagoras_tree_(fractal)) fractals with various parameters. A Pythagoras tree is generated iteratively by beginning with a square and then stacking two smaller squares on top of it, leaning against each other and meeting at the corner. The same process is then repeated on top of the two new squares, and then on top of the four new squares, and so on. The relative sizes of the two squares (or equivalently the angle at which they meet) determines the shape of the tree.
+
+There is not much mathematical content here. The main purpose of the program is simply to generate cool-looking fractals, and so most of the options are related to the display.
 
 ### Spirograph
 
