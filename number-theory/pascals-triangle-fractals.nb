@@ -1,0 +1,3576 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.4' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[    136507,       3568]
+NotebookOptionsPosition[    135162,       3516]
+NotebookOutlinePosition[    135505,       3531]
+CellTagsIndexPosition[    135462,       3528]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Pascal\[CloseCurlyQuote]s Triangle Fractals", "Title",
+ CellChangeTimes->{{3.776600831050974*^9, 3.7766008318453026`*^9}, {
+  3.7766384838213315`*^9, 3.776638488819731*^9}}],
+
+Cell["Adam Rumpf, 6/28/2015", "Text",
+ CellChangeTimes->{{3.7766008347881403`*^9, 3.776600838290375*^9}, {
+  3.7766384931880608`*^9, 3.7766384964870157`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section",
+ CellChangeTimes->{{3.7766008459498987`*^9, 3.776600848547045*^9}}],
+
+Cell[TextData[{
+ "This Notebook contains a variety of functions for generating graphics of \
+Pascal\[CloseCurlyQuote]s triangle. The ",
+ StyleBox["pascal[]", "Code"],
+ " function simply displays Pascal\[CloseCurlyQuote]s triangle with a \
+specified number of rows and with the numbers filled in. The ",
+ StyleBox["parity[]", "Code"],
+ " function accepts arguments for a number of rows and a base, and displays \
+Pascal\[CloseCurlyQuote]s triangle colored so that the entries divisible by \
+the chosen base are blank while the rest are black."
+}], "Text",
+ CellChangeTimes->{{3.776600856235587*^9, 3.776600860481224*^9}, {
+  3.7766397314080024`*^9, 3.7766399513305798`*^9}}],
+
+Cell[TextData[{
+ "The main motivation for these functions is to see the fractal structures \
+present in Pascal\[CloseCurlyQuote]s triangle. Speficically, highlighting \
+only the odd entries creates a Sierpi\:0144ski triangle. This corresponds to \
+using the above ",
+ StyleBox["parity[]", "Code"],
+ " function with a base of ",
+ Cell[BoxData[
+  FormBox["2", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". Other choices of base generate different fractals."
+}], "Text",
+ CellChangeTimes->{{3.7766399566093025`*^9, 3.776640049373783*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Code", "Section",
+ CellChangeTimes->{{3.776600864408964*^9, 3.7766008650447807`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Initialization", "Subsection",
+ CellChangeTimes->{{3.776600871130811*^9, 3.776600873087188*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Displays", " ", 
+    RowBox[{"Pascal", "'"}], "s", " ", "triangle", " ", 
+    RowBox[{"(", 
+     RowBox[{"with", " ", "numbers"}], ")"}], " ", "for", " ", "a", " ", 
+    "specified", " ", "number", " ", "of", " ", 
+    RowBox[{"rows", "."}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"pascal", "[", "n_", "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"g", "=", 
+        RowBox[{"{", "}"}]}], ",", "pt", ",", 
+       RowBox[{"tab", "=", 
+        RowBox[{"ConstantArray", "[", 
+         RowBox[{"Null", ",", 
+          RowBox[{"{", 
+           RowBox[{"n", ",", "n"}], "}"}]}], "]"}]}]}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"For", "[", 
+       RowBox[{
+        RowBox[{"i", "=", "0"}], ",", 
+        RowBox[{"i", "<", "n"}], ",", 
+        RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"For", "[", 
+          RowBox[{
+           RowBox[{"j", "=", "0"}], ",", 
+           RowBox[{"j", "\[LessEqual]", "i"}], ",", 
+           RowBox[{"j", "++"}], ",", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"tab", "[", 
+              RowBox[{"[", 
+               RowBox[{
+                RowBox[{"i", "+", "1"}], ",", 
+                RowBox[{"j", "+", "1"}]}], "]"}], "]"}], "=", 
+             RowBox[{"Binomial", "[", 
+              RowBox[{"i", ",", "j"}], "]"}]}], ";"}]}], 
+          "\[IndentingNewLine]", "]"}], ";"}]}], "\[IndentingNewLine]", "]"}],
+       ";", "\[IndentingNewLine]", 
+      RowBox[{"For", "[", 
+       RowBox[{
+        RowBox[{"i", "=", "1"}], ",", 
+        RowBox[{"i", "\[LessEqual]", 
+         RowBox[{"Length", "[", "tab", "]"}]}], ",", 
+        RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"For", "[", 
+          RowBox[{
+           RowBox[{"j", "=", "1"}], ",", 
+           RowBox[{"j", "\[LessEqual]", "i"}], ",", 
+           RowBox[{"j", "++"}], ",", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"pt", "=", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{
+                RowBox[{
+                 RowBox[{"-", "0.5"}], "i"}], "+", "j", "-", "1"}], ",", 
+               RowBox[{
+                RowBox[{"-", 
+                 SqrtBox["3"]}], 
+                RowBox[{"i", "/", "2"}]}]}], "}"}]}], ";", 
+            "\[IndentingNewLine]", 
+            RowBox[{"g", "=", 
+             RowBox[{"Join", "[", 
+              RowBox[{"g", ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"Circle", "[", 
+                  RowBox[{"pt", ",", "0.5"}], "]"}], ",", 
+                 RowBox[{"Style", "[", 
+                  RowBox[{
+                   RowBox[{"Text", "[", 
+                    RowBox[{
+                    RowBox[{"tab", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"i", ",", "j"}], "]"}], "]"}], ",", "pt"}], "]"}],
+                    ",", "20"}], "]"}]}], "}"}]}], "]"}]}], ";"}]}], 
+          "\[IndentingNewLine]", "]"}], ";"}]}], "\[IndentingNewLine]", "]"}],
+       ";", "\[IndentingNewLine]", 
+      RowBox[{"Show", "[", 
+       RowBox[{"Graphics", "[", "g", "]"}], "]"}]}]}], "\[IndentingNewLine]", 
+    "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.7766008761831923`*^9, 3.776600882799075*^9}, {
+  3.7766400719748125`*^9, 3.7766401859746466`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "Displays", " ", "a", " ", "colored", " ", "version", " ", "of", " ", 
+     RowBox[{"Pascal", "'"}], "s", " ", "triangle", " ", 
+     RowBox[{"(", 
+      RowBox[{"with", " ", "no", " ", "numbers"}], ")"}], " ", "for", " ", 
+     "a", " ", "specified", " ", "number", " ", "of", " ", "rows", " ", "and",
+      " ", "a", " ", "specified", " ", 
+     RowBox[{"base", ".", " ", "Elements"}], " ", "divisible", " ", "by", " ",
+      "the", " ", "base", " ", "are", " ", "left", " ", "blank"}], ",", " ", 
+    RowBox[{
+    "while", " ", "all", " ", "remaining", " ", "elements", " ", "are", " ", 
+     "colored", " ", 
+     RowBox[{"in", "."}]}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"parity", "[", 
+    RowBox[{"n_", ",", "p_"}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"g", "=", 
+        RowBox[{"{", "}"}]}], ",", "pt", ",", 
+       RowBox[{"tab", "=", 
+        RowBox[{"ConstantArray", "[", 
+         RowBox[{"Null", ",", 
+          RowBox[{"{", 
+           RowBox[{"n", ",", "n"}], "}"}]}], "]"}]}]}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"For", "[", 
+       RowBox[{
+        RowBox[{"i", "=", "0"}], ",", 
+        RowBox[{"i", "<", "n"}], ",", 
+        RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"For", "[", 
+          RowBox[{
+           RowBox[{"j", "=", "0"}], ",", 
+           RowBox[{"j", "\[LessEqual]", "i"}], ",", 
+           RowBox[{"j", "++"}], ",", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"tab", "[", 
+              RowBox[{"[", 
+               RowBox[{
+                RowBox[{"i", "+", "1"}], ",", 
+                RowBox[{"j", "+", "1"}]}], "]"}], "]"}], "=", 
+             RowBox[{"Binomial", "[", 
+              RowBox[{"i", ",", "j"}], "]"}]}], ";"}]}], 
+          "\[IndentingNewLine]", "]"}], ";"}]}], "\[IndentingNewLine]", "]"}],
+       ";", "\[IndentingNewLine]", 
+      RowBox[{"For", "[", 
+       RowBox[{
+        RowBox[{"i", "=", "1"}], ",", 
+        RowBox[{"i", "\[LessEqual]", 
+         RowBox[{"Length", "[", "tab", "]"}]}], ",", 
+        RowBox[{"i", "++"}], ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"For", "[", 
+          RowBox[{
+           RowBox[{"j", "=", "1"}], ",", 
+           RowBox[{"j", "\[LessEqual]", "i"}], ",", 
+           RowBox[{"j", "++"}], ",", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"pt", "=", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{
+                RowBox[{
+                 RowBox[{"-", "0.5"}], "i"}], "+", "j", "-", "1"}], ",", 
+               RowBox[{
+                RowBox[{"-", 
+                 SqrtBox["3"]}], 
+                RowBox[{"i", "/", "2"}]}]}], "}"}]}], ";", 
+            "\[IndentingNewLine]", 
+            RowBox[{"g", "=", 
+             RowBox[{"Join", "[", 
+              RowBox[{"g", ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"If", "[", 
+                  RowBox[{
+                   RowBox[{
+                    RowBox[{"Mod", "[", 
+                    RowBox[{
+                    RowBox[{"tab", "[", 
+                    RowBox[{"[", 
+                    RowBox[{"i", ",", "j"}], "]"}], "]"}], ",", "p"}], "]"}], 
+                    "\[Equal]", "0"}], ",", "White", ",", "Black"}], "]"}], 
+                 ",", 
+                 RowBox[{"Disk", "[", 
+                  RowBox[{"pt", ",", "0.5"}], "]"}]}], "}"}]}], "]"}]}], 
+            ";"}]}], "\[IndentingNewLine]", "]"}], ";"}]}], 
+       "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"Show", "[", 
+       RowBox[{"Graphics", "[", "g", "]"}], "]"}]}]}], "\[IndentingNewLine]", 
+    "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.7766402203955774`*^9, 3.77664033747458*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Demonstration", "Subsection",
+ CellChangeTimes->{{3.7766008885632277`*^9, 3.7766008904796133`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Display", " ", "10", " ", "rows", " ", "of", " ", 
+    RowBox[{"Pascal", "'"}], "s", " ", 
+    RowBox[{"triangle", "."}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"pascal", "[", "8", "]"}]}]], "Input",
+ CellChangeTimes->{{3.7766008920271177`*^9, 3.7766008970415297`*^9}, {
+  3.7766401911354895`*^9, 3.776640211437543*^9}, {3.7766403898950014`*^9, 
+  3.7766403940589504`*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{
+   CircleBox[
+    NCache[{-0.5, Rational[-1, 2] 
+      3^Rational[1, 2]}, {-0.5, -0.8660254037844386}], 0.5], 
+   StyleBox[
+    InsetBox["1", 
+     NCache[{-0.5, Rational[-1, 2] 
+       3^Rational[1, 2]}, {-0.5, -0.8660254037844386}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[NCache[{-1., -3^Rational[1, 2]}, {-1., -1.7320508075688772`}], 
+    0.5], 
+   StyleBox[
+    InsetBox["1", 
+     NCache[{-1., -3^Rational[1, 2]}, {-1., -1.7320508075688772`}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[NCache[{0., -3^Rational[1, 2]}, {0., -1.7320508075688772`}], 
+    0.5], 
+   StyleBox[
+    InsetBox["1", NCache[{0., -3^Rational[1, 2]}, {0., -1.7320508075688772`}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[
+    NCache[{-1.5, Rational[-3, 2] 
+      3^Rational[1, 2]}, {-1.5, -2.598076211353316}], 0.5], 
+   StyleBox[
+    InsetBox["1", 
+     NCache[{-1.5, Rational[-3, 2] 
+       3^Rational[1, 2]}, {-1.5, -2.598076211353316}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[
+    NCache[{-0.5, Rational[-3, 2] 
+      3^Rational[1, 2]}, {-0.5, -2.598076211353316}], 0.5], 
+   StyleBox[
+    InsetBox["2", 
+     NCache[{-0.5, Rational[-3, 2] 
+       3^Rational[1, 2]}, {-0.5, -2.598076211353316}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[
+    NCache[{0.5, Rational[-3, 2] 3^Rational[1, 2]}, {
+     0.5, -2.598076211353316}], 0.5], 
+   StyleBox[
+    InsetBox["1", 
+     NCache[{0.5, Rational[-3, 2] 3^Rational[1, 2]}, {
+      0.5, -2.598076211353316}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[
+    NCache[{-2., (-2) 3^Rational[1, 2]}, {-2., -3.4641016151377544`}], 0.5], 
+   StyleBox[
+    InsetBox["1", 
+     NCache[{-2., (-2) 3^Rational[1, 2]}, {-2., -3.4641016151377544`}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[
+    NCache[{-1., (-2) 3^Rational[1, 2]}, {-1., -3.4641016151377544`}], 0.5], 
+   StyleBox[
+    InsetBox["3", 
+     NCache[{-1., (-2) 3^Rational[1, 2]}, {-1., -3.4641016151377544`}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[NCache[{0., (-2) 3^Rational[1, 2]}, {0., -3.4641016151377544`}], 
+    0.5], 
+   StyleBox[
+    InsetBox["3", 
+     NCache[{0., (-2) 3^Rational[1, 2]}, {0., -3.4641016151377544`}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[NCache[{1., (-2) 3^Rational[1, 2]}, {1., -3.4641016151377544`}], 
+    0.5], 
+   StyleBox[
+    InsetBox["1", 
+     NCache[{1., (-2) 3^Rational[1, 2]}, {1., -3.4641016151377544`}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[
+    NCache[{-2.5, Rational[-5, 2] 
+      3^Rational[1, 2]}, {-2.5, -4.330127018922193}], 0.5], 
+   StyleBox[
+    InsetBox["1", 
+     NCache[{-2.5, Rational[-5, 2] 
+       3^Rational[1, 2]}, {-2.5, -4.330127018922193}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[
+    NCache[{-1.5, Rational[-5, 2] 
+      3^Rational[1, 2]}, {-1.5, -4.330127018922193}], 0.5], 
+   StyleBox[
+    InsetBox["4", 
+     NCache[{-1.5, Rational[-5, 2] 
+       3^Rational[1, 2]}, {-1.5, -4.330127018922193}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[
+    NCache[{-0.5, Rational[-5, 2] 
+      3^Rational[1, 2]}, {-0.5, -4.330127018922193}], 0.5], 
+   StyleBox[
+    InsetBox["6", 
+     NCache[{-0.5, Rational[-5, 2] 
+       3^Rational[1, 2]}, {-0.5, -4.330127018922193}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[
+    NCache[{0.5, Rational[-5, 2] 3^Rational[1, 2]}, {
+     0.5, -4.330127018922193}], 0.5], 
+   StyleBox[
+    InsetBox["4", 
+     NCache[{0.5, Rational[-5, 2] 3^Rational[1, 2]}, {
+      0.5, -4.330127018922193}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[
+    NCache[{1.5, Rational[-5, 2] 3^Rational[1, 2]}, {
+     1.5, -4.330127018922193}], 0.5], 
+   StyleBox[
+    InsetBox["1", 
+     NCache[{1.5, Rational[-5, 2] 3^Rational[1, 2]}, {
+      1.5, -4.330127018922193}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[NCache[{-3., (-3) 3^Rational[1, 2]}, {-3., -5.196152422706632}], 
+    0.5], 
+   StyleBox[
+    InsetBox["1", 
+     NCache[{-3., (-3) 3^Rational[1, 2]}, {-3., -5.196152422706632}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[NCache[{-2., (-3) 3^Rational[1, 2]}, {-2., -5.196152422706632}], 
+    0.5], 
+   StyleBox[
+    InsetBox["5", 
+     NCache[{-2., (-3) 3^Rational[1, 2]}, {-2., -5.196152422706632}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[NCache[{-1., (-3) 3^Rational[1, 2]}, {-1., -5.196152422706632}], 
+    0.5], 
+   StyleBox[
+    InsetBox["10", 
+     NCache[{-1., (-3) 3^Rational[1, 2]}, {-1., -5.196152422706632}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[NCache[{0., (-3) 3^Rational[1, 2]}, {0., -5.196152422706632}], 
+    0.5], 
+   StyleBox[
+    InsetBox["10", 
+     NCache[{0., (-3) 3^Rational[1, 2]}, {0., -5.196152422706632}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[NCache[{1., (-3) 3^Rational[1, 2]}, {1., -5.196152422706632}], 
+    0.5], 
+   StyleBox[
+    InsetBox["5", 
+     NCache[{1., (-3) 3^Rational[1, 2]}, {1., -5.196152422706632}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[NCache[{2., (-3) 3^Rational[1, 2]}, {2., -5.196152422706632}], 
+    0.5], 
+   StyleBox[
+    InsetBox["1", 
+     NCache[{2., (-3) 3^Rational[1, 2]}, {2., -5.196152422706632}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[
+    NCache[{-3.5, Rational[-7, 2] 
+      3^Rational[1, 2]}, {-3.5, -6.06217782649107}], 0.5], 
+   StyleBox[
+    InsetBox["1", 
+     NCache[{-3.5, Rational[-7, 2] 
+       3^Rational[1, 2]}, {-3.5, -6.06217782649107}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[
+    NCache[{-2.5, Rational[-7, 2] 
+      3^Rational[1, 2]}, {-2.5, -6.06217782649107}], 0.5], 
+   StyleBox[
+    InsetBox["6", 
+     NCache[{-2.5, Rational[-7, 2] 
+       3^Rational[1, 2]}, {-2.5, -6.06217782649107}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[
+    NCache[{-1.5, Rational[-7, 2] 
+      3^Rational[1, 2]}, {-1.5, -6.06217782649107}], 0.5], 
+   StyleBox[
+    InsetBox["15", 
+     NCache[{-1.5, Rational[-7, 2] 
+       3^Rational[1, 2]}, {-1.5, -6.06217782649107}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[
+    NCache[{-0.5, Rational[-7, 2] 
+      3^Rational[1, 2]}, {-0.5, -6.06217782649107}], 0.5], 
+   StyleBox[
+    InsetBox["20", 
+     NCache[{-0.5, Rational[-7, 2] 
+       3^Rational[1, 2]}, {-0.5, -6.06217782649107}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[
+    NCache[{0.5, Rational[-7, 2] 3^Rational[1, 2]}, {0.5, -6.06217782649107}],
+     0.5], 
+   StyleBox[
+    InsetBox["15", 
+     NCache[{0.5, Rational[-7, 2] 3^Rational[1, 2]}, {
+      0.5, -6.06217782649107}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[
+    NCache[{1.5, Rational[-7, 2] 3^Rational[1, 2]}, {1.5, -6.06217782649107}],
+     0.5], 
+   StyleBox[
+    InsetBox["6", 
+     NCache[{1.5, Rational[-7, 2] 3^Rational[1, 2]}, {
+      1.5, -6.06217782649107}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[
+    NCache[{2.5, Rational[-7, 2] 3^Rational[1, 2]}, {2.5, -6.06217782649107}],
+     0.5], 
+   StyleBox[
+    InsetBox["1", 
+     NCache[{2.5, Rational[-7, 2] 3^Rational[1, 2]}, {
+      2.5, -6.06217782649107}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[NCache[{-4., (-4) 3^Rational[1, 2]}, {-4., -6.928203230275509}], 
+    0.5], 
+   StyleBox[
+    InsetBox["1", 
+     NCache[{-4., (-4) 3^Rational[1, 2]}, {-4., -6.928203230275509}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[NCache[{-3., (-4) 3^Rational[1, 2]}, {-3., -6.928203230275509}], 
+    0.5], 
+   StyleBox[
+    InsetBox["7", 
+     NCache[{-3., (-4) 3^Rational[1, 2]}, {-3., -6.928203230275509}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[NCache[{-2., (-4) 3^Rational[1, 2]}, {-2., -6.928203230275509}], 
+    0.5], 
+   StyleBox[
+    InsetBox["21", 
+     NCache[{-2., (-4) 3^Rational[1, 2]}, {-2., -6.928203230275509}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[NCache[{-1., (-4) 3^Rational[1, 2]}, {-1., -6.928203230275509}], 
+    0.5], 
+   StyleBox[
+    InsetBox["35", 
+     NCache[{-1., (-4) 3^Rational[1, 2]}, {-1., -6.928203230275509}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[NCache[{0., (-4) 3^Rational[1, 2]}, {0., -6.928203230275509}], 
+    0.5], 
+   StyleBox[
+    InsetBox["35", 
+     NCache[{0., (-4) 3^Rational[1, 2]}, {0., -6.928203230275509}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[NCache[{1., (-4) 3^Rational[1, 2]}, {1., -6.928203230275509}], 
+    0.5], 
+   StyleBox[
+    InsetBox["21", 
+     NCache[{1., (-4) 3^Rational[1, 2]}, {1., -6.928203230275509}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[NCache[{2., (-4) 3^Rational[1, 2]}, {2., -6.928203230275509}], 
+    0.5], 
+   StyleBox[
+    InsetBox["7", 
+     NCache[{2., (-4) 3^Rational[1, 2]}, {2., -6.928203230275509}]],
+    StripOnInput->False,
+    FontSize->20], 
+   CircleBox[NCache[{3., (-4) 3^Rational[1, 2]}, {3., -6.928203230275509}], 
+    0.5], 
+   StyleBox[
+    InsetBox["1", 
+     NCache[{3., (-4) 3^Rational[1, 2]}, {3., -6.928203230275509}]],
+    StripOnInput->False,
+    FontSize->20]}]], "Output",
+ CellChangeTimes->{{3.77664019386969*^9, 3.7766402118294153`*^9}, {
+  3.7766403907937927`*^9, 3.776640394550847*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"Same", " ", "as", " ", "above"}], ",", " ", 
+    RowBox[{"but", " ", "coloring", " ", "odd", " ", 
+     RowBox[{"entries", "."}]}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"parity", "[", 
+   RowBox[{"8", ",", "2"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.776640342525874*^9, 3.7766404047813697`*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{
+   {GrayLevel[0], 
+    DiskBox[NCache[{-0.5, Rational[-1, 2] 
+       3^Rational[1, 2]}, {-0.5, -0.8660254037844386}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-1., -3^Rational[1, 2]}, {-1., -1.7320508075688772`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{0., -3^Rational[1, 2]}, {0., -1.7320508075688772`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-1.5, Rational[-3, 2] 
+       3^Rational[1, 2]}, {-1.5, -2.598076211353316}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-0.5, Rational[-3, 2] 
+       3^Rational[1, 2]}, {-0.5, -2.598076211353316}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{0.5, Rational[-3, 2] 3^Rational[1, 2]}, {
+      0.5, -2.598076211353316}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-2., (-2) 3^Rational[1, 2]}, {-2., -3.4641016151377544`}],
+      0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-1., (-2) 3^Rational[1, 2]}, {-1., -3.4641016151377544`}],
+      0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{0., (-2) 3^Rational[1, 2]}, {0., -3.4641016151377544`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{1., (-2) 3^Rational[1, 2]}, {1., -3.4641016151377544`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-2.5, Rational[-5, 2] 
+       3^Rational[1, 2]}, {-2.5, -4.330127018922193}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1.5, Rational[-5, 2] 
+       3^Rational[1, 2]}, {-1.5, -4.330127018922193}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-0.5, Rational[-5, 2] 
+       3^Rational[1, 2]}, {-0.5, -4.330127018922193}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0.5, Rational[-5, 2] 3^Rational[1, 2]}, {
+      0.5, -4.330127018922193}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{1.5, Rational[-5, 2] 3^Rational[1, 2]}, {
+      1.5, -4.330127018922193}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-3., (-3) 3^Rational[1, 2]}, {-3., -5.196152422706632}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-2., (-3) 3^Rational[1, 2]}, {-2., -5.196152422706632}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1., (-3) 3^Rational[1, 2]}, {-1., -5.196152422706632}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0., (-3) 3^Rational[1, 2]}, {0., -5.196152422706632}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{1., (-3) 3^Rational[1, 2]}, {1., -5.196152422706632}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{2., (-3) 3^Rational[1, 2]}, {2., -5.196152422706632}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-3.5, Rational[-7, 2] 
+       3^Rational[1, 2]}, {-3.5, -6.06217782649107}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2.5, Rational[-7, 2] 
+       3^Rational[1, 2]}, {-2.5, -6.06217782649107}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-1.5, Rational[-7, 2] 
+       3^Rational[1, 2]}, {-1.5, -6.06217782649107}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-0.5, Rational[-7, 2] 
+       3^Rational[1, 2]}, {-0.5, -6.06217782649107}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{0.5, Rational[-7, 2] 3^Rational[1, 2]}, {
+      0.5, -6.06217782649107}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1.5, Rational[-7, 2] 3^Rational[1, 2]}, {
+      1.5, -6.06217782649107}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{2.5, Rational[-7, 2] 3^Rational[1, 2]}, {
+      2.5, -6.06217782649107}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-4., (-4) 3^Rational[1, 2]}, {-4., -6.928203230275509}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-3., (-4) 3^Rational[1, 2]}, {-3., -6.928203230275509}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-2., (-4) 3^Rational[1, 2]}, {-2., -6.928203230275509}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-1., (-4) 3^Rational[1, 2]}, {-1., -6.928203230275509}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{0., (-4) 3^Rational[1, 2]}, {0., -6.928203230275509}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{1., (-4) 3^Rational[1, 2]}, {1., -6.928203230275509}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{2., (-4) 3^Rational[1, 2]}, {2., -6.928203230275509}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{3., (-4) 3^Rational[1, 2]}, {3., -6.928203230275509}], 
+     0.5]}}]], "Output",
+ CellChangeTimes->{3.7766404053512807`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Zooming", " ", 
+    RowBox[{"out", "."}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"parity", "[", 
+   RowBox[{"32", ",", "2"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.776640409909317*^9, 3.776640422961667*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{
+   {GrayLevel[0], 
+    DiskBox[NCache[{-0.5, Rational[-1, 2] 
+       3^Rational[1, 2]}, {-0.5, -0.8660254037844386}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-1., -3^Rational[1, 2]}, {-1., -1.7320508075688772`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{0., -3^Rational[1, 2]}, {0., -1.7320508075688772`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-1.5, Rational[-3, 2] 
+       3^Rational[1, 2]}, {-1.5, -2.598076211353316}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-0.5, Rational[-3, 2] 
+       3^Rational[1, 2]}, {-0.5, -2.598076211353316}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{0.5, Rational[-3, 2] 3^Rational[1, 2]}, {
+      0.5, -2.598076211353316}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-2., (-2) 3^Rational[1, 2]}, {-2., -3.4641016151377544`}],
+      0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-1., (-2) 3^Rational[1, 2]}, {-1., -3.4641016151377544`}],
+      0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{0., (-2) 3^Rational[1, 2]}, {0., -3.4641016151377544`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{1., (-2) 3^Rational[1, 2]}, {1., -3.4641016151377544`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-2.5, Rational[-5, 2] 
+       3^Rational[1, 2]}, {-2.5, -4.330127018922193}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1.5, Rational[-5, 2] 
+       3^Rational[1, 2]}, {-1.5, -4.330127018922193}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-0.5, Rational[-5, 2] 
+       3^Rational[1, 2]}, {-0.5, -4.330127018922193}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0.5, Rational[-5, 2] 3^Rational[1, 2]}, {
+      0.5, -4.330127018922193}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{1.5, Rational[-5, 2] 3^Rational[1, 2]}, {
+      1.5, -4.330127018922193}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-3., (-3) 3^Rational[1, 2]}, {-3., -5.196152422706632}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-2., (-3) 3^Rational[1, 2]}, {-2., -5.196152422706632}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1., (-3) 3^Rational[1, 2]}, {-1., -5.196152422706632}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0., (-3) 3^Rational[1, 2]}, {0., -5.196152422706632}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{1., (-3) 3^Rational[1, 2]}, {1., -5.196152422706632}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{2., (-3) 3^Rational[1, 2]}, {2., -5.196152422706632}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-3.5, Rational[-7, 2] 
+       3^Rational[1, 2]}, {-3.5, -6.06217782649107}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2.5, Rational[-7, 2] 
+       3^Rational[1, 2]}, {-2.5, -6.06217782649107}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-1.5, Rational[-7, 2] 
+       3^Rational[1, 2]}, {-1.5, -6.06217782649107}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-0.5, Rational[-7, 2] 
+       3^Rational[1, 2]}, {-0.5, -6.06217782649107}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{0.5, Rational[-7, 2] 3^Rational[1, 2]}, {
+      0.5, -6.06217782649107}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1.5, Rational[-7, 2] 3^Rational[1, 2]}, {
+      1.5, -6.06217782649107}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{2.5, Rational[-7, 2] 3^Rational[1, 2]}, {
+      2.5, -6.06217782649107}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-4., (-4) 3^Rational[1, 2]}, {-4., -6.928203230275509}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-3., (-4) 3^Rational[1, 2]}, {-3., -6.928203230275509}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-2., (-4) 3^Rational[1, 2]}, {-2., -6.928203230275509}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-1., (-4) 3^Rational[1, 2]}, {-1., -6.928203230275509}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{0., (-4) 3^Rational[1, 2]}, {0., -6.928203230275509}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{1., (-4) 3^Rational[1, 2]}, {1., -6.928203230275509}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{2., (-4) 3^Rational[1, 2]}, {2., -6.928203230275509}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{3., (-4) 3^Rational[1, 2]}, {3., -6.928203230275509}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-4.5, Rational[-9, 2] 
+       3^Rational[1, 2]}, {-4.5, -7.794228634059947}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-3.5, Rational[-9, 2] 
+       3^Rational[1, 2]}, {-3.5, -7.794228634059947}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2.5, Rational[-9, 2] 
+       3^Rational[1, 2]}, {-2.5, -7.794228634059947}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1.5, Rational[-9, 2] 
+       3^Rational[1, 2]}, {-1.5, -7.794228634059947}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-0.5, Rational[-9, 2] 
+       3^Rational[1, 2]}, {-0.5, -7.794228634059947}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0.5, Rational[-9, 2] 3^Rational[1, 2]}, {
+      0.5, -7.794228634059947}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1.5, Rational[-9, 2] 3^Rational[1, 2]}, {
+      1.5, -7.794228634059947}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{2.5, Rational[-9, 2] 3^Rational[1, 2]}, {
+      2.5, -7.794228634059947}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{3.5, Rational[-9, 2] 3^Rational[1, 2]}, {
+      3.5, -7.794228634059947}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-5., (-5) 3^Rational[1, 2]}, {-5., -8.660254037844386}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-4., (-5) 3^Rational[1, 2]}, {-4., -8.660254037844386}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-3., (-5) 3^Rational[1, 2]}, {-3., -8.660254037844386}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2., (-5) 3^Rational[1, 2]}, {-2., -8.660254037844386}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1., (-5) 3^Rational[1, 2]}, {-1., -8.660254037844386}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0., (-5) 3^Rational[1, 2]}, {0., -8.660254037844386}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1., (-5) 3^Rational[1, 2]}, {1., -8.660254037844386}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{2., (-5) 3^Rational[1, 2]}, {2., -8.660254037844386}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{3., (-5) 3^Rational[1, 2]}, {3., -8.660254037844386}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{4., (-5) 3^Rational[1, 2]}, {4., -8.660254037844386}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-5.5, Rational[-11, 2] 
+       3^Rational[1, 2]}, {-5.5, -9.526279441628825}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-4.5, Rational[-11, 2] 
+       3^Rational[1, 2]}, {-4.5, -9.526279441628825}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-3.5, Rational[-11, 2] 
+       3^Rational[1, 2]}, {-3.5, -9.526279441628825}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2.5, Rational[-11, 2] 
+       3^Rational[1, 2]}, {-2.5, -9.526279441628825}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1.5, Rational[-11, 2] 
+       3^Rational[1, 2]}, {-1.5, -9.526279441628825}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-0.5, Rational[-11, 2] 
+       3^Rational[1, 2]}, {-0.5, -9.526279441628825}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0.5, Rational[-11, 2] 3^Rational[1, 2]}, {
+      0.5, -9.526279441628825}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1.5, Rational[-11, 2] 3^Rational[1, 2]}, {
+      1.5, -9.526279441628825}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{2.5, Rational[-11, 2] 3^Rational[1, 2]}, {
+      2.5, -9.526279441628825}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{3.5, Rational[-11, 2] 3^Rational[1, 2]}, {
+      3.5, -9.526279441628825}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{4.5, Rational[-11, 2] 3^Rational[1, 2]}, {
+      4.5, -9.526279441628825}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-6., (-6) 3^Rational[1, 2]}, {-6., -10.392304845413264`}],
+      0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-5., (-6) 3^Rational[1, 2]}, {-5., -10.392304845413264`}],
+      0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-4., (-6) 3^Rational[1, 2]}, {-4., -10.392304845413264`}],
+      0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-3., (-6) 3^Rational[1, 2]}, {-3., -10.392304845413264`}],
+      0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2., (-6) 3^Rational[1, 2]}, {-2., -10.392304845413264`}],
+      0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1., (-6) 3^Rational[1, 2]}, {-1., -10.392304845413264`}],
+      0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0., (-6) 3^Rational[1, 2]}, {0., -10.392304845413264`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1., (-6) 3^Rational[1, 2]}, {1., -10.392304845413264`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{2., (-6) 3^Rational[1, 2]}, {2., -10.392304845413264`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{3., (-6) 3^Rational[1, 2]}, {3., -10.392304845413264`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{4., (-6) 3^Rational[1, 2]}, {4., -10.392304845413264`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{5., (-6) 3^Rational[1, 2]}, {5., -10.392304845413264`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-6.5, Rational[-13, 2] 
+       3^Rational[1, 2]}, {-6.5, -11.258330249197702`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-5.5, Rational[-13, 2] 
+       3^Rational[1, 2]}, {-5.5, -11.258330249197702`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-4.5, Rational[-13, 2] 
+       3^Rational[1, 2]}, {-4.5, -11.258330249197702`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-3.5, Rational[-13, 2] 
+       3^Rational[1, 2]}, {-3.5, -11.258330249197702`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-2.5, Rational[-13, 2] 
+       3^Rational[1, 2]}, {-2.5, -11.258330249197702`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1.5, Rational[-13, 2] 
+       3^Rational[1, 2]}, {-1.5, -11.258330249197702`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-0.5, Rational[-13, 2] 
+       3^Rational[1, 2]}, {-0.5, -11.258330249197702`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0.5, Rational[-13, 2] 3^Rational[1, 2]}, {
+      0.5, -11.258330249197702`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{1.5, Rational[-13, 2] 3^Rational[1, 2]}, {
+      1.5, -11.258330249197702`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[
+     NCache[{2.5, Rational[-13, 2] 3^Rational[1, 2]}, {
+      2.5, -11.258330249197702`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{3.5, Rational[-13, 2] 3^Rational[1, 2]}, {
+      3.5, -11.258330249197702`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{4.5, Rational[-13, 2] 3^Rational[1, 2]}, {
+      4.5, -11.258330249197702`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{5.5, Rational[-13, 2] 3^Rational[1, 2]}, {
+      5.5, -11.258330249197702`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-7., (-7) 3^Rational[1, 2]}, {-7., -12.12435565298214}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-6., (-7) 3^Rational[1, 2]}, {-6., -12.12435565298214}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-5., (-7) 3^Rational[1, 2]}, {-5., -12.12435565298214}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-4., (-7) 3^Rational[1, 2]}, {-4., -12.12435565298214}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-3., (-7) 3^Rational[1, 2]}, {-3., -12.12435565298214}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-2., (-7) 3^Rational[1, 2]}, {-2., -12.12435565298214}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1., (-7) 3^Rational[1, 2]}, {-1., -12.12435565298214}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0., (-7) 3^Rational[1, 2]}, {0., -12.12435565298214}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{1., (-7) 3^Rational[1, 2]}, {1., -12.12435565298214}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{2., (-7) 3^Rational[1, 2]}, {2., -12.12435565298214}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{3., (-7) 3^Rational[1, 2]}, {3., -12.12435565298214}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{4., (-7) 3^Rational[1, 2]}, {4., -12.12435565298214}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{5., (-7) 3^Rational[1, 2]}, {5., -12.12435565298214}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{6., (-7) 3^Rational[1, 2]}, {6., -12.12435565298214}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-7.5, Rational[-15, 2] 
+       3^Rational[1, 2]}, {-7.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-6.5, Rational[-15, 2] 
+       3^Rational[1, 2]}, {-6.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-5.5, Rational[-15, 2] 
+       3^Rational[1, 2]}, {-5.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-4.5, Rational[-15, 2] 
+       3^Rational[1, 2]}, {-4.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-3.5, Rational[-15, 2] 
+       3^Rational[1, 2]}, {-3.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2.5, Rational[-15, 2] 
+       3^Rational[1, 2]}, {-2.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-1.5, Rational[-15, 2] 
+       3^Rational[1, 2]}, {-1.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-0.5, Rational[-15, 2] 
+       3^Rational[1, 2]}, {-0.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{0.5, Rational[-15, 2] 3^Rational[1, 2]}, {
+      0.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1.5, Rational[-15, 2] 3^Rational[1, 2]}, {
+      1.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{2.5, Rational[-15, 2] 3^Rational[1, 2]}, {
+      2.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{3.5, Rational[-15, 2] 3^Rational[1, 2]}, {
+      3.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{4.5, Rational[-15, 2] 3^Rational[1, 2]}, {
+      4.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{5.5, Rational[-15, 2] 3^Rational[1, 2]}, {
+      5.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{6.5, Rational[-15, 2] 3^Rational[1, 2]}, {
+      6.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-8., (-8) 3^Rational[1, 2]}, {-8., -13.856406460551018`}],
+      0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-7., (-8) 3^Rational[1, 2]}, {-7., -13.856406460551018`}],
+      0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-6., (-8) 3^Rational[1, 2]}, {-6., -13.856406460551018`}],
+      0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-5., (-8) 3^Rational[1, 2]}, {-5., -13.856406460551018`}],
+      0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-4., (-8) 3^Rational[1, 2]}, {-4., -13.856406460551018`}],
+      0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-3., (-8) 3^Rational[1, 2]}, {-3., -13.856406460551018`}],
+      0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-2., (-8) 3^Rational[1, 2]}, {-2., -13.856406460551018`}],
+      0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-1., (-8) 3^Rational[1, 2]}, {-1., -13.856406460551018`}],
+      0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{0., (-8) 3^Rational[1, 2]}, {0., -13.856406460551018`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{1., (-8) 3^Rational[1, 2]}, {1., -13.856406460551018`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{2., (-8) 3^Rational[1, 2]}, {2., -13.856406460551018`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{3., (-8) 3^Rational[1, 2]}, {3., -13.856406460551018`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{4., (-8) 3^Rational[1, 2]}, {4., -13.856406460551018`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{5., (-8) 3^Rational[1, 2]}, {5., -13.856406460551018`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{6., (-8) 3^Rational[1, 2]}, {6., -13.856406460551018`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{7., (-8) 3^Rational[1, 2]}, {7., -13.856406460551018`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-8.5, Rational[-17, 2] 
+       3^Rational[1, 2]}, {-8.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-7.5, Rational[-17, 2] 
+       3^Rational[1, 2]}, {-7.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-6.5, Rational[-17, 2] 
+       3^Rational[1, 2]}, {-6.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-5.5, Rational[-17, 2] 
+       3^Rational[1, 2]}, {-5.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-4.5, Rational[-17, 2] 
+       3^Rational[1, 2]}, {-4.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-3.5, Rational[-17, 2] 
+       3^Rational[1, 2]}, {-3.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2.5, Rational[-17, 2] 
+       3^Rational[1, 2]}, {-2.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1.5, Rational[-17, 2] 
+       3^Rational[1, 2]}, {-1.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-0.5, Rational[-17, 2] 
+       3^Rational[1, 2]}, {-0.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0.5, Rational[-17, 2] 3^Rational[1, 2]}, {
+      0.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1.5, Rational[-17, 2] 3^Rational[1, 2]}, {
+      1.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{2.5, Rational[-17, 2] 3^Rational[1, 2]}, {
+      2.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{3.5, Rational[-17, 2] 3^Rational[1, 2]}, {
+      3.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{4.5, Rational[-17, 2] 3^Rational[1, 2]}, {
+      4.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{5.5, Rational[-17, 2] 3^Rational[1, 2]}, {
+      5.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{6.5, Rational[-17, 2] 3^Rational[1, 2]}, {
+      6.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{7.5, Rational[-17, 2] 3^Rational[1, 2]}, {
+      7.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-9., (-9) 3^Rational[1, 2]}, {-9., -15.588457268119894`}],
+      0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-8., (-9) 3^Rational[1, 2]}, {-8., -15.588457268119894`}],
+      0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-7., (-9) 3^Rational[1, 2]}, {-7., -15.588457268119894`}],
+      0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-6., (-9) 3^Rational[1, 2]}, {-6., -15.588457268119894`}],
+      0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-5., (-9) 3^Rational[1, 2]}, {-5., -15.588457268119894`}],
+      0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-4., (-9) 3^Rational[1, 2]}, {-4., -15.588457268119894`}],
+      0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-3., (-9) 3^Rational[1, 2]}, {-3., -15.588457268119894`}],
+      0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2., (-9) 3^Rational[1, 2]}, {-2., -15.588457268119894`}],
+      0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1., (-9) 3^Rational[1, 2]}, {-1., -15.588457268119894`}],
+      0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0., (-9) 3^Rational[1, 2]}, {0., -15.588457268119894`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1., (-9) 3^Rational[1, 2]}, {1., -15.588457268119894`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{2., (-9) 3^Rational[1, 2]}, {2., -15.588457268119894`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{3., (-9) 3^Rational[1, 2]}, {3., -15.588457268119894`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{4., (-9) 3^Rational[1, 2]}, {4., -15.588457268119894`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{5., (-9) 3^Rational[1, 2]}, {5., -15.588457268119894`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{6., (-9) 3^Rational[1, 2]}, {6., -15.588457268119894`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{7., (-9) 3^Rational[1, 2]}, {7., -15.588457268119894`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{8., (-9) 3^Rational[1, 2]}, {8., -15.588457268119894`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-9.5, Rational[-19, 2] 
+       3^Rational[1, 2]}, {-9.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-8.5, Rational[-19, 2] 
+       3^Rational[1, 2]}, {-8.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-7.5, Rational[-19, 2] 
+       3^Rational[1, 2]}, {-7.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-6.5, Rational[-19, 2] 
+       3^Rational[1, 2]}, {-6.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-5.5, Rational[-19, 2] 
+       3^Rational[1, 2]}, {-5.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-4.5, Rational[-19, 2] 
+       3^Rational[1, 2]}, {-4.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-3.5, Rational[-19, 2] 
+       3^Rational[1, 2]}, {-3.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2.5, Rational[-19, 2] 
+       3^Rational[1, 2]}, {-2.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1.5, Rational[-19, 2] 
+       3^Rational[1, 2]}, {-1.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-0.5, Rational[-19, 2] 
+       3^Rational[1, 2]}, {-0.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0.5, Rational[-19, 2] 3^Rational[1, 2]}, {
+      0.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1.5, Rational[-19, 2] 3^Rational[1, 2]}, {
+      1.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{2.5, Rational[-19, 2] 3^Rational[1, 2]}, {
+      2.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{3.5, Rational[-19, 2] 3^Rational[1, 2]}, {
+      3.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{4.5, Rational[-19, 2] 3^Rational[1, 2]}, {
+      4.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{5.5, Rational[-19, 2] 3^Rational[1, 2]}, {
+      5.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{6.5, Rational[-19, 2] 3^Rational[1, 2]}, {
+      6.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{7.5, Rational[-19, 2] 3^Rational[1, 2]}, {
+      7.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{8.5, Rational[-19, 2] 3^Rational[1, 2]}, {
+      8.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-10., (-10) 
+       3^Rational[1, 2]}, {-10., -17.32050807568877}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-9., (-10) 3^Rational[1, 2]}, {-9., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-8., (-10) 3^Rational[1, 2]}, {-8., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-7., (-10) 3^Rational[1, 2]}, {-7., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-6., (-10) 3^Rational[1, 2]}, {-6., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-5., (-10) 3^Rational[1, 2]}, {-5., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-4., (-10) 3^Rational[1, 2]}, {-4., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-3., (-10) 3^Rational[1, 2]}, {-3., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2., (-10) 3^Rational[1, 2]}, {-2., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1., (-10) 3^Rational[1, 2]}, {-1., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0., (-10) 3^Rational[1, 2]}, {0., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1., (-10) 3^Rational[1, 2]}, {1., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{2., (-10) 3^Rational[1, 2]}, {2., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{3., (-10) 3^Rational[1, 2]}, {3., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{4., (-10) 3^Rational[1, 2]}, {4., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{5., (-10) 3^Rational[1, 2]}, {5., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{6., (-10) 3^Rational[1, 2]}, {6., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{7., (-10) 3^Rational[1, 2]}, {7., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{8., (-10) 3^Rational[1, 2]}, {8., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{9., (-10) 3^Rational[1, 2]}, {9., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-10.5, Rational[-21, 2] 
+       3^Rational[1, 2]}, {-10.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-9.5, Rational[-21, 2] 
+       3^Rational[1, 2]}, {-9.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-8.5, Rational[-21, 2] 
+       3^Rational[1, 2]}, {-8.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-7.5, Rational[-21, 2] 
+       3^Rational[1, 2]}, {-7.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-6.5, Rational[-21, 2] 
+       3^Rational[1, 2]}, {-6.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-5.5, Rational[-21, 2] 
+       3^Rational[1, 2]}, {-5.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-4.5, Rational[-21, 2] 
+       3^Rational[1, 2]}, {-4.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-3.5, Rational[-21, 2] 
+       3^Rational[1, 2]}, {-3.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2.5, Rational[-21, 2] 
+       3^Rational[1, 2]}, {-2.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1.5, Rational[-21, 2] 
+       3^Rational[1, 2]}, {-1.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-0.5, Rational[-21, 2] 
+       3^Rational[1, 2]}, {-0.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0.5, Rational[-21, 2] 3^Rational[1, 2]}, {
+      0.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1.5, Rational[-21, 2] 3^Rational[1, 2]}, {
+      1.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{2.5, Rational[-21, 2] 3^Rational[1, 2]}, {
+      2.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{3.5, Rational[-21, 2] 3^Rational[1, 2]}, {
+      3.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{4.5, Rational[-21, 2] 3^Rational[1, 2]}, {
+      4.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{5.5, Rational[-21, 2] 3^Rational[1, 2]}, {
+      5.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{6.5, Rational[-21, 2] 3^Rational[1, 2]}, {
+      6.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{7.5, Rational[-21, 2] 3^Rational[1, 2]}, {
+      7.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{8.5, Rational[-21, 2] 3^Rational[1, 2]}, {
+      8.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{9.5, Rational[-21, 2] 3^Rational[1, 2]}, {
+      9.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-11., (-11) 
+       3^Rational[1, 2]}, {-11., -19.05255888325765}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-10., (-11) 
+       3^Rational[1, 2]}, {-10., -19.05255888325765}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-9., (-11) 3^Rational[1, 2]}, {-9., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-8., (-11) 3^Rational[1, 2]}, {-8., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-7., (-11) 3^Rational[1, 2]}, {-7., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-6., (-11) 3^Rational[1, 2]}, {-6., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-5., (-11) 3^Rational[1, 2]}, {-5., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-4., (-11) 3^Rational[1, 2]}, {-4., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-3., (-11) 3^Rational[1, 2]}, {-3., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2., (-11) 3^Rational[1, 2]}, {-2., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1., (-11) 3^Rational[1, 2]}, {-1., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0., (-11) 3^Rational[1, 2]}, {0., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1., (-11) 3^Rational[1, 2]}, {1., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{2., (-11) 3^Rational[1, 2]}, {2., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{3., (-11) 3^Rational[1, 2]}, {3., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{4., (-11) 3^Rational[1, 2]}, {4., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{5., (-11) 3^Rational[1, 2]}, {5., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{6., (-11) 3^Rational[1, 2]}, {6., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{7., (-11) 3^Rational[1, 2]}, {7., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{8., (-11) 3^Rational[1, 2]}, {8., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{9., (-11) 3^Rational[1, 2]}, {9., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{10., (-11) 3^Rational[1, 2]}, {10., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-11.5, Rational[-23, 2] 
+       3^Rational[1, 2]}, {-11.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-10.5, Rational[-23, 2] 
+       3^Rational[1, 2]}, {-10.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-9.5, Rational[-23, 2] 
+       3^Rational[1, 2]}, {-9.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-8.5, Rational[-23, 2] 
+       3^Rational[1, 2]}, {-8.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-7.5, Rational[-23, 2] 
+       3^Rational[1, 2]}, {-7.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-6.5, Rational[-23, 2] 
+       3^Rational[1, 2]}, {-6.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-5.5, Rational[-23, 2] 
+       3^Rational[1, 2]}, {-5.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-4.5, Rational[-23, 2] 
+       3^Rational[1, 2]}, {-4.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-3.5, Rational[-23, 2] 
+       3^Rational[1, 2]}, {-3.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2.5, Rational[-23, 2] 
+       3^Rational[1, 2]}, {-2.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1.5, Rational[-23, 2] 
+       3^Rational[1, 2]}, {-1.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-0.5, Rational[-23, 2] 
+       3^Rational[1, 2]}, {-0.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0.5, Rational[-23, 2] 3^Rational[1, 2]}, {
+      0.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1.5, Rational[-23, 2] 3^Rational[1, 2]}, {
+      1.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{2.5, Rational[-23, 2] 3^Rational[1, 2]}, {
+      2.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{3.5, Rational[-23, 2] 3^Rational[1, 2]}, {
+      3.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{4.5, Rational[-23, 2] 3^Rational[1, 2]}, {
+      4.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{5.5, Rational[-23, 2] 3^Rational[1, 2]}, {
+      5.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{6.5, Rational[-23, 2] 3^Rational[1, 2]}, {
+      6.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{7.5, Rational[-23, 2] 3^Rational[1, 2]}, {
+      7.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{8.5, Rational[-23, 2] 3^Rational[1, 2]}, {
+      8.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{9.5, Rational[-23, 2] 3^Rational[1, 2]}, {
+      9.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{10.5, Rational[-23, 2] 3^Rational[1, 2]}, {
+      10.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-12., (-12) 
+       3^Rational[1, 2]}, {-12., -20.784609690826528`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-11., (-12) 
+       3^Rational[1, 2]}, {-11., -20.784609690826528`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-10., (-12) 
+       3^Rational[1, 2]}, {-10., -20.784609690826528`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-9., (-12) 
+       3^Rational[1, 2]}, {-9., -20.784609690826528`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-8., (-12) 
+       3^Rational[1, 2]}, {-8., -20.784609690826528`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-7., (-12) 
+       3^Rational[1, 2]}, {-7., -20.784609690826528`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-6., (-12) 
+       3^Rational[1, 2]}, {-6., -20.784609690826528`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-5., (-12) 
+       3^Rational[1, 2]}, {-5., -20.784609690826528`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-4., (-12) 
+       3^Rational[1, 2]}, {-4., -20.784609690826528`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-3., (-12) 
+       3^Rational[1, 2]}, {-3., -20.784609690826528`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2., (-12) 
+       3^Rational[1, 2]}, {-2., -20.784609690826528`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1., (-12) 
+       3^Rational[1, 2]}, {-1., -20.784609690826528`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0., (-12) 3^Rational[1, 2]}, {0., -20.784609690826528`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1., (-12) 3^Rational[1, 2]}, {1., -20.784609690826528`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{2., (-12) 3^Rational[1, 2]}, {2., -20.784609690826528`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{3., (-12) 3^Rational[1, 2]}, {3., -20.784609690826528`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{4., (-12) 3^Rational[1, 2]}, {4., -20.784609690826528`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{5., (-12) 3^Rational[1, 2]}, {5., -20.784609690826528`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{6., (-12) 3^Rational[1, 2]}, {6., -20.784609690826528`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{7., (-12) 3^Rational[1, 2]}, {7., -20.784609690826528`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{8., (-12) 3^Rational[1, 2]}, {8., -20.784609690826528`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{9., (-12) 3^Rational[1, 2]}, {9., -20.784609690826528`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{10., (-12) 3^Rational[1, 2]}, {
+      10., -20.784609690826528`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{11., (-12) 3^Rational[1, 2]}, {
+      11., -20.784609690826528`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-12.5, Rational[-25, 2] 
+       3^Rational[1, 2]}, {-12.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-11.5, Rational[-25, 2] 
+       3^Rational[1, 2]}, {-11.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-10.5, Rational[-25, 2] 
+       3^Rational[1, 2]}, {-10.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-9.5, Rational[-25, 2] 
+       3^Rational[1, 2]}, {-9.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-8.5, Rational[-25, 2] 
+       3^Rational[1, 2]}, {-8.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-7.5, Rational[-25, 2] 
+       3^Rational[1, 2]}, {-7.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-6.5, Rational[-25, 2] 
+       3^Rational[1, 2]}, {-6.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-5.5, Rational[-25, 2] 
+       3^Rational[1, 2]}, {-5.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-4.5, Rational[-25, 2] 
+       3^Rational[1, 2]}, {-4.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-3.5, Rational[-25, 2] 
+       3^Rational[1, 2]}, {-3.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2.5, Rational[-25, 2] 
+       3^Rational[1, 2]}, {-2.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1.5, Rational[-25, 2] 
+       3^Rational[1, 2]}, {-1.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-0.5, Rational[-25, 2] 
+       3^Rational[1, 2]}, {-0.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[
+     NCache[{0.5, Rational[-25, 2] 3^Rational[1, 2]}, {
+      0.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1.5, Rational[-25, 2] 3^Rational[1, 2]}, {
+      1.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{2.5, Rational[-25, 2] 3^Rational[1, 2]}, {
+      2.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{3.5, Rational[-25, 2] 3^Rational[1, 2]}, {
+      3.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{4.5, Rational[-25, 2] 3^Rational[1, 2]}, {
+      4.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{5.5, Rational[-25, 2] 3^Rational[1, 2]}, {
+      5.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{6.5, Rational[-25, 2] 3^Rational[1, 2]}, {
+      6.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{7.5, Rational[-25, 2] 3^Rational[1, 2]}, {
+      7.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{8.5, Rational[-25, 2] 3^Rational[1, 2]}, {
+      8.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{9.5, Rational[-25, 2] 3^Rational[1, 2]}, {
+      9.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{10.5, Rational[-25, 2] 3^Rational[1, 2]}, {
+      10.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{11.5, Rational[-25, 2] 3^Rational[1, 2]}, {
+      11.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-13., (-13) 
+       3^Rational[1, 2]}, {-13., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-12., (-13) 
+       3^Rational[1, 2]}, {-12., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-11., (-13) 
+       3^Rational[1, 2]}, {-11., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-10., (-13) 
+       3^Rational[1, 2]}, {-10., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-9., (-13) 
+       3^Rational[1, 2]}, {-9., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-8., (-13) 
+       3^Rational[1, 2]}, {-8., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-7., (-13) 
+       3^Rational[1, 2]}, {-7., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-6., (-13) 
+       3^Rational[1, 2]}, {-6., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-5., (-13) 
+       3^Rational[1, 2]}, {-5., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-4., (-13) 
+       3^Rational[1, 2]}, {-4., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-3., (-13) 
+       3^Rational[1, 2]}, {-3., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2., (-13) 
+       3^Rational[1, 2]}, {-2., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1., (-13) 
+       3^Rational[1, 2]}, {-1., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0., (-13) 3^Rational[1, 2]}, {0., -22.516660498395403`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1., (-13) 3^Rational[1, 2]}, {1., -22.516660498395403`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{2., (-13) 3^Rational[1, 2]}, {2., -22.516660498395403`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{3., (-13) 3^Rational[1, 2]}, {3., -22.516660498395403`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{4., (-13) 3^Rational[1, 2]}, {4., -22.516660498395403`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{5., (-13) 3^Rational[1, 2]}, {5., -22.516660498395403`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{6., (-13) 3^Rational[1, 2]}, {6., -22.516660498395403`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{7., (-13) 3^Rational[1, 2]}, {7., -22.516660498395403`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{8., (-13) 3^Rational[1, 2]}, {8., -22.516660498395403`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{9., (-13) 3^Rational[1, 2]}, {9., -22.516660498395403`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[
+     NCache[{10., (-13) 3^Rational[1, 2]}, {10., -22.516660498395403`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{11., (-13) 3^Rational[1, 2]}, {
+      11., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{12., (-13) 3^Rational[1, 2]}, {
+      12., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-13.5, Rational[-27, 2] 
+       3^Rational[1, 2]}, {-13.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-12.5, Rational[-27, 2] 
+       3^Rational[1, 2]}, {-12.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-11.5, Rational[-27, 2] 
+       3^Rational[1, 2]}, {-11.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-10.5, Rational[-27, 2] 
+       3^Rational[1, 2]}, {-10.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-9.5, Rational[-27, 2] 
+       3^Rational[1, 2]}, {-9.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-8.5, Rational[-27, 2] 
+       3^Rational[1, 2]}, {-8.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-7.5, Rational[-27, 2] 
+       3^Rational[1, 2]}, {-7.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-6.5, Rational[-27, 2] 
+       3^Rational[1, 2]}, {-6.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-5.5, Rational[-27, 2] 
+       3^Rational[1, 2]}, {-5.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-4.5, Rational[-27, 2] 
+       3^Rational[1, 2]}, {-4.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-3.5, Rational[-27, 2] 
+       3^Rational[1, 2]}, {-3.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2.5, Rational[-27, 2] 
+       3^Rational[1, 2]}, {-2.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1.5, Rational[-27, 2] 
+       3^Rational[1, 2]}, {-1.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-0.5, Rational[-27, 2] 
+       3^Rational[1, 2]}, {-0.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0.5, Rational[-27, 2] 3^Rational[1, 2]}, {
+      0.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1.5, Rational[-27, 2] 3^Rational[1, 2]}, {
+      1.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{2.5, Rational[-27, 2] 3^Rational[1, 2]}, {
+      2.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{3.5, Rational[-27, 2] 3^Rational[1, 2]}, {
+      3.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{4.5, Rational[-27, 2] 3^Rational[1, 2]}, {
+      4.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{5.5, Rational[-27, 2] 3^Rational[1, 2]}, {
+      5.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{6.5, Rational[-27, 2] 3^Rational[1, 2]}, {
+      6.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{7.5, Rational[-27, 2] 3^Rational[1, 2]}, {
+      7.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{8.5, Rational[-27, 2] 3^Rational[1, 2]}, {
+      8.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{9.5, Rational[-27, 2] 3^Rational[1, 2]}, {
+      9.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{10.5, Rational[-27, 2] 3^Rational[1, 2]}, {
+      10.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{11.5, Rational[-27, 2] 3^Rational[1, 2]}, {
+      11.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{12.5, Rational[-27, 2] 3^Rational[1, 2]}, {
+      12.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-14., (-14) 
+       3^Rational[1, 2]}, {-14., -24.24871130596428}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-13., (-14) 
+       3^Rational[1, 2]}, {-13., -24.24871130596428}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-12., (-14) 
+       3^Rational[1, 2]}, {-12., -24.24871130596428}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-11., (-14) 
+       3^Rational[1, 2]}, {-11., -24.24871130596428}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-10., (-14) 
+       3^Rational[1, 2]}, {-10., -24.24871130596428}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-9., (-14) 3^Rational[1, 2]}, {-9., -24.24871130596428}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-8., (-14) 3^Rational[1, 2]}, {-8., -24.24871130596428}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-7., (-14) 3^Rational[1, 2]}, {-7., -24.24871130596428}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-6., (-14) 3^Rational[1, 2]}, {-6., -24.24871130596428}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-5., (-14) 3^Rational[1, 2]}, {-5., -24.24871130596428}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-4., (-14) 3^Rational[1, 2]}, {-4., -24.24871130596428}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-3., (-14) 3^Rational[1, 2]}, {-3., -24.24871130596428}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2., (-14) 3^Rational[1, 2]}, {-2., -24.24871130596428}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1., (-14) 3^Rational[1, 2]}, {-1., -24.24871130596428}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0., (-14) 3^Rational[1, 2]}, {0., -24.24871130596428}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1., (-14) 3^Rational[1, 2]}, {1., -24.24871130596428}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{2., (-14) 3^Rational[1, 2]}, {2., -24.24871130596428}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{3., (-14) 3^Rational[1, 2]}, {3., -24.24871130596428}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{4., (-14) 3^Rational[1, 2]}, {4., -24.24871130596428}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{5., (-14) 3^Rational[1, 2]}, {5., -24.24871130596428}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{6., (-14) 3^Rational[1, 2]}, {6., -24.24871130596428}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{7., (-14) 3^Rational[1, 2]}, {7., -24.24871130596428}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{8., (-14) 3^Rational[1, 2]}, {8., -24.24871130596428}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{9., (-14) 3^Rational[1, 2]}, {9., -24.24871130596428}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{10., (-14) 3^Rational[1, 2]}, {10., -24.24871130596428}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{11., (-14) 3^Rational[1, 2]}, {11., -24.24871130596428}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{12., (-14) 3^Rational[1, 2]}, {12., -24.24871130596428}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{13., (-14) 3^Rational[1, 2]}, {13., -24.24871130596428}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-14.5, Rational[-29, 2] 
+       3^Rational[1, 2]}, {-14.5, -25.11473670974872}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-13.5, Rational[-29, 2] 
+       3^Rational[1, 2]}, {-13.5, -25.11473670974872}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-12.5, Rational[-29, 2] 
+       3^Rational[1, 2]}, {-12.5, -25.11473670974872}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-11.5, Rational[-29, 2] 
+       3^Rational[1, 2]}, {-11.5, -25.11473670974872}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-10.5, Rational[-29, 2] 
+       3^Rational[1, 2]}, {-10.5, -25.11473670974872}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-9.5, Rational[-29, 2] 
+       3^Rational[1, 2]}, {-9.5, -25.11473670974872}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-8.5, Rational[-29, 2] 
+       3^Rational[1, 2]}, {-8.5, -25.11473670974872}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-7.5, Rational[-29, 2] 
+       3^Rational[1, 2]}, {-7.5, -25.11473670974872}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-6.5, Rational[-29, 2] 
+       3^Rational[1, 2]}, {-6.5, -25.11473670974872}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-5.5, Rational[-29, 2] 
+       3^Rational[1, 2]}, {-5.5, -25.11473670974872}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-4.5, Rational[-29, 2] 
+       3^Rational[1, 2]}, {-4.5, -25.11473670974872}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-3.5, Rational[-29, 2] 
+       3^Rational[1, 2]}, {-3.5, -25.11473670974872}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-2.5, Rational[-29, 2] 
+       3^Rational[1, 2]}, {-2.5, -25.11473670974872}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1.5, Rational[-29, 2] 
+       3^Rational[1, 2]}, {-1.5, -25.11473670974872}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-0.5, Rational[-29, 2] 
+       3^Rational[1, 2]}, {-0.5, -25.11473670974872}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0.5, Rational[-29, 2] 3^Rational[1, 2]}, {
+      0.5, -25.11473670974872}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{1.5, Rational[-29, 2] 3^Rational[1, 2]}, {
+      1.5, -25.11473670974872}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{2.5, Rational[-29, 2] 3^Rational[1, 2]}, {
+      2.5, -25.11473670974872}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{3.5, Rational[-29, 2] 3^Rational[1, 2]}, {
+      3.5, -25.11473670974872}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{4.5, Rational[-29, 2] 3^Rational[1, 2]}, {
+      4.5, -25.11473670974872}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{5.5, Rational[-29, 2] 3^Rational[1, 2]}, {
+      5.5, -25.11473670974872}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{6.5, Rational[-29, 2] 3^Rational[1, 2]}, {
+      6.5, -25.11473670974872}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{7.5, Rational[-29, 2] 3^Rational[1, 2]}, {
+      7.5, -25.11473670974872}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{8.5, Rational[-29, 2] 3^Rational[1, 2]}, {
+      8.5, -25.11473670974872}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{9.5, Rational[-29, 2] 3^Rational[1, 2]}, {
+      9.5, -25.11473670974872}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{10.5, Rational[-29, 2] 3^Rational[1, 2]}, {
+      10.5, -25.11473670974872}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{11.5, Rational[-29, 2] 3^Rational[1, 2]}, {
+      11.5, -25.11473670974872}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{12.5, Rational[-29, 2] 3^Rational[1, 2]}, {
+      12.5, -25.11473670974872}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{13.5, Rational[-29, 2] 3^Rational[1, 2]}, {
+      13.5, -25.11473670974872}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-15., (-15) 
+       3^Rational[1, 2]}, {-15., -25.980762113533157`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-14., (-15) 
+       3^Rational[1, 2]}, {-14., -25.980762113533157`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-13., (-15) 
+       3^Rational[1, 2]}, {-13., -25.980762113533157`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-12., (-15) 
+       3^Rational[1, 2]}, {-12., -25.980762113533157`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-11., (-15) 
+       3^Rational[1, 2]}, {-11., -25.980762113533157`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-10., (-15) 
+       3^Rational[1, 2]}, {-10., -25.980762113533157`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-9., (-15) 
+       3^Rational[1, 2]}, {-9., -25.980762113533157`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-8., (-15) 
+       3^Rational[1, 2]}, {-8., -25.980762113533157`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-7., (-15) 
+       3^Rational[1, 2]}, {-7., -25.980762113533157`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-6., (-15) 
+       3^Rational[1, 2]}, {-6., -25.980762113533157`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-5., (-15) 
+       3^Rational[1, 2]}, {-5., -25.980762113533157`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-4., (-15) 
+       3^Rational[1, 2]}, {-4., -25.980762113533157`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-3., (-15) 
+       3^Rational[1, 2]}, {-3., -25.980762113533157`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-2., (-15) 
+       3^Rational[1, 2]}, {-2., -25.980762113533157`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1., (-15) 
+       3^Rational[1, 2]}, {-1., -25.980762113533157`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0., (-15) 3^Rational[1, 2]}, {0., -25.980762113533157`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{1., (-15) 3^Rational[1, 2]}, {1., -25.980762113533157`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{2., (-15) 3^Rational[1, 2]}, {2., -25.980762113533157`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{3., (-15) 3^Rational[1, 2]}, {3., -25.980762113533157`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{4., (-15) 3^Rational[1, 2]}, {4., -25.980762113533157`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{5., (-15) 3^Rational[1, 2]}, {5., -25.980762113533157`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{6., (-15) 3^Rational[1, 2]}, {6., -25.980762113533157`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{7., (-15) 3^Rational[1, 2]}, {7., -25.980762113533157`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{8., (-15) 3^Rational[1, 2]}, {8., -25.980762113533157`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{9., (-15) 3^Rational[1, 2]}, {9., -25.980762113533157`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{10., (-15) 3^Rational[1, 2]}, {
+      10., -25.980762113533157`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{11., (-15) 3^Rational[1, 2]}, {
+      11., -25.980762113533157`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{12., (-15) 3^Rational[1, 2]}, {
+      12., -25.980762113533157`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{13., (-15) 3^Rational[1, 2]}, {
+      13., -25.980762113533157`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{14., (-15) 3^Rational[1, 2]}, {
+      14., -25.980762113533157`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-15.5, Rational[-31, 2] 
+       3^Rational[1, 2]}, {-15.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-14.5, Rational[-31, 2] 
+       3^Rational[1, 2]}, {-14.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-13.5, Rational[-31, 2] 
+       3^Rational[1, 2]}, {-13.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-12.5, Rational[-31, 2] 
+       3^Rational[1, 2]}, {-12.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-11.5, Rational[-31, 2] 
+       3^Rational[1, 2]}, {-11.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-10.5, Rational[-31, 2] 
+       3^Rational[1, 2]}, {-10.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-9.5, Rational[-31, 2] 
+       3^Rational[1, 2]}, {-9.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-8.5, Rational[-31, 2] 
+       3^Rational[1, 2]}, {-8.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-7.5, Rational[-31, 2] 
+       3^Rational[1, 2]}, {-7.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-6.5, Rational[-31, 2] 
+       3^Rational[1, 2]}, {-6.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-5.5, Rational[-31, 2] 
+       3^Rational[1, 2]}, {-5.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-4.5, Rational[-31, 2] 
+       3^Rational[1, 2]}, {-4.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-3.5, Rational[-31, 2] 
+       3^Rational[1, 2]}, {-3.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2.5, Rational[-31, 2] 
+       3^Rational[1, 2]}, {-2.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-1.5, Rational[-31, 2] 
+       3^Rational[1, 2]}, {-1.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-0.5, Rational[-31, 2] 
+       3^Rational[1, 2]}, {-0.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{0.5, Rational[-31, 2] 3^Rational[1, 2]}, {
+      0.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1.5, Rational[-31, 2] 3^Rational[1, 2]}, {
+      1.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{2.5, Rational[-31, 2] 3^Rational[1, 2]}, {
+      2.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{3.5, Rational[-31, 2] 3^Rational[1, 2]}, {
+      3.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{4.5, Rational[-31, 2] 3^Rational[1, 2]}, {
+      4.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{5.5, Rational[-31, 2] 3^Rational[1, 2]}, {
+      5.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{6.5, Rational[-31, 2] 3^Rational[1, 2]}, {
+      6.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{7.5, Rational[-31, 2] 3^Rational[1, 2]}, {
+      7.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{8.5, Rational[-31, 2] 3^Rational[1, 2]}, {
+      8.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{9.5, Rational[-31, 2] 3^Rational[1, 2]}, {
+      9.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{10.5, Rational[-31, 2] 3^Rational[1, 2]}, {
+      10.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{11.5, Rational[-31, 2] 3^Rational[1, 2]}, {
+      11.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{12.5, Rational[-31, 2] 3^Rational[1, 2]}, {
+      12.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{13.5, Rational[-31, 2] 3^Rational[1, 2]}, {
+      13.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{14.5, Rational[-31, 2] 3^Rational[1, 2]}, {
+      14.5, -26.846787517317598`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-16., (-16) 
+       3^Rational[1, 2]}, {-16., -27.712812921102035`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-15., (-16) 
+       3^Rational[1, 2]}, {-15., -27.712812921102035`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-14., (-16) 
+       3^Rational[1, 2]}, {-14., -27.712812921102035`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-13., (-16) 
+       3^Rational[1, 2]}, {-13., -27.712812921102035`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-12., (-16) 
+       3^Rational[1, 2]}, {-12., -27.712812921102035`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-11., (-16) 
+       3^Rational[1, 2]}, {-11., -27.712812921102035`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-10., (-16) 
+       3^Rational[1, 2]}, {-10., -27.712812921102035`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-9., (-16) 
+       3^Rational[1, 2]}, {-9., -27.712812921102035`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-8., (-16) 
+       3^Rational[1, 2]}, {-8., -27.712812921102035`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-7., (-16) 
+       3^Rational[1, 2]}, {-7., -27.712812921102035`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-6., (-16) 
+       3^Rational[1, 2]}, {-6., -27.712812921102035`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-5., (-16) 
+       3^Rational[1, 2]}, {-5., -27.712812921102035`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-4., (-16) 
+       3^Rational[1, 2]}, {-4., -27.712812921102035`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-3., (-16) 
+       3^Rational[1, 2]}, {-3., -27.712812921102035`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-2., (-16) 
+       3^Rational[1, 2]}, {-2., -27.712812921102035`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-1., (-16) 
+       3^Rational[1, 2]}, {-1., -27.712812921102035`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{0., (-16) 3^Rational[1, 2]}, {0., -27.712812921102035`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{1., (-16) 3^Rational[1, 2]}, {1., -27.712812921102035`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{2., (-16) 3^Rational[1, 2]}, {2., -27.712812921102035`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{3., (-16) 3^Rational[1, 2]}, {3., -27.712812921102035`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{4., (-16) 3^Rational[1, 2]}, {4., -27.712812921102035`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{5., (-16) 3^Rational[1, 2]}, {5., -27.712812921102035`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{6., (-16) 3^Rational[1, 2]}, {6., -27.712812921102035`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{7., (-16) 3^Rational[1, 2]}, {7., -27.712812921102035`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{8., (-16) 3^Rational[1, 2]}, {8., -27.712812921102035`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{9., (-16) 3^Rational[1, 2]}, {9., -27.712812921102035`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{10., (-16) 3^Rational[1, 2]}, {
+      10., -27.712812921102035`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{11., (-16) 3^Rational[1, 2]}, {
+      11., -27.712812921102035`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{12., (-16) 3^Rational[1, 2]}, {
+      12., -27.712812921102035`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{13., (-16) 3^Rational[1, 2]}, {
+      13., -27.712812921102035`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{14., (-16) 3^Rational[1, 2]}, {
+      14., -27.712812921102035`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{15., (-16) 3^Rational[1, 2]}, {
+      15., -27.712812921102035`}], 0.5]}}]], "Output",
+ CellChangeTimes->{3.776640423679446*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Base", " ", "3."}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"parity", "[", 
+   RowBox[{"27", ",", "3"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.7766404268497467`*^9, 3.776640455736282*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[{
+   {GrayLevel[0], 
+    DiskBox[NCache[{-0.5, Rational[-1, 2] 
+       3^Rational[1, 2]}, {-0.5, -0.8660254037844386}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-1., -3^Rational[1, 2]}, {-1., -1.7320508075688772`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{0., -3^Rational[1, 2]}, {0., -1.7320508075688772`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-1.5, Rational[-3, 2] 
+       3^Rational[1, 2]}, {-1.5, -2.598076211353316}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-0.5, Rational[-3, 2] 
+       3^Rational[1, 2]}, {-0.5, -2.598076211353316}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{0.5, Rational[-3, 2] 3^Rational[1, 2]}, {
+      0.5, -2.598076211353316}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-2., (-2) 3^Rational[1, 2]}, {-2., -3.4641016151377544`}],
+      0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1., (-2) 3^Rational[1, 2]}, {-1., -3.4641016151377544`}],
+      0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0., (-2) 3^Rational[1, 2]}, {0., -3.4641016151377544`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{1., (-2) 3^Rational[1, 2]}, {1., -3.4641016151377544`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-2.5, Rational[-5, 2] 
+       3^Rational[1, 2]}, {-2.5, -4.330127018922193}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-1.5, Rational[-5, 2] 
+       3^Rational[1, 2]}, {-1.5, -4.330127018922193}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-0.5, Rational[-5, 2] 
+       3^Rational[1, 2]}, {-0.5, -4.330127018922193}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{0.5, Rational[-5, 2] 3^Rational[1, 2]}, {
+      0.5, -4.330127018922193}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{1.5, Rational[-5, 2] 3^Rational[1, 2]}, {
+      1.5, -4.330127018922193}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-3., (-3) 3^Rational[1, 2]}, {-3., -5.196152422706632}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-2., (-3) 3^Rational[1, 2]}, {-2., -5.196152422706632}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-1., (-3) 3^Rational[1, 2]}, {-1., -5.196152422706632}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{0., (-3) 3^Rational[1, 2]}, {0., -5.196152422706632}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{1., (-3) 3^Rational[1, 2]}, {1., -5.196152422706632}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{2., (-3) 3^Rational[1, 2]}, {2., -5.196152422706632}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-3.5, Rational[-7, 2] 
+       3^Rational[1, 2]}, {-3.5, -6.06217782649107}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2.5, Rational[-7, 2] 
+       3^Rational[1, 2]}, {-2.5, -6.06217782649107}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1.5, Rational[-7, 2] 
+       3^Rational[1, 2]}, {-1.5, -6.06217782649107}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-0.5, Rational[-7, 2] 
+       3^Rational[1, 2]}, {-0.5, -6.06217782649107}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0.5, Rational[-7, 2] 3^Rational[1, 2]}, {
+      0.5, -6.06217782649107}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1.5, Rational[-7, 2] 3^Rational[1, 2]}, {
+      1.5, -6.06217782649107}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{2.5, Rational[-7, 2] 3^Rational[1, 2]}, {
+      2.5, -6.06217782649107}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-4., (-4) 3^Rational[1, 2]}, {-4., -6.928203230275509}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-3., (-4) 3^Rational[1, 2]}, {-3., -6.928203230275509}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2., (-4) 3^Rational[1, 2]}, {-2., -6.928203230275509}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-1., (-4) 3^Rational[1, 2]}, {-1., -6.928203230275509}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{0., (-4) 3^Rational[1, 2]}, {0., -6.928203230275509}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1., (-4) 3^Rational[1, 2]}, {1., -6.928203230275509}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{2., (-4) 3^Rational[1, 2]}, {2., -6.928203230275509}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{3., (-4) 3^Rational[1, 2]}, {3., -6.928203230275509}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-4.5, Rational[-9, 2] 
+       3^Rational[1, 2]}, {-4.5, -7.794228634059947}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-3.5, Rational[-9, 2] 
+       3^Rational[1, 2]}, {-3.5, -7.794228634059947}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-2.5, Rational[-9, 2] 
+       3^Rational[1, 2]}, {-2.5, -7.794228634059947}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-1.5, Rational[-9, 2] 
+       3^Rational[1, 2]}, {-1.5, -7.794228634059947}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-0.5, Rational[-9, 2] 
+       3^Rational[1, 2]}, {-0.5, -7.794228634059947}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{0.5, Rational[-9, 2] 3^Rational[1, 2]}, {
+      0.5, -7.794228634059947}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{1.5, Rational[-9, 2] 3^Rational[1, 2]}, {
+      1.5, -7.794228634059947}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{2.5, Rational[-9, 2] 3^Rational[1, 2]}, {
+      2.5, -7.794228634059947}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{3.5, Rational[-9, 2] 3^Rational[1, 2]}, {
+      3.5, -7.794228634059947}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-5., (-5) 3^Rational[1, 2]}, {-5., -8.660254037844386}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-4., (-5) 3^Rational[1, 2]}, {-4., -8.660254037844386}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-3., (-5) 3^Rational[1, 2]}, {-3., -8.660254037844386}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2., (-5) 3^Rational[1, 2]}, {-2., -8.660254037844386}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1., (-5) 3^Rational[1, 2]}, {-1., -8.660254037844386}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0., (-5) 3^Rational[1, 2]}, {0., -8.660254037844386}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1., (-5) 3^Rational[1, 2]}, {1., -8.660254037844386}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{2., (-5) 3^Rational[1, 2]}, {2., -8.660254037844386}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{3., (-5) 3^Rational[1, 2]}, {3., -8.660254037844386}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{4., (-5) 3^Rational[1, 2]}, {4., -8.660254037844386}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-5.5, Rational[-11, 2] 
+       3^Rational[1, 2]}, {-5.5, -9.526279441628825}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-4.5, Rational[-11, 2] 
+       3^Rational[1, 2]}, {-4.5, -9.526279441628825}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-3.5, Rational[-11, 2] 
+       3^Rational[1, 2]}, {-3.5, -9.526279441628825}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2.5, Rational[-11, 2] 
+       3^Rational[1, 2]}, {-2.5, -9.526279441628825}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1.5, Rational[-11, 2] 
+       3^Rational[1, 2]}, {-1.5, -9.526279441628825}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-0.5, Rational[-11, 2] 
+       3^Rational[1, 2]}, {-0.5, -9.526279441628825}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0.5, Rational[-11, 2] 3^Rational[1, 2]}, {
+      0.5, -9.526279441628825}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1.5, Rational[-11, 2] 3^Rational[1, 2]}, {
+      1.5, -9.526279441628825}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{2.5, Rational[-11, 2] 3^Rational[1, 2]}, {
+      2.5, -9.526279441628825}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{3.5, Rational[-11, 2] 3^Rational[1, 2]}, {
+      3.5, -9.526279441628825}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{4.5, Rational[-11, 2] 3^Rational[1, 2]}, {
+      4.5, -9.526279441628825}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-6., (-6) 3^Rational[1, 2]}, {-6., -10.392304845413264`}],
+      0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-5., (-6) 3^Rational[1, 2]}, {-5., -10.392304845413264`}],
+      0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-4., (-6) 3^Rational[1, 2]}, {-4., -10.392304845413264`}],
+      0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-3., (-6) 3^Rational[1, 2]}, {-3., -10.392304845413264`}],
+      0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2., (-6) 3^Rational[1, 2]}, {-2., -10.392304845413264`}],
+      0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1., (-6) 3^Rational[1, 2]}, {-1., -10.392304845413264`}],
+      0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0., (-6) 3^Rational[1, 2]}, {0., -10.392304845413264`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1., (-6) 3^Rational[1, 2]}, {1., -10.392304845413264`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{2., (-6) 3^Rational[1, 2]}, {2., -10.392304845413264`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{3., (-6) 3^Rational[1, 2]}, {3., -10.392304845413264`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{4., (-6) 3^Rational[1, 2]}, {4., -10.392304845413264`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{5., (-6) 3^Rational[1, 2]}, {5., -10.392304845413264`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-6.5, Rational[-13, 2] 
+       3^Rational[1, 2]}, {-6.5, -11.258330249197702`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-5.5, Rational[-13, 2] 
+       3^Rational[1, 2]}, {-5.5, -11.258330249197702`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-4.5, Rational[-13, 2] 
+       3^Rational[1, 2]}, {-4.5, -11.258330249197702`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-3.5, Rational[-13, 2] 
+       3^Rational[1, 2]}, {-3.5, -11.258330249197702`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2.5, Rational[-13, 2] 
+       3^Rational[1, 2]}, {-2.5, -11.258330249197702`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1.5, Rational[-13, 2] 
+       3^Rational[1, 2]}, {-1.5, -11.258330249197702`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-0.5, Rational[-13, 2] 
+       3^Rational[1, 2]}, {-0.5, -11.258330249197702`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0.5, Rational[-13, 2] 3^Rational[1, 2]}, {
+      0.5, -11.258330249197702`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1.5, Rational[-13, 2] 3^Rational[1, 2]}, {
+      1.5, -11.258330249197702`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[
+     NCache[{2.5, Rational[-13, 2] 3^Rational[1, 2]}, {
+      2.5, -11.258330249197702`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{3.5, Rational[-13, 2] 3^Rational[1, 2]}, {
+      3.5, -11.258330249197702`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{4.5, Rational[-13, 2] 3^Rational[1, 2]}, {
+      4.5, -11.258330249197702`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{5.5, Rational[-13, 2] 3^Rational[1, 2]}, {
+      5.5, -11.258330249197702`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-7., (-7) 3^Rational[1, 2]}, {-7., -12.12435565298214}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-6., (-7) 3^Rational[1, 2]}, {-6., -12.12435565298214}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-5., (-7) 3^Rational[1, 2]}, {-5., -12.12435565298214}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-4., (-7) 3^Rational[1, 2]}, {-4., -12.12435565298214}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-3., (-7) 3^Rational[1, 2]}, {-3., -12.12435565298214}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2., (-7) 3^Rational[1, 2]}, {-2., -12.12435565298214}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1., (-7) 3^Rational[1, 2]}, {-1., -12.12435565298214}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0., (-7) 3^Rational[1, 2]}, {0., -12.12435565298214}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1., (-7) 3^Rational[1, 2]}, {1., -12.12435565298214}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{2., (-7) 3^Rational[1, 2]}, {2., -12.12435565298214}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{3., (-7) 3^Rational[1, 2]}, {3., -12.12435565298214}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{4., (-7) 3^Rational[1, 2]}, {4., -12.12435565298214}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{5., (-7) 3^Rational[1, 2]}, {5., -12.12435565298214}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{6., (-7) 3^Rational[1, 2]}, {6., -12.12435565298214}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-7.5, Rational[-15, 2] 
+       3^Rational[1, 2]}, {-7.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-6.5, Rational[-15, 2] 
+       3^Rational[1, 2]}, {-6.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-5.5, Rational[-15, 2] 
+       3^Rational[1, 2]}, {-5.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-4.5, Rational[-15, 2] 
+       3^Rational[1, 2]}, {-4.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-3.5, Rational[-15, 2] 
+       3^Rational[1, 2]}, {-3.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-2.5, Rational[-15, 2] 
+       3^Rational[1, 2]}, {-2.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1.5, Rational[-15, 2] 
+       3^Rational[1, 2]}, {-1.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-0.5, Rational[-15, 2] 
+       3^Rational[1, 2]}, {-0.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0.5, Rational[-15, 2] 3^Rational[1, 2]}, {
+      0.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{1.5, Rational[-15, 2] 3^Rational[1, 2]}, {
+      1.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{2.5, Rational[-15, 2] 3^Rational[1, 2]}, {
+      2.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{3.5, Rational[-15, 2] 3^Rational[1, 2]}, {
+      3.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{4.5, Rational[-15, 2] 3^Rational[1, 2]}, {
+      4.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{5.5, Rational[-15, 2] 3^Rational[1, 2]}, {
+      5.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{6.5, Rational[-15, 2] 3^Rational[1, 2]}, {
+      6.5, -12.990381056766578`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-8., (-8) 3^Rational[1, 2]}, {-8., -13.856406460551018`}],
+      0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-7., (-8) 3^Rational[1, 2]}, {-7., -13.856406460551018`}],
+      0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-6., (-8) 3^Rational[1, 2]}, {-6., -13.856406460551018`}],
+      0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-5., (-8) 3^Rational[1, 2]}, {-5., -13.856406460551018`}],
+      0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-4., (-8) 3^Rational[1, 2]}, {-4., -13.856406460551018`}],
+      0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-3., (-8) 3^Rational[1, 2]}, {-3., -13.856406460551018`}],
+      0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-2., (-8) 3^Rational[1, 2]}, {-2., -13.856406460551018`}],
+      0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1., (-8) 3^Rational[1, 2]}, {-1., -13.856406460551018`}],
+      0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0., (-8) 3^Rational[1, 2]}, {0., -13.856406460551018`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{1., (-8) 3^Rational[1, 2]}, {1., -13.856406460551018`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{2., (-8) 3^Rational[1, 2]}, {2., -13.856406460551018`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{3., (-8) 3^Rational[1, 2]}, {3., -13.856406460551018`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{4., (-8) 3^Rational[1, 2]}, {4., -13.856406460551018`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{5., (-8) 3^Rational[1, 2]}, {5., -13.856406460551018`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{6., (-8) 3^Rational[1, 2]}, {6., -13.856406460551018`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{7., (-8) 3^Rational[1, 2]}, {7., -13.856406460551018`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-8.5, Rational[-17, 2] 
+       3^Rational[1, 2]}, {-8.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-7.5, Rational[-17, 2] 
+       3^Rational[1, 2]}, {-7.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-6.5, Rational[-17, 2] 
+       3^Rational[1, 2]}, {-6.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-5.5, Rational[-17, 2] 
+       3^Rational[1, 2]}, {-5.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-4.5, Rational[-17, 2] 
+       3^Rational[1, 2]}, {-4.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-3.5, Rational[-17, 2] 
+       3^Rational[1, 2]}, {-3.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-2.5, Rational[-17, 2] 
+       3^Rational[1, 2]}, {-2.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-1.5, Rational[-17, 2] 
+       3^Rational[1, 2]}, {-1.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-0.5, Rational[-17, 2] 
+       3^Rational[1, 2]}, {-0.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{0.5, Rational[-17, 2] 3^Rational[1, 2]}, {
+      0.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{1.5, Rational[-17, 2] 3^Rational[1, 2]}, {
+      1.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{2.5, Rational[-17, 2] 3^Rational[1, 2]}, {
+      2.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{3.5, Rational[-17, 2] 3^Rational[1, 2]}, {
+      3.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{4.5, Rational[-17, 2] 3^Rational[1, 2]}, {
+      4.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{5.5, Rational[-17, 2] 3^Rational[1, 2]}, {
+      5.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{6.5, Rational[-17, 2] 3^Rational[1, 2]}, {
+      6.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{7.5, Rational[-17, 2] 3^Rational[1, 2]}, {
+      7.5, -14.722431864335457`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-9., (-9) 3^Rational[1, 2]}, {-9., -15.588457268119894`}],
+      0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-8., (-9) 3^Rational[1, 2]}, {-8., -15.588457268119894`}],
+      0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-7., (-9) 3^Rational[1, 2]}, {-7., -15.588457268119894`}],
+      0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-6., (-9) 3^Rational[1, 2]}, {-6., -15.588457268119894`}],
+      0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-5., (-9) 3^Rational[1, 2]}, {-5., -15.588457268119894`}],
+      0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-4., (-9) 3^Rational[1, 2]}, {-4., -15.588457268119894`}],
+      0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-3., (-9) 3^Rational[1, 2]}, {-3., -15.588457268119894`}],
+      0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-2., (-9) 3^Rational[1, 2]}, {-2., -15.588457268119894`}],
+      0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-1., (-9) 3^Rational[1, 2]}, {-1., -15.588457268119894`}],
+      0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{0., (-9) 3^Rational[1, 2]}, {0., -15.588457268119894`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{1., (-9) 3^Rational[1, 2]}, {1., -15.588457268119894`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{2., (-9) 3^Rational[1, 2]}, {2., -15.588457268119894`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{3., (-9) 3^Rational[1, 2]}, {3., -15.588457268119894`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{4., (-9) 3^Rational[1, 2]}, {4., -15.588457268119894`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{5., (-9) 3^Rational[1, 2]}, {5., -15.588457268119894`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{6., (-9) 3^Rational[1, 2]}, {6., -15.588457268119894`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{7., (-9) 3^Rational[1, 2]}, {7., -15.588457268119894`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{8., (-9) 3^Rational[1, 2]}, {8., -15.588457268119894`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-9.5, Rational[-19, 2] 
+       3^Rational[1, 2]}, {-9.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-8.5, Rational[-19, 2] 
+       3^Rational[1, 2]}, {-8.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-7.5, Rational[-19, 2] 
+       3^Rational[1, 2]}, {-7.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-6.5, Rational[-19, 2] 
+       3^Rational[1, 2]}, {-6.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-5.5, Rational[-19, 2] 
+       3^Rational[1, 2]}, {-5.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-4.5, Rational[-19, 2] 
+       3^Rational[1, 2]}, {-4.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-3.5, Rational[-19, 2] 
+       3^Rational[1, 2]}, {-3.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2.5, Rational[-19, 2] 
+       3^Rational[1, 2]}, {-2.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1.5, Rational[-19, 2] 
+       3^Rational[1, 2]}, {-1.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-0.5, Rational[-19, 2] 
+       3^Rational[1, 2]}, {-0.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0.5, Rational[-19, 2] 3^Rational[1, 2]}, {
+      0.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1.5, Rational[-19, 2] 3^Rational[1, 2]}, {
+      1.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{2.5, Rational[-19, 2] 3^Rational[1, 2]}, {
+      2.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{3.5, Rational[-19, 2] 3^Rational[1, 2]}, {
+      3.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{4.5, Rational[-19, 2] 3^Rational[1, 2]}, {
+      4.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{5.5, Rational[-19, 2] 3^Rational[1, 2]}, {
+      5.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{6.5, Rational[-19, 2] 3^Rational[1, 2]}, {
+      6.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{7.5, Rational[-19, 2] 3^Rational[1, 2]}, {
+      7.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{8.5, Rational[-19, 2] 3^Rational[1, 2]}, {
+      8.5, -16.454482671904334`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-10., (-10) 
+       3^Rational[1, 2]}, {-10., -17.32050807568877}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-9., (-10) 3^Rational[1, 2]}, {-9., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-8., (-10) 3^Rational[1, 2]}, {-8., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-7., (-10) 3^Rational[1, 2]}, {-7., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-6., (-10) 3^Rational[1, 2]}, {-6., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-5., (-10) 3^Rational[1, 2]}, {-5., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-4., (-10) 3^Rational[1, 2]}, {-4., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-3., (-10) 3^Rational[1, 2]}, {-3., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2., (-10) 3^Rational[1, 2]}, {-2., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-1., (-10) 3^Rational[1, 2]}, {-1., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{0., (-10) 3^Rational[1, 2]}, {0., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1., (-10) 3^Rational[1, 2]}, {1., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{2., (-10) 3^Rational[1, 2]}, {2., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{3., (-10) 3^Rational[1, 2]}, {3., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{4., (-10) 3^Rational[1, 2]}, {4., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{5., (-10) 3^Rational[1, 2]}, {5., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{6., (-10) 3^Rational[1, 2]}, {6., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{7., (-10) 3^Rational[1, 2]}, {7., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{8., (-10) 3^Rational[1, 2]}, {8., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{9., (-10) 3^Rational[1, 2]}, {9., -17.32050807568877}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-10.5, Rational[-21, 2] 
+       3^Rational[1, 2]}, {-10.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-9.5, Rational[-21, 2] 
+       3^Rational[1, 2]}, {-9.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-8.5, Rational[-21, 2] 
+       3^Rational[1, 2]}, {-8.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-7.5, Rational[-21, 2] 
+       3^Rational[1, 2]}, {-7.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-6.5, Rational[-21, 2] 
+       3^Rational[1, 2]}, {-6.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-5.5, Rational[-21, 2] 
+       3^Rational[1, 2]}, {-5.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-4.5, Rational[-21, 2] 
+       3^Rational[1, 2]}, {-4.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-3.5, Rational[-21, 2] 
+       3^Rational[1, 2]}, {-3.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2.5, Rational[-21, 2] 
+       3^Rational[1, 2]}, {-2.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-1.5, Rational[-21, 2] 
+       3^Rational[1, 2]}, {-1.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-0.5, Rational[-21, 2] 
+       3^Rational[1, 2]}, {-0.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{0.5, Rational[-21, 2] 3^Rational[1, 2]}, {
+      0.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1.5, Rational[-21, 2] 3^Rational[1, 2]}, {
+      1.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{2.5, Rational[-21, 2] 3^Rational[1, 2]}, {
+      2.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{3.5, Rational[-21, 2] 3^Rational[1, 2]}, {
+      3.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{4.5, Rational[-21, 2] 3^Rational[1, 2]}, {
+      4.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{5.5, Rational[-21, 2] 3^Rational[1, 2]}, {
+      5.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{6.5, Rational[-21, 2] 3^Rational[1, 2]}, {
+      6.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{7.5, Rational[-21, 2] 3^Rational[1, 2]}, {
+      7.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{8.5, Rational[-21, 2] 3^Rational[1, 2]}, {
+      8.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{9.5, Rational[-21, 2] 3^Rational[1, 2]}, {
+      9.5, -18.186533479473212`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-11., (-11) 
+       3^Rational[1, 2]}, {-11., -19.05255888325765}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-10., (-11) 
+       3^Rational[1, 2]}, {-10., -19.05255888325765}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-9., (-11) 3^Rational[1, 2]}, {-9., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-8., (-11) 3^Rational[1, 2]}, {-8., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-7., (-11) 3^Rational[1, 2]}, {-7., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-6., (-11) 3^Rational[1, 2]}, {-6., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-5., (-11) 3^Rational[1, 2]}, {-5., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-4., (-11) 3^Rational[1, 2]}, {-4., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-3., (-11) 3^Rational[1, 2]}, {-3., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-2., (-11) 3^Rational[1, 2]}, {-2., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1., (-11) 3^Rational[1, 2]}, {-1., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{0., (-11) 3^Rational[1, 2]}, {0., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{1., (-11) 3^Rational[1, 2]}, {1., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{2., (-11) 3^Rational[1, 2]}, {2., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{3., (-11) 3^Rational[1, 2]}, {3., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{4., (-11) 3^Rational[1, 2]}, {4., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{5., (-11) 3^Rational[1, 2]}, {5., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{6., (-11) 3^Rational[1, 2]}, {6., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{7., (-11) 3^Rational[1, 2]}, {7., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{8., (-11) 3^Rational[1, 2]}, {8., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{9., (-11) 3^Rational[1, 2]}, {9., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{10., (-11) 3^Rational[1, 2]}, {10., -19.05255888325765}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-11.5, Rational[-23, 2] 
+       3^Rational[1, 2]}, {-11.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-10.5, Rational[-23, 2] 
+       3^Rational[1, 2]}, {-10.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-9.5, Rational[-23, 2] 
+       3^Rational[1, 2]}, {-9.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-8.5, Rational[-23, 2] 
+       3^Rational[1, 2]}, {-8.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-7.5, Rational[-23, 2] 
+       3^Rational[1, 2]}, {-7.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-6.5, Rational[-23, 2] 
+       3^Rational[1, 2]}, {-6.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-5.5, Rational[-23, 2] 
+       3^Rational[1, 2]}, {-5.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-4.5, Rational[-23, 2] 
+       3^Rational[1, 2]}, {-4.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-3.5, Rational[-23, 2] 
+       3^Rational[1, 2]}, {-3.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-2.5, Rational[-23, 2] 
+       3^Rational[1, 2]}, {-2.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-1.5, Rational[-23, 2] 
+       3^Rational[1, 2]}, {-1.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-0.5, Rational[-23, 2] 
+       3^Rational[1, 2]}, {-0.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{0.5, Rational[-23, 2] 3^Rational[1, 2]}, {
+      0.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{1.5, Rational[-23, 2] 3^Rational[1, 2]}, {
+      1.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{2.5, Rational[-23, 2] 3^Rational[1, 2]}, {
+      2.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{3.5, Rational[-23, 2] 3^Rational[1, 2]}, {
+      3.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{4.5, Rational[-23, 2] 3^Rational[1, 2]}, {
+      4.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{5.5, Rational[-23, 2] 3^Rational[1, 2]}, {
+      5.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{6.5, Rational[-23, 2] 3^Rational[1, 2]}, {
+      6.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{7.5, Rational[-23, 2] 3^Rational[1, 2]}, {
+      7.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{8.5, Rational[-23, 2] 3^Rational[1, 2]}, {
+      8.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{9.5, Rational[-23, 2] 3^Rational[1, 2]}, {
+      9.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{10.5, Rational[-23, 2] 3^Rational[1, 2]}, {
+      10.5, -19.918584287042087`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-12., (-12) 
+       3^Rational[1, 2]}, {-12., -20.784609690826528`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-11., (-12) 
+       3^Rational[1, 2]}, {-11., -20.784609690826528`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-10., (-12) 
+       3^Rational[1, 2]}, {-10., -20.784609690826528`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-9., (-12) 
+       3^Rational[1, 2]}, {-9., -20.784609690826528`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-8., (-12) 
+       3^Rational[1, 2]}, {-8., -20.784609690826528`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-7., (-12) 
+       3^Rational[1, 2]}, {-7., -20.784609690826528`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-6., (-12) 
+       3^Rational[1, 2]}, {-6., -20.784609690826528`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-5., (-12) 
+       3^Rational[1, 2]}, {-5., -20.784609690826528`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-4., (-12) 
+       3^Rational[1, 2]}, {-4., -20.784609690826528`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-3., (-12) 
+       3^Rational[1, 2]}, {-3., -20.784609690826528`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-2., (-12) 
+       3^Rational[1, 2]}, {-2., -20.784609690826528`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-1., (-12) 
+       3^Rational[1, 2]}, {-1., -20.784609690826528`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{0., (-12) 3^Rational[1, 2]}, {0., -20.784609690826528`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{1., (-12) 3^Rational[1, 2]}, {1., -20.784609690826528`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{2., (-12) 3^Rational[1, 2]}, {2., -20.784609690826528`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{3., (-12) 3^Rational[1, 2]}, {3., -20.784609690826528`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{4., (-12) 3^Rational[1, 2]}, {4., -20.784609690826528`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{5., (-12) 3^Rational[1, 2]}, {5., -20.784609690826528`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{6., (-12) 3^Rational[1, 2]}, {6., -20.784609690826528`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{7., (-12) 3^Rational[1, 2]}, {7., -20.784609690826528`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{8., (-12) 3^Rational[1, 2]}, {8., -20.784609690826528`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{9., (-12) 3^Rational[1, 2]}, {9., -20.784609690826528`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{10., (-12) 3^Rational[1, 2]}, {
+      10., -20.784609690826528`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{11., (-12) 3^Rational[1, 2]}, {
+      11., -20.784609690826528`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-12.5, Rational[-25, 2] 
+       3^Rational[1, 2]}, {-12.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-11.5, Rational[-25, 2] 
+       3^Rational[1, 2]}, {-11.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-10.5, Rational[-25, 2] 
+       3^Rational[1, 2]}, {-10.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-9.5, Rational[-25, 2] 
+       3^Rational[1, 2]}, {-9.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-8.5, Rational[-25, 2] 
+       3^Rational[1, 2]}, {-8.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-7.5, Rational[-25, 2] 
+       3^Rational[1, 2]}, {-7.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-6.5, Rational[-25, 2] 
+       3^Rational[1, 2]}, {-6.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-5.5, Rational[-25, 2] 
+       3^Rational[1, 2]}, {-5.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-4.5, Rational[-25, 2] 
+       3^Rational[1, 2]}, {-4.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-3.5, Rational[-25, 2] 
+       3^Rational[1, 2]}, {-3.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2.5, Rational[-25, 2] 
+       3^Rational[1, 2]}, {-2.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-1.5, Rational[-25, 2] 
+       3^Rational[1, 2]}, {-1.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-0.5, Rational[-25, 2] 
+       3^Rational[1, 2]}, {-0.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[
+     NCache[{0.5, Rational[-25, 2] 3^Rational[1, 2]}, {
+      0.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1.5, Rational[-25, 2] 3^Rational[1, 2]}, {
+      1.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{2.5, Rational[-25, 2] 3^Rational[1, 2]}, {
+      2.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{3.5, Rational[-25, 2] 3^Rational[1, 2]}, {
+      3.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{4.5, Rational[-25, 2] 3^Rational[1, 2]}, {
+      4.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{5.5, Rational[-25, 2] 3^Rational[1, 2]}, {
+      5.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{6.5, Rational[-25, 2] 3^Rational[1, 2]}, {
+      6.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{7.5, Rational[-25, 2] 3^Rational[1, 2]}, {
+      7.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{8.5, Rational[-25, 2] 3^Rational[1, 2]}, {
+      8.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{9.5, Rational[-25, 2] 3^Rational[1, 2]}, {
+      9.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{10.5, Rational[-25, 2] 3^Rational[1, 2]}, {
+      10.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{11.5, Rational[-25, 2] 3^Rational[1, 2]}, {
+      11.5, -21.650635094610966`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-13., (-13) 
+       3^Rational[1, 2]}, {-13., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-12., (-13) 
+       3^Rational[1, 2]}, {-12., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-11., (-13) 
+       3^Rational[1, 2]}, {-11., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-10., (-13) 
+       3^Rational[1, 2]}, {-10., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-9., (-13) 
+       3^Rational[1, 2]}, {-9., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-8., (-13) 
+       3^Rational[1, 2]}, {-8., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-7., (-13) 
+       3^Rational[1, 2]}, {-7., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-6., (-13) 
+       3^Rational[1, 2]}, {-6., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-5., (-13) 
+       3^Rational[1, 2]}, {-5., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-4., (-13) 
+       3^Rational[1, 2]}, {-4., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-3., (-13) 
+       3^Rational[1, 2]}, {-3., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{-2., (-13) 
+       3^Rational[1, 2]}, {-2., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-1., (-13) 
+       3^Rational[1, 2]}, {-1., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{0., (-13) 3^Rational[1, 2]}, {0., -22.516660498395403`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{1., (-13) 3^Rational[1, 2]}, {1., -22.516660498395403`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{2., (-13) 3^Rational[1, 2]}, {2., -22.516660498395403`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{3., (-13) 3^Rational[1, 2]}, {3., -22.516660498395403`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{4., (-13) 3^Rational[1, 2]}, {4., -22.516660498395403`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{5., (-13) 3^Rational[1, 2]}, {5., -22.516660498395403`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{6., (-13) 3^Rational[1, 2]}, {6., -22.516660498395403`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[NCache[{7., (-13) 3^Rational[1, 2]}, {7., -22.516660498395403`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{8., (-13) 3^Rational[1, 2]}, {8., -22.516660498395403`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{9., (-13) 3^Rational[1, 2]}, {9., -22.516660498395403`}], 
+     0.5]}, 
+   {GrayLevel[1], 
+    DiskBox[
+     NCache[{10., (-13) 3^Rational[1, 2]}, {10., -22.516660498395403`}], 
+     0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{11., (-13) 3^Rational[1, 2]}, {
+      11., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{12., (-13) 3^Rational[1, 2]}, {
+      12., -22.516660498395403`}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-13.5, Rational[-27, 2] 
+       3^Rational[1, 2]}, {-13.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-12.5, Rational[-27, 2] 
+       3^Rational[1, 2]}, {-12.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-11.5, Rational[-27, 2] 
+       3^Rational[1, 2]}, {-11.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-10.5, Rational[-27, 2] 
+       3^Rational[1, 2]}, {-10.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-9.5, Rational[-27, 2] 
+       3^Rational[1, 2]}, {-9.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-8.5, Rational[-27, 2] 
+       3^Rational[1, 2]}, {-8.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-7.5, Rational[-27, 2] 
+       3^Rational[1, 2]}, {-7.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-6.5, Rational[-27, 2] 
+       3^Rational[1, 2]}, {-6.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-5.5, Rational[-27, 2] 
+       3^Rational[1, 2]}, {-5.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-4.5, Rational[-27, 2] 
+       3^Rational[1, 2]}, {-4.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-3.5, Rational[-27, 2] 
+       3^Rational[1, 2]}, {-3.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-2.5, Rational[-27, 2] 
+       3^Rational[1, 2]}, {-2.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-1.5, Rational[-27, 2] 
+       3^Rational[1, 2]}, {-1.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{-0.5, Rational[-27, 2] 
+       3^Rational[1, 2]}, {-0.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{0.5, Rational[-27, 2] 3^Rational[1, 2]}, {
+      0.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{1.5, Rational[-27, 2] 3^Rational[1, 2]}, {
+      1.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{2.5, Rational[-27, 2] 3^Rational[1, 2]}, {
+      2.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{3.5, Rational[-27, 2] 3^Rational[1, 2]}, {
+      3.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{4.5, Rational[-27, 2] 3^Rational[1, 2]}, {
+      4.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{5.5, Rational[-27, 2] 3^Rational[1, 2]}, {
+      5.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{6.5, Rational[-27, 2] 3^Rational[1, 2]}, {
+      6.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{7.5, Rational[-27, 2] 3^Rational[1, 2]}, {
+      7.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{8.5, Rational[-27, 2] 3^Rational[1, 2]}, {
+      8.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{9.5, Rational[-27, 2] 3^Rational[1, 2]}, {
+      9.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{10.5, Rational[-27, 2] 3^Rational[1, 2]}, {
+      10.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{11.5, Rational[-27, 2] 3^Rational[1, 2]}, {
+      11.5, -23.38268590217984}], 0.5]}, 
+   {GrayLevel[0], 
+    DiskBox[NCache[{12.5, Rational[-27, 2] 3^Rational[1, 2]}, {
+      12.5, -23.38268590217984}], 0.5]}}]], "Output",
+ CellChangeTimes->{{3.776640438683322*^9, 3.776640456456398*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Manipulate", " ", "version", " ", "of", " ", "the", " ", 
+    RowBox[{"above", "."}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"Manipulate", "[", 
+   RowBox[{
+    RowBox[{"parity", "[", 
+     RowBox[{"32", ",", "p"}], "]"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"p", ",", "2", ",", "\"\<base\>\""}], "}"}], ",", "2", ",", 
+      "12", ",", "1"}], "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.77664048172921*^9, 3.776640512822136*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`p$$ = 2, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`p$$], 2, "base"}, 2, 12, 1}}, Typeset`size$$ = {
+    360., {155., 160.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`p$657$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`p$$ = 2}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`p$$, $CellContext`p$657$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, 
+      "Body" :> $CellContext`parity[32, $CellContext`p$$], 
+      "Specifications" :> {{{$CellContext`p$$, 2, "base"}, 2, 12, 1}}, 
+      "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{411., {202., 208.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.7766405175799584`*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{759, 833},
+WindowMargins->{{48, Automatic}, {Automatic, 68}},
+FrontEndVersion->"10.4 for Microsoft Windows (64-bit) (April 11, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 179, 2, 90, "Title"],
+Cell[762, 26, 158, 2, 30, "Text"],
+Cell[CellGroupData[{
+Cell[945, 32, 99, 1, 63, "Section"],
+Cell[1047, 35, 673, 12, 106, "Text"],
+Cell[1723, 49, 546, 12, 68, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2306, 66, 91, 1, 63, "Section"],
+Cell[CellGroupData[{
+Cell[2422, 71, 102, 1, 43, "Subsection"],
+Cell[2527, 74, 3471, 91, 398, "Input"],
+Cell[6001, 167, 3939, 101, 438, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9977, 273, 105, 1, 43, "Subsection"],
+Cell[CellGroupData[{
+Cell[10107, 278, 441, 9, 52, "Input"],
+Cell[10551, 289, 9302, 286, 334, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[19890, 580, 382, 9, 52, "Input"],
+Cell[20275, 591, 4244, 110, 334, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[24556, 706, 278, 7, 52, "Input"],
+Cell[24837, 715, 62756, 1589, 330, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[87630, 2309, 256, 6, 52, "Input"],
+Cell[87889, 2317, 45032, 1139, 330, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[132958, 3461, 541, 14, 52, "Input"],
+Cell[133502, 3477, 1608, 33, 427, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

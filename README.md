@@ -9,6 +9,7 @@ A large collection of _Mathematica_ demonstrations written by Adam Rumpf, sorted
   * [Complex Newton's Method](#complex-newtons-method)
   * [Monte Carlo Method](#monte-carlo-method)
 * [Number Theory](#number-theory)
+  * [Pascal's Triangle Fractals](#pascals-triangle-fractals)
   * [Recamán's Sequence](#recamáns-sequence)
   * [Remainder Graphs](#remainder-graphs)
 * [Just for Fun](#just-for-fun)
@@ -57,6 +58,20 @@ This Notebook includes a visual demonstration of the Monte Carlo method applied 
 ## Number Theory
 
 Number theory is not really my area, so most of the files in this folder are related to number sequences which give rise to interesting graphics that anybody can appreciate.
+
+### Pascal's Triangle Fractals
+
+<img src="images/pascals-triangle-fractals-1.png" alt="Pascal's Triangle Fractals Image 1" width="300"/> <img src="images/pascals-triangle-fractals-2.png" alt="Pascal's Triangle Fractals Image 2" width="300"/>
+
+Created 6/28/2015
+
+[Notebook Link](../master/number-theory/pascals-triangle-fractals.nb)
+
+[Pascal's Triangle](https://en.wikipedia.org/wiki/Pascal%27s_triangle) is a triangular array best known for the property that its rows consist of the [binomial coefficients](https://en.wikipedia.org/wiki/Binomial_coefficient). There are many other lesser-known properties of Pascal's triangle, including its relationship to the fractal [Sierpiński Triangle](https://en.wikipedia.org/wiki/Sierpi%C5%84ski_triangle). This is one of my favorite examples of a fractal appearing in an unexpected place.
+
+A Sierpiński triangle can be generted by highlighting all odd entries in Pascal's triangle. Using the fact that each entry of Pascal's triangle is the sum of the two preceding entries, we can think of Pascal's triangle as an [elementary cellular automaton](https://en.wikipedia.org/wiki/Elementary_cellular_automaton) (specifically [Rule 60](https://en.wikipedia.org/wiki/Elementary_cellular_automaton#Rule_60)).
+
+This program generates an instance of Pascal's triangle with the specified number of rows, and can color the entries depending on whether they are divisible by a chosen value. Highlighting the entries not divisible by 2 (i.e. the odd entries) generates a Sierpiński triangle. Choosing values other than 2 results in different fractals.
 
 ### Recamán's Sequence
 
