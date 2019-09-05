@@ -8,6 +8,7 @@ A large collection of _Mathematica_ demonstrations written by Adam Rumpf, sorted
 * [Calculus, Differential Equations, and Analysis](#calculus-differential-equations-and-analysis)
   * [Complex Newton's Method](#complex-newtons-method)
   * [Monte Carlo Method](#monte-carlo-method)
+  * [Vector Kinematics](#vector-kinematics)
 * [Number Theory](#number-theory)
   * [Pascal's Triangle Fractals](#pascals-triangle-fractals)
   * [Recamán's Sequence](#recamáns-sequence)
@@ -55,6 +56,16 @@ Created 9/13/2016
 [Monte Carlo methods](https://en.wikipedia.org/wiki/Monte_Carlo_method) are a type of computational method for numerical integration based on random experiments. If the goal is to calculate the area within a particular curve, then a Monte Carlo method consists of randomly sampling points within a region of known area that surrounds the region of interest. In expectation, the ratio of points within the region of interest to points outside of the region of interest should equal the ratio of the two regions' areas, and because the surrounding region's area is known, this ratio can be used to calculate the unknown region's area. Due to the random nature of the experiment the ratio will not be exact, and may vary between realizations, but as the number of sample points increases the ratio should converge to the correct value.
 
 This Notebook includes a visual demonstration of the Monte Carlo method applied to calculating two separate areas: the area under an arbitrary curve, and the area of a unit circle (which should be exactly π, making this method a way to numerically approximate π). For each experiment, the user can select how many points to randomly sample. Running and re-running the command should produce slightly different results due to the randomness. There are also functions to plot the approximation error as the number of sample points increases, to show how it generally decreases as the number of iterations increases.
+
+### Vector Kinematics
+
+<img src="images/vector-kinematics-1.png" alt="Vector Kinematics Image 1" width="300"/> <img src="images/vector-kinematics-2.png" alt="Vector Kinematics Image 2" width="300"/>
+
+Created 8/28/2017
+
+[Notebook Link](../master/calc-diffeq-analysis/vector-kinematics.nb)
+
+This demonstration is meant for elementary Calculus students encountering the concept of position, velocity, and acceleration vectors for the first time. It includes a series of Manipulate environments which describe various kinematic systems such as ballistic motion and rotational orbiting. Within each system there is a time slider to animate the system, and there is a toggle to select whether to display the position vector (with its x- and y-components), the velocity vector (with its x- and y-components), the acceleration vector (with its x- and y-components), and the velocity vector along with the acceleration vector. The purpose of these animations is to give a visual demonstration of how the velocity vector describes where the position vector is "about" to move to, and how the acceleration vector does the same for the velocity vector.
 
 ## Number Theory
 
