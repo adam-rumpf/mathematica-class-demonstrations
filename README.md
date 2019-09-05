@@ -12,6 +12,7 @@ A large collection of _Mathematica_ demonstrations written by Adam Rumpf, sorted
   * [Remainder Graphs](#remainder-graphs)
 * [Just for Fun](#just-for-fun)
   * [Domino and Tromino Tiling](#domino-and-tromino-tiling)
+  * [Dragon Curve](#dragon-curve)
   * [Spirograph](#spirograph)
 
 ## Overview
@@ -32,9 +33,9 @@ Many of the files in this folder are things that I wrote to show my calculus stu
 
 <img src="images/complex-newtons-method-1.png" alt="Complex Newton's Method Image 1" width="300"/> <img src="images/complex-newtons-method-2.png" alt="Complex Newton's Method Image 2" width="300"/>
 
-2/23/2016
+Created 2/23/2016
 
-[Notebook](../master/calc-diffeq-analysis/complex-newtons-method.nb)
+[Notebook Link](../master/calc-diffeq-analysis/complex-newtons-method.nb)
 
 This is a demonstration of how [Newton's Method](https://en.wikipedia.org/wiki/Newton%27s_method) works for complex-valued functions. Most Calculus students will learn about Newton's Method for finding roots of real-valued functions, and may be surprised to learn that it also works for complex numbers. They may also learn that the method does not necessarily always converge to the root nearest the initial guess due to "overshooting" in unexpected ways. For real numbers this phenomenon is not very interesting to look at, but for the complex numbers we can generate fascinating and beautiful fractal basins of attraction.
 
@@ -48,9 +49,9 @@ Number theory is not really my area, so most of the files in this folder are rel
 
 <img src="images/recaman-1.png" alt="Recamán's Sequence Image 1" width="300"/> <img src="images/recaman-2.png" alt="Recamán's Sequence Image 2" width="300"/>
 
-8/25/2018
+Created 8/25/2018
 
-[Notebook](../master/number-theory/recamans-sequence.nb)
+[Notebook Link](../master/number-theory/recamans-sequence.nb)
 
 Recamán's Sequence (sequence [A005132](https://oeis.org/A005132) in the [OEIS](oeis.org)) is defined by an iterative process beginning at _0_, at step _n=0_. In step _n_, we either take _n_ steps backward or _n_ steps forward. We go backward if doing so would take us to a nonnegative number that has not yet been visited, and otherwise we go forward. It is conjectured that this sequence includes every nonnegative integer exactly once.
 
@@ -60,11 +61,11 @@ This program is mostly meant for drawing pictures of Recamán's Sequence. Becaus
 
 <img src="images/remainder-graph-1.png" alt="Remainder Graph Image 1" height="300"/>
 
-10/10/2017
+Created 10/10/2017
 
-[Notebook](../master/number-theory/remainder-graph.nb)
+[Notebook Link](../master/number-theory/remainder-graph.nb)
 
-[Demonstration](http://demonstrations.wolfram.com/AnimatedRemainderGraph/)
+[Demonstration Link](http://demonstrations.wolfram.com/AnimatedRemainderGraph/)
 
 I was inspired to write this program by an [article](https://mindyourdecisions.com/blog/2015/07/26/divisibility-by-7-test-using-a-graph-why-does-it-work-sunday-puzzle/) by Presh Talwalkar. It demonstrates a cool trick for determining remainders after dividing a large number by a small number. Because this also allows calculating remainders of 0, this also encompasses the topic of divisibility tests. Testing for divisibility by 7 is famously tricky compared to the other small numbers, but this graphical method gives a fairly easy solution.
 
@@ -82,11 +83,11 @@ The files in this folder were simply made out of personal interest. Many of them
 
 <img src="images/domino-tiling-1.png" alt="Domino Tiling Image 1" width="300"/> <img src="images/tromino-tiling-1.png" alt="Tromino Tiling Image 1" width="300"/>
 
-10/16/2017
+Created 10/16/2017
 
-[Notebook](../master/fun/domino-tromino-tiling.nb)
+[Notebook Link](../master/fun/domino-tromino-tiling.nb)
 
-[Demonstration](http://demonstrations.wolfram.com/DominoAndTriominoTilingsOfAChessboard/)
+[Demonstration Link](http://demonstrations.wolfram.com/DominoAndTriominoTilingsOfAChessboard/)
 
 This file combines two related puzzles that involve tiling a chess board. The main purpose of the puzzles is to figure out for yourself whether tilings exist under certain circumstances, and how you could go about finding these tilings. The tromino puzzle, in particular, is often used as an introduction to proof by induction. This program makes use of the puzzles' solutions to compute tilings and display the results.
 
@@ -98,14 +99,28 @@ What if we remove some squares from the chess board? If we just remove one squar
 
 What if we remove a single square from the board? Then we would have 63 squares, which is divisible by 3, and thus might be possible. Suppose, for simplicity, that we remove a corner from the board. Can it be tiled with trominos? What squares could be removed while still allowing a tromino tiling?
 
+### Dragon Curve
+
+<img src="images/dragon-curve-1.png" alt="Dragon Curve Image 1" height="300"/>
+
+Created 5/6/2016
+
+[Notebook Link](../master/fun/dragon-curve.nb)
+
+The [dragon curve](https://en.wikipedia.org/wiki/Dragon_curve) is my favorite fractal, and considering how much I love fractals that is really saying something. Like all fractals it looks cool and has some interesting properties, like being self-similar and tileable and being two-dimensional in the limit despite each finite iteration being one-dimensional. However, unlike many fractals it is fairly simple to approximate in real life, and the final shape is completely unexpected based only on the first few iterations.
+
+One of the several equivalent constructions of the dragon curve involves taking a thin strip of paper and folding it in half, end-to-end, several times (the number of folds corresponds to the generation number). Then unfold the paper, open each crease to form a 90 degree angle, and look at the edge of the strip. The first fold simply creates an "L" shape. Starting over and adding a second fold creates a roughly "?" shape. Including additional folds one-at-a-time and observing the resulting curve produces shapes that are not very interesting, but after around 6 or 7 folds the shape begins to become incredibly intricate and complex.
+
+This Notebook defines a function that applies a recursive algorithm to draw a specified generation of dragon curve. Due to the recursive nature, the computational time increases exponentially as the generation number increases, so I would not recommend trying to draw anything past approximately 18 generations. I would also not recomment running the entire notebook at once, and instead running only specific blocks one-at-a-time.
+
 ### Spirograph
 
 <img src="images/spirograph-1.png" alt="Spirograph Image 1" width="150"/> <img src="images/spirograph-2.png" alt="Spirograph Image 2" width="150"/>
 <img src="images/spirograph-3.png" alt="Spirograph Image 3" width="150"/> <img src="images/spirograph-4.png" alt="Spirograph Image 4" width="150"/>
 
-10/27/2016
+Created 10/27/2016
 
-[Notebook](../master/fun/spirograph.nb)
+[Notebook Link](../master/fun/spirograph.nb)
 
 This is an interactive version of a [Spirograph](https://en.wikipedia.org/wiki/Spirograph) which displays the path of a pen attached to a disk rolling around a larger disk. There are controls to adjust the relative sizes of the disks, whether the small disk is inside or outside the larger disk, and where the pen is positioned (even allowing it to be outside of the disk). There is also a feature that displays a disk rolling on its edge around in circles.
 
