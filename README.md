@@ -119,7 +119,23 @@ The reasons for why this method works are worth figuring out for oneself (see th
 
 ## Graph Theory
 
-Graph theory is close to my area of research. It is also a mathematical field that is inherently visualizable, and as such lends itself well to visual demonstrations. Since graphs are such a basic unit of information, many of the files (such as [Remainder Graph](#remainder-graphs)) in other sections indirectly involve some graph theory. The demonstrations in this section are those that are more directly related to graph theory.
+Graph theory is close to my area of research. It is also a mathematical field that is inherently visualizable, and as such lends itself well to visual demonstrations. Since graphs are such a basic unit of information, many of the files in other sections (such as [Remainder Graph](#remainder-graphs)) indirectly involve some graph theory. The demonstrations in this section are those that are more directly related to graph theory.
+
+### Graph Untangler
+
+<img src="images/dijkstras-algorithm-astar-search-1.png" alt="Dijkstra's Algorithm and A* Search Image 1" width="300"/> <img src="images/dijkstras-algorithm-astar-search-2.png" alt="Dijkstra's Algorithm and A* Search Image 2" width="300"/>
+
+Created 11/8/2017
+
+[Notebook Link](../master/graph-theory/dijkstras-algorithm-astar-search.nb)
+
+[Demonstration Link](http://demonstrations.wolfram.com/DijkstrasAndASearchAlgorithmsForPathfindingWithObstacles/)
+
+[Dijkstra's algorithm](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm) and [A* search](https://en.wikipedia.org/wiki/A*_search_algorithm) are two well-known graph search algorithms capeable of finding the shortest path between two nodes. This demonstration shows how both work for the problem of navigating between two specified points on a 2D grid with obstacles. Searched and tentative nodes are highlighted as the algorithm moves forward and the final chosen path is drawn. There are controls to select the start and end nodes as well as the obstacle shapes. A step slider can be used to animate the search process, which ends as soon as a path between the two nodes has been found.
+
+Dijkstra's algorithm attempts to find the shortest path from a start node to every other node on the graph, although it can be halted early if a specific end node is specified. Nodes whose distance has already been determined are marked as "searched", while nodes on the search frontier have tentative distances based on the shortest known path. In each iteration the node with the shortest tentative distance is chosen for search. Because of this, the set of searched nodes slowly expands out from the start node, meaning that the algorithm may search a lot of extraneous nodes on its way to the destination. This can be seen in the demonstration by the way that the "bubble" of explored nodes slowly expands.
+
+A* search is a modified version of Dijkstra's algorithm which explicitly attempts to choose nodes likely to be closer to the destination. This requires extra information in the form of a heuristic distance from each node to the destination (for example, the Euclidean distance based on the node coordinates). Because of this preferential selection, A* tends to move directly towards the destination when possible, spreading out only to find its way past obstacles. An interesting illustration of this is to use the L-shaped obstacle with the start node on the inside and the destination on the outside.
 
 ### Graph Untangler
 
@@ -129,7 +145,7 @@ Created 2/5/2016
 
 [Notebook Link](../master/graph-theory/graph-untangler.nb)
 
-I wrote this as a tool for myself during my first graph theory course, for the purposes of solving graph isomorphism problems. A common way to imagine the problem of determining whether two different embeddings actually represent the same graph is to imagine that the vertices and edges can be moved around. If one graph can be manipulated to look like the other, then they must be isomorphic.
+I wrote this as a tool for myself during my first graph theory course for the purposes of solving graph isomorphism problems. A common way to try to determine whether two different embeddings actually represent the same graph is to imagine that the vertices and edges can be moved around. If one graph can be manipulated to look like the other, then they must be isomorphic, and the physical movements which occurred are a physical representation of the bijection from one graph to the other.
 
 This file contains a very simple function that accepts a _Mathematica_ Graph object and produces a circular embedding of the graph. The vertices can be clicked and dragged to move them around.
 
