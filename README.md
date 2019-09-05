@@ -14,6 +14,7 @@ A large collection of _Mathematica_ demonstrations written by Adam Rumpf, sorted
   * [Recamán's Sequence](#recamáns-sequence)
   * [Remainder Graphs](#remainder-graphs)
 * [Graph Theory](#graph-theory)
+  * [Dijkstra's Algorithm and A* Search](#dijkstras-algorithm-and-a-search)
   * [Graph Untangler](#graph-untangler)
 * [Just for Fun](#just-for-fun)
   * [Domino and Tromino Tiling](#domino-and-tromino-tiling)
@@ -121,7 +122,7 @@ The reasons for why this method works are worth figuring out for oneself (see th
 
 Graph theory is close to my area of research. It is also a mathematical field that is inherently visualizable, and as such lends itself well to visual demonstrations. Since graphs are such a basic unit of information, many of the files in other sections (such as [Remainder Graph](#remainder-graphs)) indirectly involve some graph theory. The demonstrations in this section are those that are more directly related to graph theory.
 
-### Graph Untangler
+### Dijkstra's Algorithm and A* Search
 
 <img src="images/dijkstras-algorithm-astar-search-1.png" alt="Dijkstra's Algorithm and A* Search Image 1" width="300"/> <img src="images/dijkstras-algorithm-astar-search-2.png" alt="Dijkstra's Algorithm and A* Search Image 2" width="300"/>
 
