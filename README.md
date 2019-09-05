@@ -13,6 +13,8 @@ A large collection of _Mathematica_ demonstrations written by Adam Rumpf, sorted
   * [Pascal's Triangle Fractals](#pascals-triangle-fractals)
   * [Recamán's Sequence](#recamáns-sequence)
   * [Remainder Graphs](#remainder-graphs)
+* [Graph Theory](#graph-theory)
+  * [Graph Untangler](#graph-untangler)
 * [Just for Fun](#just-for-fun)
   * [Domino and Tromino Tiling](#domino-and-tromino-tiling)
   * [Dragon Curve](#dragon-curve)
@@ -114,6 +116,22 @@ As an example, suppose we wish to know whether 42,959 is divisible by 7. The pro
 With this graph in place, we begin at position 0 and then read the digits of 42,959 from left to right. Each time we read a digit, we advance around the black circuit that number of steps. Between each digit, we follow the green arrow that leads out of the current position. In this case, we begin at 0 and read the first digit, "4". Then we advance 4 places to position 4, and then follow the green arrow to position 5. The next digit is "2", so we advance 2 to arrive at 0, and then follow the green arrow to remain at 0. Next we take "9" steps to 2, follow the green arrow to 6, advance "5" digits to 4, follow the green arrow to 5, and finally advance "9" digits to arrive back at 0. The final position is the remainder after division by 7. In this case it is 0, indicating that 42,959 is, indeed, divisible by 7.
 
 The reasons for why this method works are worth figuring out for oneself (see the article linked above). It also generalizes to any base besides 7, and doing so produces some interesting graphical representations of why the well-known divisibility tests that students learn in basic arithmetic work. For example, the graphs resulting from 2, 5, and 10 all have the property that every green arrow points to 0, indicating that, no matter where the black arrows take us, we will always reset our position to 0 between steps. As a result, only the final digit matters, which is exactly what students learn for 2, 5, and 10. The graphs resulting from 3 and 9 both have the property that every green arrow is a loop, making them essentially meaningless. As a result, only the total number of steps taken on the black arrows (which is the sum of all digits) matters, and that is exactly what students learn for 3 and 9. 11 is also rather interesting.
+
+## Graph Theory
+
+Graph theory is close to my area of research. It is also a mathematical field that is inherently visualizable, and as such lends itself well to visual demonstrations. Since graphs are such a basic unit of information, many of the files (such as [Remainder Graph](#remainder-graphs)) in other sections indirectly involve some graph theory. The demonstrations in this section are those that are more directly related to graph theory.
+
+### Graph Untangler
+
+<img src="images/graph-untangler-1.png" alt="Graph Untangler Image 1" width="300"/> <img src="images/graph-untangler-2.png" alt="Graph Untangler Image 2" width="300"/>
+
+Created 2/5/2016
+
+[Notebook Link](../master/graph-theory/graph-untangler.nb)
+
+I wrote this as a tool for myself during my first graph theory course, for the purposes of solving graph isomorphism problems. A common way to imagine the problem of determining whether two different embeddings actually represent the same graph is to imagine that the vertices and edges can be moved around. If one graph can be manipulated to look like the other, then they must be isomorphic.
+
+This file contains a very simple function that accepts a _Mathematica_ Graph object and produces a circular embedding of the graph. The vertices can be clicked and dragged to move them around.
 
 ## Just for Fun
 

@@ -1,0 +1,551 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.4' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     22656,        543]
+NotebookOptionsPosition[     21711,        504]
+NotebookOutlinePosition[     22055,        519]
+CellTagsIndexPosition[     22012,        516]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Graph Untangler", "Title",
+ CellChangeTimes->{{3.776600831050974*^9, 3.7766008318453026`*^9}, {
+  3.7767070771727304`*^9, 3.776707079511982*^9}}],
+
+Cell["Adam Rumpf, 2/5/2016", "Text",
+ CellChangeTimes->{{3.7766008347881403`*^9, 3.776600838290375*^9}, {
+  3.776707083612672*^9, 3.776707097383258*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section",
+ CellChangeTimes->{{3.7766008459498987`*^9, 3.776600848547045*^9}}],
+
+Cell["\<\
+This is a small, lightweight program that lets the user define a graph and \
+then click and drag to move the vertices. This may be useful for manipulating \
+the appearance of a graph to see whether it is isomorphic to another graph.\
+\>", "Text",
+ CellChangeTimes->{{3.776600856235587*^9, 3.776600860481224*^9}, {
+  3.7767071077309713`*^9, 3.7767071468124313`*^9}, {3.7767072003343797`*^9, 
+  3.776707240616064*^9}}],
+
+Cell[TextData[{
+ "The ",
+ StyleBox["graphmove[]", "Code"],
+ " function accepts a Graph object as its input. The initial embedding \
+arranges the vertices into a unit circle in an arbitrary order."
+}], "Text",
+ CellChangeTimes->{{3.776707243899014*^9, 3.7767072747682815`*^9}, {
+  3.7767083257468357`*^9, 3.7767083549745493`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Code", "Section",
+ CellChangeTimes->{{3.776600864408964*^9, 3.7766008650447807`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Initialization", "Subsection",
+ CellChangeTimes->{{3.776600871130811*^9, 3.776600873087188*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"graphmove", "[", "g_", "]"}], ":=", 
+  RowBox[{"Quiet", "[", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"n", "=", 
+       RowBox[{"Length", "[", 
+        RowBox[{"AdjacencyMatrix", "[", "g", "]"}], "]"}]}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Manipulate", "@@", 
+      RowBox[{"Join", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"GraphPlot", "[", 
+          RowBox[{"g", ",", 
+           RowBox[{"VertexCoordinateRules", "\[Rule]", 
+            RowBox[{"Table", "[", 
+             RowBox[{
+              RowBox[{"i", "\[Rule]", 
+               RowBox[{"a", "[", "i", "]"}]}], ",", 
+              RowBox[{"{", 
+               RowBox[{"i", ",", "1", ",", "n"}], "}"}]}], "]"}]}], ",", 
+           RowBox[{"PlotRange", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"-", "1.1"}], ",", "1.1"}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"-", "1"}], "/", "1"}], ",", "1.1"}], "}"}]}], 
+             "}"}]}]}], "]"}], "}"}], ",", 
+        RowBox[{"Table", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"a", "[", "i", "]"}], ",", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"Cos", "[", 
+                 RowBox[{"2", "Pi", " ", 
+                  RowBox[{"i", "/", "n"}]}], "]"}], ",", 
+                RowBox[{"Sin", "[", 
+                 RowBox[{"2", "Pi", " ", 
+                  RowBox[{"i", "/", "n"}]}], "]"}]}], "}"}]}], "}"}], ",", 
+            "Locator"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"i", ",", "1", ",", "n"}], "}"}]}], "]"}]}], "]"}]}]}], 
+    "\[IndentingNewLine]", "]"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.7766008761831923`*^9, 3.776600882799075*^9}, 
+   3.776707281425147*^9, {3.776707353760726*^9, 3.7767074253422127`*^9}, {
+   3.7767074554343204`*^9, 3.776707497942706*^9}, {3.7767083409322023`*^9, 
+   3.77670834919342*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Demonstration", "Subsection",
+ CellChangeTimes->{{3.7766008885632277`*^9, 3.7766008904796133`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"Manipulating", " ", "a", " ", "built"}], "-", 
+    RowBox[{"in", " ", "graph"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"graphmove", "[", 
+   RowBox[{"PetersenGraph", "[", 
+    RowBox[{"5", ",", "2"}], "]"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.7766008920271177`*^9, 3.7766008970415297`*^9}, {
+  3.7767072951648173`*^9, 3.776707315695243*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`$42$$ = {
+    Rational[1, 4] (1 + 5^Rational[1, 2]), (Rational[5, 8] + 
+      Rational[-1, 8] 5^Rational[1, 2])^
+     Rational[1, 2]}, $CellContext`$43$$ = {
+    Rational[1, 4] (-1 + 5^Rational[1, 2]), (Rational[5, 8] + 
+      Rational[1, 8] 5^Rational[1, 2])^Rational[1, 2]}, $CellContext`$44$$ = {
+    Rational[1, 4] (1 - 5^Rational[1, 2]), (Rational[5, 8] + 
+      Rational[1, 8] 5^Rational[1, 2])^Rational[1, 2]}, $CellContext`$45$$ = {
+    Rational[1, 4] (-1 - 5^Rational[1, 2]), (Rational[5, 8] + 
+      Rational[-1, 8] 5^Rational[1, 2])^
+     Rational[1, 2]}, $CellContext`$46$$ = {-1, 0}, $CellContext`$47$$ = {
+    Rational[1, 4] (-1 - 5^
+      Rational[1, 2]), -(Rational[5, 8] + Rational[-1, 8] 5^Rational[1, 2])^
+      Rational[1, 2]}, $CellContext`$48$$ = {
+    Rational[1, 4] (1 - 5^
+      Rational[1, 2]), -(Rational[5, 8] + Rational[1, 8] 5^Rational[1, 2])^
+      Rational[1, 2]}, $CellContext`$49$$ = {
+    Rational[1, 4] (-1 + 
+      5^Rational[1, 2]), -(Rational[5, 8] + Rational[1, 8] 5^Rational[1, 2])^
+      Rational[1, 2]}, $CellContext`$50$$ = {
+    Rational[1, 4] (1 + 
+      5^Rational[1, 2]), -(Rational[5, 8] + Rational[-1, 8] 5^Rational[1, 2])^
+      Rational[1, 2]}, $CellContext`$51$$ = {1, 0}, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`$42$$], {
+       Rational[1, 4] (1 + 5^Rational[1, 2]), (Rational[5, 8] + 
+         Rational[-1, 8] 5^Rational[1, 2])^Rational[1, 2]}, 
+       RawBoxes[
+        RowBox[{"a", "[", "1", "]"}]]}, Automatic}, {{
+       Hold[$CellContext`$43$$], {
+       Rational[1, 4] (-1 + 5^Rational[1, 2]), (Rational[5, 8] + 
+         Rational[1, 8] 5^Rational[1, 2])^Rational[1, 2]}, 
+       RawBoxes[
+        RowBox[{"a", "[", "2", "]"}]]}, Automatic}, {{
+       Hold[$CellContext`$44$$], {
+       Rational[1, 4] (1 - 5^Rational[1, 2]), (Rational[5, 8] + 
+         Rational[1, 8] 5^Rational[1, 2])^Rational[1, 2]}, 
+       RawBoxes[
+        RowBox[{"a", "[", "3", "]"}]]}, Automatic}, {{
+       Hold[$CellContext`$45$$], {
+       Rational[1, 4] (-1 - 5^Rational[1, 2]), (Rational[5, 8] + 
+         Rational[-1, 8] 5^Rational[1, 2])^Rational[1, 2]}, 
+       RawBoxes[
+        RowBox[{"a", "[", "4", "]"}]]}, Automatic}, {{
+       Hold[$CellContext`$46$$], {-1, 0}, 
+       RawBoxes[
+        RowBox[{"a", "[", "5", "]"}]]}, Automatic}, {{
+       Hold[$CellContext`$47$$], {
+       Rational[1, 4] (-1 - 5^
+         Rational[1, 2]), -(Rational[5, 8] + 
+          Rational[-1, 8] 5^Rational[1, 2])^Rational[1, 2]}, 
+       RawBoxes[
+        RowBox[{"a", "[", "6", "]"}]]}, Automatic}, {{
+       Hold[$CellContext`$48$$], {
+       Rational[1, 4] (1 - 5^
+         Rational[1, 2]), -(Rational[5, 8] + Rational[1, 8] 5^Rational[1, 2])^
+         Rational[1, 2]}, 
+       RawBoxes[
+        RowBox[{"a", "[", "7", "]"}]]}, Automatic}, {{
+       Hold[$CellContext`$49$$], {
+       Rational[1, 4] (-1 + 
+         5^Rational[1, 2]), -(Rational[5, 8] + 
+          Rational[1, 8] 5^Rational[1, 2])^Rational[1, 2]}, 
+       RawBoxes[
+        RowBox[{"a", "[", "8", "]"}]]}, Automatic}, {{
+       Hold[$CellContext`$50$$], {
+       Rational[1, 4] (1 + 
+         5^Rational[1, 2]), -(Rational[5, 8] + 
+          Rational[-1, 8] 5^Rational[1, 2])^Rational[1, 2]}, 
+       RawBoxes[
+        RowBox[{"a", "[", "9", "]"}]]}, Automatic}, {{
+       Hold[$CellContext`$51$$], {1, 0}, 
+       RawBoxes[
+        RowBox[{"a", "[", "10", "]"}]]}, Automatic}}, Typeset`size$$ = {
+    360., {177., 183.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`$42$$ = {
+         Rational[1, 4] (1 + 5^Rational[1, 2]), (Rational[5, 8] + 
+           Rational[-1, 8] 5^Rational[1, 2])^
+          Rational[1, 2]}, $CellContext`$43$$ = {
+         Rational[1, 4] (-1 + 5^Rational[1, 2]), (Rational[5, 8] + 
+           Rational[1, 8] 5^Rational[1, 2])^
+          Rational[1, 2]}, $CellContext`$44$$ = {
+         Rational[1, 4] (1 - 5^Rational[1, 2]), (Rational[5, 8] + 
+           Rational[1, 8] 5^Rational[1, 2])^
+          Rational[1, 2]}, $CellContext`$45$$ = {
+         Rational[1, 4] (-1 - 5^Rational[1, 2]), (Rational[5, 8] + 
+           Rational[-1, 8] 5^Rational[1, 2])^
+          Rational[1, 2]}, $CellContext`$46$$ = {-1, 
+         0}, $CellContext`$47$$ = {
+         Rational[1, 4] (-1 - 5^
+           Rational[1, 2]), -(Rational[5, 8] + 
+            Rational[-1, 8] 5^Rational[1, 2])^
+           Rational[1, 2]}, $CellContext`$48$$ = {
+         Rational[1, 4] (1 - 5^
+           Rational[1, 2]), -(Rational[5, 8] + 
+            Rational[1, 8] 5^Rational[1, 2])^
+           Rational[1, 2]}, $CellContext`$49$$ = {
+         Rational[1, 4] (-1 + 
+           5^Rational[1, 2]), -(Rational[5, 8] + 
+            Rational[1, 8] 5^Rational[1, 2])^
+           Rational[1, 2]}, $CellContext`$50$$ = {
+         Rational[1, 4] (1 + 
+           5^Rational[1, 2]), -(Rational[5, 8] + 
+            Rational[-1, 8] 5^Rational[1, 2])^
+           Rational[1, 2]}, $CellContext`$51$$ = {1, 0}}, 
+      "ControllerVariables" :> {}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      GraphPlot[
+       SparseArray[
+        Automatic, {10, 10}, 0, {
+         1, {{0, 3, 6, 9, 12, 15, 18, 21, 24, 27, 30}, {{3}, {4}, {6}, {4}, {
+           5}, {7}, {1}, {5}, {8}, {1}, {2}, {9}, {2}, {3}, {10}, {1}, {7}, {
+           10}, {2}, {6}, {8}, {3}, {7}, {9}, {4}, {8}, {10}, {5}, {6}, {
+           9}}}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
+          1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}], 
+        VertexCoordinateRules -> {
+         1 -> $CellContext`$42$$, 2 -> $CellContext`$43$$, 
+          3 -> $CellContext`$44$$, 4 -> $CellContext`$45$$, 
+          5 -> $CellContext`$46$$, 6 -> $CellContext`$47$$, 
+          7 -> $CellContext`$48$$, 8 -> $CellContext`$49$$, 
+          9 -> $CellContext`$50$$, 10 -> $CellContext`$51$$}, 
+        PlotRange -> {{-1, 1}, {-1, 1}}, 
+        VertexCoordinateRules -> {{0.9510565162951535, 
+         0.30901699437494745`}, {
+         0.5877852522924732, -0.8090169943749473}, {-0.587785252292473, \
+-0.8090169943749475}, {-0.9510565162951536, 
+         0.30901699437494723`}, {-2.4492935982947064`*^-16, 1.}, {
+         1.902113032590307, 0.6180339887498949}, {
+         1.1755705045849465`, -1.6180339887498947`}, {-1.175570504584946, \
+-1.618033988749895}, {-1.9021130325903073`, 
+         0.6180339887498945}, {-4.898587196589413*^-16, 2.}}, DirectedEdges -> 
+        False], "Specifications" :> {{{$CellContext`$42$$, {
+          Rational[1, 4] (1 + 5^Rational[1, 2]), (Rational[5, 8] + 
+            Rational[-1, 8] 5^Rational[1, 2])^Rational[1, 2]}, 
+          RawBoxes[
+           RowBox[{"a", "[", "1", "]"}]]}, Automatic, ControlType -> 
+         Locator}, {{$CellContext`$43$$, {
+          Rational[1, 4] (-1 + 5^Rational[1, 2]), (Rational[5, 8] + 
+            Rational[1, 8] 5^Rational[1, 2])^Rational[1, 2]}, 
+          RawBoxes[
+           RowBox[{"a", "[", "2", "]"}]]}, Automatic, ControlType -> 
+         Locator}, {{$CellContext`$44$$, {
+          Rational[1, 4] (1 - 5^Rational[1, 2]), (Rational[5, 8] + 
+            Rational[1, 8] 5^Rational[1, 2])^Rational[1, 2]}, 
+          RawBoxes[
+           RowBox[{"a", "[", "3", "]"}]]}, Automatic, ControlType -> 
+         Locator}, {{$CellContext`$45$$, {
+          Rational[1, 4] (-1 - 5^Rational[1, 2]), (Rational[5, 8] + 
+            Rational[-1, 8] 5^Rational[1, 2])^Rational[1, 2]}, 
+          RawBoxes[
+           RowBox[{"a", "[", "4", "]"}]]}, Automatic, ControlType -> 
+         Locator}, {{$CellContext`$46$$, {-1, 0}, 
+          RawBoxes[
+           RowBox[{"a", "[", "5", "]"}]]}, Automatic, ControlType -> 
+         Locator}, {{$CellContext`$47$$, {
+          Rational[1, 4] (-1 - 5^
+            Rational[1, 2]), -(Rational[5, 8] + 
+             Rational[-1, 8] 5^Rational[1, 2])^Rational[1, 2]}, 
+          RawBoxes[
+           RowBox[{"a", "[", "6", "]"}]]}, Automatic, ControlType -> 
+         Locator}, {{$CellContext`$48$$, {
+          Rational[1, 4] (1 - 5^
+            Rational[1, 2]), -(Rational[5, 8] + 
+             Rational[1, 8] 5^Rational[1, 2])^Rational[1, 2]}, 
+          RawBoxes[
+           RowBox[{"a", "[", "7", "]"}]]}, Automatic, ControlType -> 
+         Locator}, {{$CellContext`$49$$, {
+          Rational[1, 4] (-1 + 
+            5^Rational[1, 2]), -(Rational[5, 8] + 
+             Rational[1, 8] 5^Rational[1, 2])^Rational[1, 2]}, 
+          RawBoxes[
+           RowBox[{"a", "[", "8", "]"}]]}, Automatic, ControlType -> 
+         Locator}, {{$CellContext`$50$$, {
+          Rational[1, 4] (1 + 
+            5^Rational[1, 2]), -(Rational[5, 8] + 
+             Rational[-1, 8] 5^Rational[1, 2])^Rational[1, 2]}, 
+          RawBoxes[
+           RowBox[{"a", "[", "9", "]"}]]}, Automatic, ControlType -> 
+         Locator}, {{$CellContext`$51$$, {1, 0}, 
+          RawBoxes[
+           RowBox[{"a", "[", "10", "]"}]]}, Automatic, ControlType -> 
+         Locator}}, "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{417., {212., 218.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{
+  3.7767073212004795`*^9, {3.776707372082876*^9, 3.776707427587473*^9}, 
+   3.776707499890101*^9, 3.7767083598653307`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"Manipulating", " ", "a", " ", "user"}], "-", 
+    RowBox[{"defined", " ", "graph"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"g1", "=", 
+     RowBox[{"Graph", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"1", "\[UndirectedEdge]", "4"}], ",", 
+        RowBox[{"1", "\[UndirectedEdge]", "6"}], ",", 
+        RowBox[{"1", "\[UndirectedEdge]", "8"}], ",", 
+        RowBox[{"3", "\[UndirectedEdge]", "2"}], ",", 
+        RowBox[{"3", "\[UndirectedEdge]", "6"}], ",", 
+        RowBox[{"3", "\[UndirectedEdge]", "8"}], ",", 
+        RowBox[{"5", "\[UndirectedEdge]", "2"}], ",", 
+        RowBox[{"5", "\[UndirectedEdge]", "4"}], ",", 
+        RowBox[{"5", "\[UndirectedEdge]", "8"}], ",", 
+        RowBox[{"7", "\[UndirectedEdge]", "2"}], ",", 
+        RowBox[{"7", "\[UndirectedEdge]", "4"}], ",", 
+        RowBox[{"7", "\[UndirectedEdge]", "6"}]}], "}"}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"graphmove", "[", "g1", "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.7767075239613714`*^9, 3.7767075578228674`*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`$52$$ = {
+    2^Rational[-1, 2], 2^Rational[-1, 2]}, $CellContext`$53$$ = {0, 
+    1}, $CellContext`$54$$ = {-2^Rational[-1, 2], 2^
+     Rational[-1, 2]}, $CellContext`$55$$ = {-1, 
+    0}, $CellContext`$56$$ = {-2^Rational[-1, 2], -2^
+      Rational[-1, 2]}, $CellContext`$57$$ = {0, -1}, $CellContext`$58$$ = {
+    2^Rational[-1, 2], -2^Rational[-1, 2]}, $CellContext`$59$$ = {1, 0}, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`$52$$], {2^Rational[-1, 2], 2^Rational[-1, 2]}, 
+       RawBoxes[
+        RowBox[{"a", "[", "1", "]"}]]}, Automatic}, {{
+       Hold[$CellContext`$53$$], {0, 1}, 
+       RawBoxes[
+        RowBox[{"a", "[", "2", "]"}]]}, Automatic}, {{
+       Hold[$CellContext`$54$$], {-2^Rational[-1, 2], 2^Rational[-1, 2]}, 
+       RawBoxes[
+        RowBox[{"a", "[", "3", "]"}]]}, Automatic}, {{
+       Hold[$CellContext`$55$$], {-1, 0}, 
+       RawBoxes[
+        RowBox[{"a", "[", "4", "]"}]]}, Automatic}, {{
+       Hold[$CellContext`$56$$], {-2^Rational[-1, 2], -2^Rational[-1, 2]}, 
+       RawBoxes[
+        RowBox[{"a", "[", "5", "]"}]]}, Automatic}, {{
+       Hold[$CellContext`$57$$], {0, -1}, 
+       RawBoxes[
+        RowBox[{"a", "[", "6", "]"}]]}, Automatic}, {{
+       Hold[$CellContext`$58$$], {2^Rational[-1, 2], -2^Rational[-1, 2]}, 
+       RawBoxes[
+        RowBox[{"a", "[", "7", "]"}]]}, Automatic}, {{
+       Hold[$CellContext`$59$$], {1, 0}, 
+       RawBoxes[
+        RowBox[{"a", "[", "8", "]"}]]}, Automatic}}, Typeset`size$$ = {
+    360., {177., 183.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`$52$$ = {
+         2^Rational[-1, 2], 2^Rational[-1, 2]}, $CellContext`$53$$ = {0, 
+         1}, $CellContext`$54$$ = {-2^Rational[-1, 2], 2^
+          Rational[-1, 2]}, $CellContext`$55$$ = {-1, 
+         0}, $CellContext`$56$$ = {-2^Rational[-1, 2], -2^
+           Rational[-1, 2]}, $CellContext`$57$$ = {
+         0, -1}, $CellContext`$58$$ = {
+         2^Rational[-1, 2], -2^Rational[-1, 2]}, $CellContext`$59$$ = {1, 0}},
+       "ControllerVariables" :> {}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      GraphPlot[
+       SparseArray[
+        Automatic, {8, 8}, 0, {
+         1, {{0, 3, 6, 9, 12, 15, 18, 21, 24}, {{2}, {3}, {4}, {1}, {7}, {
+           8}, {1}, {5}, {8}, {1}, {5}, {7}, {3}, {4}, {6}, {5}, {7}, {8}, {
+           2}, {4}, {6}, {2}, {3}, {6}}}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+           1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}}], 
+        VertexCoordinateRules -> {
+         1 -> $CellContext`$52$$, 2 -> $CellContext`$53$$, 
+          3 -> $CellContext`$54$$, 4 -> $CellContext`$55$$, 
+          5 -> $CellContext`$56$$, 6 -> $CellContext`$57$$, 
+          7 -> $CellContext`$58$$, 8 -> $CellContext`$59$$}, 
+        PlotRange -> {{-1, 1}, {-1, 1}}, {
+        DirectedEdges -> False, 
+         VertexCoordinateRules -> {{1.545713196859671, 
+          0.002898644500823888}, {2.1858143675867456`, 0.8170295534533817}, {
+          0.6445658294636958, 0.}, {0.8211165819257953, 0.8143663765900064}, {
+          0., 0.8129048918720487}, {0.6404824171383363, 1.626937866868539}, {
+          1.541500633444136, 1.628499455291616}, {1.3650792579091868`, 
+          0.8152060734235071}}}], 
+      "Specifications" :> {{{$CellContext`$52$$, {
+          2^Rational[-1, 2], 2^Rational[-1, 2]}, 
+          RawBoxes[
+           RowBox[{"a", "[", "1", "]"}]]}, Automatic, ControlType -> 
+         Locator}, {{$CellContext`$53$$, {0, 1}, 
+          RawBoxes[
+           RowBox[{"a", "[", "2", "]"}]]}, Automatic, ControlType -> 
+         Locator}, {{$CellContext`$54$$, {-2^Rational[-1, 2], 2^
+           Rational[-1, 2]}, 
+          RawBoxes[
+           RowBox[{"a", "[", "3", "]"}]]}, Automatic, ControlType -> 
+         Locator}, {{$CellContext`$55$$, {-1, 0}, 
+          RawBoxes[
+           RowBox[{"a", "[", "4", "]"}]]}, Automatic, ControlType -> 
+         Locator}, {{$CellContext`$56$$, {-2^Rational[-1, 2], -2^
+            Rational[-1, 2]}, 
+          RawBoxes[
+           RowBox[{"a", "[", "5", "]"}]]}, Automatic, ControlType -> 
+         Locator}, {{$CellContext`$57$$, {0, -1}, 
+          RawBoxes[
+           RowBox[{"a", "[", "6", "]"}]]}, Automatic, ControlType -> 
+         Locator}, {{$CellContext`$58$$, {
+          2^Rational[-1, 2], -2^Rational[-1, 2]}, 
+          RawBoxes[
+           RowBox[{"a", "[", "7", "]"}]]}, Automatic, ControlType -> 
+         Locator}, {{$CellContext`$59$$, {1, 0}, 
+          RawBoxes[
+           RowBox[{"a", "[", "8", "]"}]]}, Automatic, ControlType -> 
+         Locator}}, "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{417., {212., 218.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.776707559240405*^9, 3.776708361726291*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{759, 833},
+WindowMargins->{{300, Automatic}, {Automatic, 15}},
+FrontEndVersion->"10.4 for Microsoft Windows (64-bit) (April 11, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 151, 2, 90, "Title"],
+Cell[734, 26, 153, 2, 30, "Text"],
+Cell[CellGroupData[{
+Cell[912, 32, 99, 1, 63, "Section"],
+Cell[1014, 35, 426, 7, 68, "Text"],
+Cell[1443, 44, 329, 7, 49, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1809, 56, 91, 1, 63, "Section"],
+Cell[CellGroupData[{
+Cell[1925, 61, 102, 1, 43, "Subsection"],
+Cell[2030, 64, 2160, 57, 132, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4227, 126, 105, 1, 43, "Subsection"],
+Cell[CellGroupData[{
+Cell[4357, 131, 429, 10, 52, "Input"],
+Cell[4789, 143, 10051, 207, 447, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[14877, 355, 1138, 26, 92, "Input"],
+Cell[16018, 383, 5641, 115, 447, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
