@@ -61,7 +61,7 @@ Number theory is not really my area, so most of the files in this folder are rel
 
 ### Pascal's Triangle Fractals
 
-<img src="images/pascals-triangle-fractals-1.png" alt="Pascal's Triangle Fractals Image 1" width="300"/> <img src="images/pascals-triangle-fractals-2.png" alt="Pascal's Triangle Fractals Image 2" width="300"/>
+<img src="images/pascals-triangle-fractal-1.png" alt="Pascal's Triangle Fractals Image 1" width="300"/> <img src="images/pascals-triangle-fractal-2.png" alt="Pascal's Triangle Fractals Image 2" width="300"/>
 
 Created 6/28/2015
 
