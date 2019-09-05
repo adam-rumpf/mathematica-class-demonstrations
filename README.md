@@ -7,6 +7,7 @@ A large collection of _Mathematica_ demonstrations written by Adam Rumpf, sorted
 * [Overview](#overview)
 * [Calculus, Differential Equations, and Analysis](#calculus-differential-equations-and-analysis)
   * [Complex Newton's Method](#complex-newtons-method)
+  * [Monte Carlo Method](#monte-carlo-method)
 * [Number Theory](#number-theory)
   * [Recamán's Sequence](#recamáns-sequence)
   * [Remainder Graphs](#remainder-graphs)
@@ -40,6 +41,18 @@ Created 2/23/2016
 This is a demonstration of how [Newton's Method](https://en.wikipedia.org/wiki/Newton%27s_method) works for complex-valued functions. Most Calculus students will learn about Newton's Method for finding roots of real-valued functions, and may be surprised to learn that it also works for complex numbers. They may also learn that the method does not necessarily always converge to the root nearest the initial guess due to "overshooting" in unexpected ways. For real numbers this phenomenon is not very interesting to look at, but for the complex numbers we can generate fascinating and beautiful fractal basins of attraction.
 
 The main function of this demonstration allows the user to specify a function and a few other parameters, and outputs a coloring of a portion of the complex plane demonstrating the basins of attraction of the different roots. Note that this may take a while to calculate for some large cases with many nodes. For this reason I would not recommend running the entire notebook, but rather running the initialization code and then evaluating one function at a time.
+
+### Monte Carlo Method
+
+<img src="images/monte-carlo-method-1.png" alt="Monte Carlo Method Image 1" width="300"/> <img src="images/monte-carlo-method-2.png" alt="Monte Carlo Method Image 2" width="300"/>
+
+Created 9/13/2016
+
+[Notebook Link](../master/calc-diffeq-analysis/monte-carlo-method.nb)
+
+[Monte Carlo methods](https://en.wikipedia.org/wiki/Monte_Carlo_method) are a type of computational method for numerical integration based on random experiments. If the goal is to calculate the area within a particular curve, then a Monte Carlo method consists of randomly sampling points within a region of known area that surrounds the region of interest. In expectation, the ratio of points within the region of interest to points outside of the region of interest should equal the ratio of the two regions' areas, and because the surrounding region's area is known, this ratio can be used to calculate the unknown region's area. Due to the random nature of the experiment the ratio will not be exact, and may vary between realizations, but as the number of sample points increases the ratio should converge to the correct value.
+
+This Notebook includes a visual demonstration of the Monte Carlo method applied to calculating two separate areas: the area under an arbitrary curve, and the area of a unit circle (which should be exactly π, making this method a way to numerically approximate π). For each experiment, the user can select how many points to randomly sample. Running and re-running the command should produce slightly different results due to the randomness. There are also functions to plot the approximation error as the number of sample points increases, to show how it generally decreases as the number of iterations increases.
 
 ## Number Theory
 
