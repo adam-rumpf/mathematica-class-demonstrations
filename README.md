@@ -8,6 +8,7 @@ A large collection of _Mathematica_ demonstrations written by Adam Rumpf, sorted
 * [Calculus, Differential Equations, and Analysis](#calculus-differential-equations-and-analysis)
   * [Complex Newton's Method](#complex-newtons-method)
   * [Monte Carlo Method](#monte-carlo-method)
+  * [Taylor and Fourier Series Approximations](#taylor-and-fourier-series-approximations)
   * [Vector Kinematics](#vector-kinematics)
 * [Number Theory](#number-theory)
   * [Pascal's Triangle Fractals](#pascals-triangle-fractals)
@@ -59,6 +60,18 @@ Created 9/13/2016
 [Monte Carlo methods](https://en.wikipedia.org/wiki/Monte_Carlo_method) are a type of computational method for numerical integration based on random experiments. If the goal is to calculate the area within a particular curve, then a Monte Carlo method consists of randomly sampling points within a region of known area that surrounds the region of interest. In expectation, the ratio of points within the region of interest to points outside of the region of interest should equal the ratio of the two regions' areas, and because the surrounding region's area is known, this ratio can be used to calculate the unknown region's area. Due to the random nature of the experiment the ratio will not be exact, and may vary between realizations, but as the number of sample points increases the ratio should converge to the correct value.
 
 This Notebook includes a visual demonstration of the Monte Carlo method applied to calculating two separate areas: the area under an arbitrary curve, and the area of a unit circle (which should be exactly π, making this method a way to numerically approximate π). For each experiment, the user can select how many points to randomly sample. Running and re-running the command should produce slightly different results due to the randomness. There are also functions to plot the approximation error as the number of sample points increases, to show how it generally decreases as the number of iterations increases.
+
+### Taylor and Fourier Series Approximations
+
+<img src="images/taylor-series-1.png" alt="Taylor Series Image 1" width="300"/> <img src="images/fourier-series-1.png" alt="Fourier Series Image 1" width="300"/>
+
+Created 11/6/2017
+
+[Notebook Link](../master/calc-diffeq-analysis/taylor-fourier-series.nb)
+
+This demonstration shows how a [Taylor Series](https://en.wikipedia.org/wiki/Taylor_series) or a [Fourier Series](https://en.wikipedia.org/wiki/Fourier_series) approximation of a given function changes as more terms are added to the series. The Taylor and Fourier series' are both ways of representing functions as linear combinations of simpler functions (polynomial functions for Taylor and trigonometric functions for Fourier). They also have important applications in computational mathematics, since taking only the first few terms of the series can provide a simple approximation of a potentially complicated function within a small neighorhood.
+
+This program includes two Manipulate environments: one for Taylor series and one for Fourier series. Both include a dropdown menu of example functions and a slider to select the number of terms to include. The Taylor series also includes a slider to select the center of the approximation. These can be used to show how well the approximations model the original function near or far from the center, and how adding more terms changes things.
 
 ### Vector Kinematics
 

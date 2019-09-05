@@ -1,0 +1,662 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.4' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     25026,        654]
+NotebookOptionsPosition[     24035,        614]
+NotebookOutlinePosition[     24378,        629]
+CellTagsIndexPosition[     24335,        626]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Taylor and Fourier Series Approximations", "Title",
+ CellChangeTimes->{{3.776600831050974*^9, 3.7766008318453026`*^9}, {
+  3.7767140013845873`*^9, 3.776714007217739*^9}}],
+
+Cell["Adam Rumpf, 11/6/2017", "Text",
+ CellChangeTimes->{{3.7766008347881403`*^9, 3.776600838290375*^9}, {
+  3.7767140142346497`*^9, 3.776714015672207*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section",
+ CellChangeTimes->{{3.7766008459498987`*^9, 3.776600848547045*^9}}],
+
+Cell[TextData[{
+ "This demonstration defines two Manipulate environments to explore the \
+construction of Taylor series or Fourier series approximations. Both include \
+a dropdown menu to select an example function and a slider to select a number \
+of terms. The display will show a plot of the function along with its \
+approximation of the specified degree. The Tayor series environment also \
+includes a slider to select the center. The Fourier approximation has no \
+specified center, and instead attempts to approximate the function restricted \
+to the interval ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"[", 
+    RowBox[{
+     RowBox[{"-", "2"}], ",", "2"}], "]"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.776600856235587*^9, 3.776600860481224*^9}, {
+  3.7767152313467493`*^9, 3.776715251595624*^9}, {3.7767153596343837`*^9, 
+  3.7767154470043917`*^9}, {3.7767155560514975`*^9, 3.7767155884797783`*^9}}],
+
+Cell["\<\
+The purpose of this demonstration is to illustrate the effects of adding more \
+terms to the approximation, and how in general this causes the approximation \
+to be closer to the original function over a larger area. Unusual features, \
+like discontinuity, may cause problems for the Taylor approximation, but less \
+of a problem for the Fourier approximation. The Taylor approximation is \
+generally best near its center.\
+\>", "Text",
+ CellChangeTimes->{{3.776715452906002*^9, 3.776715549692165*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Code", "Section",
+ CellChangeTimes->{{3.776600864408964*^9, 3.7766008650447807`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Initialization", "Subsection",
+ CellChangeTimes->{{3.776600871130811*^9, 3.776600873087188*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "explicit", " ", "definition", " ", "of", " ", "Taylor", " ", "series", 
+     " ", "for", " ", "function", " ", "f"}], ",", " ", 
+    RowBox[{"n", " ", "terms"}], ",", " ", 
+    RowBox[{"center", " ", "c"}], ",", " ", 
+    RowBox[{"and", " ", "variable", " ", "x"}]}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"taylor", "[", 
+    RowBox[{"f_", ",", "n_", ",", "c_", ",", "x_"}], "]"}], ":=", 
+   RowBox[{"Sum", "[", 
+    RowBox[{
+     RowBox[{
+      FractionBox[
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"D", "[", 
+          RowBox[{
+           RowBox[{"f", "[", "x", "]"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"x", ",", "i"}], "}"}]}], "]"}], "/.", 
+         RowBox[{"x", "\[Rule]", "c"}]}], ")"}], 
+       RowBox[{"i", "!"}]], 
+      SuperscriptBox[
+       RowBox[{"(", 
+        RowBox[{"x", "-", "c"}], ")"}], "i"]}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "0", ",", "n"}], "}"}]}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.7766008761831923`*^9, 3.776600882799075*^9}, {
+  3.7767147153423014`*^9, 3.7767147524331293`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "explicit", " ", "definition", " ", "of", " ", "Fourier", " ", "series", 
+     " ", "for", " ", "function", " ", "f"}], ",", " ", 
+    RowBox[{"n", " ", "terms"}], ",", " ", 
+    RowBox[{"and", " ", "variable", " ", "x"}]}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"fouriercoeff", "[", 
+      RowBox[{"f_", ",", "0"}], "]"}], ":=", 
+     RowBox[{
+      FractionBox["1", "4"], 
+      RowBox[{"NIntegrate", "[", 
+       RowBox[{
+        RowBox[{"f", "[", "x", "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"x", ",", 
+          RowBox[{"-", "2"}], ",", "2"}], "}"}]}], "]"}]}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"fouriercoeff", "[", 
+      RowBox[{"f_", ",", "n_"}], "]"}], ":=", 
+     RowBox[{
+      FractionBox["1", "4"], 
+      RowBox[{"NIntegrate", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"f", "[", "x", "]"}], " ", 
+         SuperscriptBox["E", 
+          RowBox[{"I", " ", "Pi", " ", "n", " ", 
+           RowBox[{"x", "/", "2"}]}]]}], ",", 
+        RowBox[{"{", 
+         RowBox[{"x", ",", 
+          RowBox[{"-", "2"}], ",", "2"}], "}"}]}], "]"}]}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"fourier", "[", 
+      RowBox[{"f_", ",", "n_", ",", "x_"}], "]"}], ":=", 
+     RowBox[{"Sum", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"fouriercoeff", "[", 
+         RowBox[{"f", ",", "m"}], "]"}], 
+        SuperscriptBox["E", 
+         RowBox[{
+          RowBox[{"-", "I"}], " ", "Pi", " ", "m", " ", 
+          RowBox[{"x", "/", "2"}]}]]}], ",", 
+       RowBox[{"{", 
+        RowBox[{"m", ",", 
+         RowBox[{"-", "n"}], ",", "n"}], "}"}]}], "]"}]}], ";"}]}]}]], "Input",
+ CellChangeTimes->{{3.776714756229327*^9, 3.776714782207021*^9}}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Demonstration", "Subsection",
+ CellChangeTimes->{{3.7766008885632277`*^9, 3.7766008904796133`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Taylor", " ", "Series"}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"Manipulate", "[", 
+   RowBox[{
+    RowBox[{"Show", "[", 
+     RowBox[{
+      RowBox[{"Plot", "[", 
+       RowBox[{
+        RowBox[{"f", "[", "x", "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"x", ",", 
+          RowBox[{
+           RowBox[{"-", "3"}], "Pi"}], ",", 
+          RowBox[{"3", "Pi"}]}], "}"}], ",", 
+        RowBox[{"PlotRange", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"-", "3"}], "Pi"}], ",", 
+             RowBox[{"3", "Pi"}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"-", "3"}], "Pi"}], ",", 
+             RowBox[{"3", "Pi"}]}], "}"}]}], "}"}]}], ",", 
+        RowBox[{"AspectRatio", "\[Rule]", "Automatic"}], ",", 
+        RowBox[{"PlotStyle", "\[Rule]", "Blue"}], ",", 
+        RowBox[{"Exclusions", "\[Rule]", 
+         RowBox[{"-", "1"}]}]}], "]"}], ",", 
+      RowBox[{"Plot", "[", 
+       RowBox[{
+        RowBox[{"Evaluate", "[", 
+         RowBox[{"taylor", "[", 
+          RowBox[{"f", ",", "n", ",", "c", ",", "x"}], "]"}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"x", ",", 
+          RowBox[{
+           RowBox[{"-", "3"}], "Pi"}], ",", 
+          RowBox[{"3", "Pi"}]}], "}"}], ",", 
+        RowBox[{"PlotRange", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"-", "3"}], "Pi"}], ",", 
+             RowBox[{"3", "Pi"}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"-", "3"}], "Pi"}], ",", 
+             RowBox[{"3", "Pi"}]}], "}"}]}], "}"}]}], ",", 
+        RowBox[{"AspectRatio", "\[Rule]", "Automatic"}], ",", 
+        RowBox[{"PlotStyle", "\[Rule]", "Red"}]}], "]"}], ",", 
+      RowBox[{"Graphics", "[", 
+       RowBox[{"{", 
+        RowBox[{"Black", ",", 
+         RowBox[{"PointSize", "[", "Large", "]"}], ",", 
+         RowBox[{"Point", "[", 
+          RowBox[{"{", 
+           RowBox[{"c", ",", 
+            RowBox[{"f", "[", "c", "]"}]}], "}"}], "]"}]}], "}"}], "]"}]}], 
+     "]"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"f", ",", "Sin"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Sin", "\[Rule]", "\"\<sin(x)\>\""}], ",", 
+        RowBox[{"Cos", "\[Rule]", "\"\<cos(x)\>\""}], ",", 
+        RowBox[{
+        "Exp", "\[Rule]", 
+         "\"\<\!\(\*SuperscriptBox[\(\[ExponentialE]\), \(x\)]\)\>\""}], ",", 
+        RowBox[{
+         RowBox[{"Function", "[", 
+          RowBox[{"x", ",", 
+           RowBox[{"Log", "[", 
+            RowBox[{"x", "+", "1"}], "]"}]}], "]"}], "\[Rule]", 
+         "\"\<ln(x+1)\>\""}], ",", 
+        RowBox[{
+         RowBox[{"Function", "[", 
+          RowBox[{"x", ",", 
+           RowBox[{"5", 
+            SuperscriptBox["E", 
+             RowBox[{
+              RowBox[{"-", 
+               SuperscriptBox["x", "2"]}], "/", "5"}]]}]}], "]"}], "\[Rule]", 
+         "\"\<5\!\(\*SuperscriptBox[\(\[ExponentialE]\), \
+\(\(-\*SuperscriptBox[\(x\), \(2\)]\)/5\)]\)\>\""}], ",", 
+        RowBox[{
+         RowBox[{"Function", "[", 
+          RowBox[{"x", ",", 
+           RowBox[{"0.0025", 
+            RowBox[{"(", 
+             RowBox[{"x", "+", "10"}], ")"}], 
+            RowBox[{"(", 
+             RowBox[{"x", "+", "1"}], ")"}], 
+            RowBox[{"(", 
+             RowBox[{"x", "-", "2"}], ")"}], 
+            RowBox[{"(", 
+             RowBox[{"x", "-", "7"}], ")"}]}]}], "]"}], "\[Rule]", 
+         "\"\<0.35\[VeryThinSpace]+0.16x-0.1875\!\(\*SuperscriptBox[\(x\), \
+\(2\)]\)+0.005\!\(\*SuperscriptBox[\(x\), \
+\(3\)]\)+0.0025\!\(\*SuperscriptBox[\(x\), \(4\)]\)\>\""}], ",", 
+        RowBox[{
+         RowBox[{"Function", "[", 
+          RowBox[{"x", ",", 
+           RowBox[{
+            RowBox[{"0.01", "x", 
+             RowBox[{"(", 
+              RowBox[{"x", "+", "5"}], ")"}], 
+             RowBox[{"(", 
+              RowBox[{"x", "-", "6"}], ")"}]}], "+", 
+            FractionBox["5", 
+             RowBox[{
+              SuperscriptBox[
+               RowBox[{"(", 
+                RowBox[{"x", "+", "2"}], ")"}], "2"], "+", "1"}]]}]}], "]"}], 
+         "\[Rule]", 
+         "\"\<-0.3x-0.01\!\(\*SuperscriptBox[\(x\), \
+\(2\)]\)+0.01\!\(\*SuperscriptBox[\(x\), \(3\)]\)+\!\(\*FractionBox[\(5\), \(\
+\*SuperscriptBox[\((x + 2)\), \(2\)] + 1\)]\)\>\""}], ",", 
+        RowBox[{
+         RowBox[{"Function", "[", 
+          RowBox[{"x", ",", 
+           FractionBox["1", 
+            RowBox[{"x", "+", "1"}]]}], "]"}], "\[Rule]", 
+         "\"\<\!\(\*FractionBox[\(1\), \(x + 1\)]\)\>\""}]}], "}"}]}], "}"}], 
+    ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"c", ",", "0"}], "}"}], ",", 
+      RowBox[{"-", "9.4"}], ",", "9.4", ",", "0.1"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"n", ",", "0", ",", "20", ",", "1"}], "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.7766008920271177`*^9, 3.7766008970415297`*^9}, {
+  3.776714788342057*^9, 3.7767147944720917`*^9}, {3.776714839076784*^9, 
+  3.776714846085717*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`c$$ = 0, $CellContext`f$$ = 
+    Sin, $CellContext`n$$ = 0, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`f$$], Sin}, {
+      Sin -> "sin(x)", Cos -> "cos(x)", Exp -> 
+       "\!\(\*SuperscriptBox[\(\[ExponentialE]\), \(x\)]\)", 
+       Function[$CellContext`x, 
+         Log[$CellContext`x + 1]] -> "ln(x+1)", 
+       Function[$CellContext`x, 5 E^((-$CellContext`x^2)/5)] -> 
+       "5\!\(\*SuperscriptBox[\(\[ExponentialE]\), \
+\(\(-\*SuperscriptBox[\(x\), \(2\)]\)/5\)]\)", 
+       Function[$CellContext`x, 
+         0.0025 ($CellContext`x + 10) ($CellContext`x + 1) ($CellContext`x - 
+          2) ($CellContext`x - 7)] -> 
+       "0.35\[VeryThinSpace]+0.16x-0.1875\!\(\*SuperscriptBox[\(x\), \
+\(2\)]\)+0.005\!\(\*SuperscriptBox[\(x\), \
+\(3\)]\)+0.0025\!\(\*SuperscriptBox[\(x\), \(4\)]\)", 
+       Function[$CellContext`x, 
+         0.01 $CellContext`x ($CellContext`x + 5) ($CellContext`x - 6) + 
+         5/(($CellContext`x + 2)^2 + 1)] -> 
+       "-0.3x-0.01\!\(\*SuperscriptBox[\(x\), \
+\(2\)]\)+0.01\!\(\*SuperscriptBox[\(x\), \(3\)]\)+\!\(\*FractionBox[\(5\), \(\
+\*SuperscriptBox[\((x + 2)\), \(2\)] + 1\)]\)", 
+       Function[$CellContext`x, 1/($CellContext`x + 1)] -> 
+       "\!\(\*FractionBox[\(1\), \(x + 1\)]\)"}}, {{
+       Hold[$CellContext`c$$], 0}, -9.4, 9.4, 0.1}, {
+      Hold[$CellContext`n$$], 0, 20, 1}}, Typeset`size$$ = {
+    360., {177., 183.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`f$30859$$ = 
+    False, $CellContext`c$30860$$ = 0, $CellContext`n$30861$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`c$$ = 0, $CellContext`f$$ = 
+        Sin, $CellContext`n$$ = 0}, "ControllerVariables" :> {
+        Hold[$CellContext`f$$, $CellContext`f$30859$$, False], 
+        Hold[$CellContext`c$$, $CellContext`c$30860$$, 0], 
+        Hold[$CellContext`n$$, $CellContext`n$30861$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> Show[
+        Plot[
+         $CellContext`f$$[$CellContext`x], {$CellContext`x, (-3) Pi, 3 Pi}, 
+         PlotRange -> {{(-3) Pi, 3 Pi}, {(-3) Pi, 3 Pi}}, AspectRatio -> 
+         Automatic, PlotStyle -> Blue, Exclusions -> -1], 
+        Plot[
+         Evaluate[
+          $CellContext`taylor[$CellContext`f$$, $CellContext`n$$, \
+$CellContext`c$$, $CellContext`x]], {$CellContext`x, (-3) Pi, 3 Pi}, 
+         PlotRange -> {{(-3) Pi, 3 Pi}, {(-3) Pi, 3 Pi}}, AspectRatio -> 
+         Automatic, PlotStyle -> Red], 
+        Graphics[{Black, 
+          PointSize[Large], 
+          Point[{$CellContext`c$$, 
+            $CellContext`f$$[$CellContext`c$$]}]}]], 
+      "Specifications" :> {{{$CellContext`f$$, Sin}, {
+         Sin -> "sin(x)", Cos -> "cos(x)", Exp -> 
+          "\!\(\*SuperscriptBox[\(\[ExponentialE]\), \(x\)]\)", 
+          Function[$CellContext`x, 
+            Log[$CellContext`x + 1]] -> "ln(x+1)", 
+          Function[$CellContext`x, 5 E^((-$CellContext`x^2)/5)] -> 
+          "5\!\(\*SuperscriptBox[\(\[ExponentialE]\), \
+\(\(-\*SuperscriptBox[\(x\), \(2\)]\)/5\)]\)", 
+          Function[$CellContext`x, 
+            0.0025 ($CellContext`x + 10) ($CellContext`x + 1) ($CellContext`x - 
+             2) ($CellContext`x - 7)] -> 
+          "0.35\[VeryThinSpace]+0.16x-0.1875\!\(\*SuperscriptBox[\(x\), \
+\(2\)]\)+0.005\!\(\*SuperscriptBox[\(x\), \
+\(3\)]\)+0.0025\!\(\*SuperscriptBox[\(x\), \(4\)]\)", 
+          Function[$CellContext`x, 
+            0.01 $CellContext`x ($CellContext`x + 5) ($CellContext`x - 6) + 
+            5/(($CellContext`x + 2)^2 + 1)] -> 
+          "-0.3x-0.01\!\(\*SuperscriptBox[\(x\), \
+\(2\)]\)+0.01\!\(\*SuperscriptBox[\(x\), \(3\)]\)+\!\(\*FractionBox[\(5\), \(\
+\*SuperscriptBox[\((x + 2)\), \(2\)] + 1\)]\)", 
+          Function[$CellContext`x, 1/($CellContext`x + 1)] -> 
+          "\!\(\*FractionBox[\(1\), \(x + 1\)]\)"}}, {{$CellContext`c$$, 
+          0}, -9.4, 9.4, 0.1}, {$CellContext`n$$, 0, 20, 1}}, "Options" :> {},
+       "DefaultOptions" :> {}],
+     ImageSizeCache->{411., {261., 267.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.776715221773468*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"Fourier", " ", "Series"}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"Manipulate", "[", 
+   RowBox[{
+    RowBox[{"Quiet", "[", 
+     RowBox[{"Show", "[", 
+      RowBox[{"Plot", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"f", "[", "x", "]"}], ",", 
+          RowBox[{"Evaluate", "[", 
+           RowBox[{"fourier", "[", 
+            RowBox[{"f", ",", "n", ",", "x"}], "]"}], "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"x", ",", 
+          RowBox[{"-", "4"}], ",", "4"}], "}"}], ",", 
+        RowBox[{"PlotRange", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "4"}], ",", "4"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"-", "4"}], ",", "4"}], "}"}]}], "}"}]}], ",", 
+        RowBox[{"AspectRatio", "\[Rule]", "Automatic"}], ",", 
+        RowBox[{"PlotStyle", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{"Blue", ",", "Red"}], "}"}]}]}], "]"}], "]"}], "]"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"f", ",", "Identity"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"Identity", "\[Rule]", "\"\<x\>\""}], ",", 
+        RowBox[{
+         RowBox[{"Function", "[", 
+          RowBox[{"x", ",", 
+           RowBox[{"3", 
+            SuperscriptBox["E", 
+             RowBox[{
+              RowBox[{"-", "3"}], 
+              SuperscriptBox["x", "2"]}]]}]}], "]"}], "\[Rule]", 
+         "\"\<3\!\(\*SuperscriptBox[\(\[ExponentialE]\), \(\(-3\) \
+\*SuperscriptBox[\(x\), \(2\)]\)]\)\>\""}], ",", 
+        RowBox[{
+        "ArcTan", "\[Rule]", 
+         "\"\<\!\(\*SuperscriptBox[\(tan\), \(-1\)]\)(x)\>\""}], ",", 
+        RowBox[{
+         RowBox[{"Function", "[", 
+          RowBox[{"x", ",", 
+           RowBox[{
+            RowBox[{"SquareWave", "[", 
+             RowBox[{"x", "/", "4"}], "]"}], "+", "1"}]}], "]"}], "\[Rule]", 
+         "\"\<Square Wave\>\""}], ",", 
+        RowBox[{
+         RowBox[{"Function", "[", 
+          RowBox[{"x", ",", 
+           RowBox[{"2", 
+            RowBox[{"UnitStep", "[", "x", "]"}]}]}], "]"}], "\[Rule]", 
+         "\"\<Unit Step\>\""}], ",", 
+        RowBox[{
+         RowBox[{"Function", "[", 
+          RowBox[{"x", ",", 
+           RowBox[{
+            RowBox[{"TriangleWave", "[", 
+             RowBox[{"x", "/", "4"}], "]"}], "+", "1"}]}], "]"}], "\[Rule]", 
+         "\"\<Triangle Wave\>\""}], ",", 
+        RowBox[{
+         RowBox[{"Function", "[", 
+          RowBox[{"x", ",", 
+           RowBox[{"2", 
+            RowBox[{"SawtoothWave", "[", 
+             RowBox[{"x", "/", "2"}], "]"}]}]}], "]"}], "\[Rule]", 
+         "\"\<Sawtooth Wave\>\""}], ",", 
+        RowBox[{
+         RowBox[{"Function", "[", 
+          RowBox[{"x", ",", 
+           RowBox[{"Piecewise", "[", 
+            RowBox[{
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{
+                  FractionBox["3", "4"], 
+                  SuperscriptBox["x", "2"]}], ",", 
+                 RowBox[{
+                  RowBox[{"-", "2"}], "\[LessEqual]", "x", "<", "0"}]}], 
+                "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{
+                  FractionBox["1", "2"], "x"}], ",", 
+                 RowBox[{"0", "\[LessEqual]", "x", "\[LessEqual]", "2"}]}], 
+                "}"}]}], "}"}], ",", "0"}], "]"}]}], "]"}], "\[Rule]", 
+         "\"\<Piecewise Function\>\""}]}], "}"}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"n", ",", "1"}], "}"}], ",", "0", ",", "10", ",", "1"}], 
+     "}"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.7767148520628047`*^9, 3.776714895334985*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`f$$ = Identity, $CellContext`n$$ = 1, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`f$$], Identity}, {
+      Identity -> "x", Function[$CellContext`x, 3 E^((-3) $CellContext`x^2)] -> 
+       "3\!\(\*SuperscriptBox[\(\[ExponentialE]\), \(\(-3\) \*SuperscriptBox[\
+\(x\), \(2\)]\)]\)", ArcTan -> "\!\(\*SuperscriptBox[\(tan\), \(-1\)]\)(x)", 
+       Function[$CellContext`x, SquareWave[$CellContext`x/4] + 1] -> 
+       "Square Wave", Function[$CellContext`x, 2 UnitStep[$CellContext`x]] -> 
+       "Unit Step", 
+       Function[$CellContext`x, TriangleWave[$CellContext`x/4] + 1] -> 
+       "Triangle Wave", 
+       Function[$CellContext`x, 2 SawtoothWave[$CellContext`x/2]] -> 
+       "Sawtooth Wave", Function[$CellContext`x, 
+         Piecewise[{{(3/4) $CellContext`x^2, 
+            
+            Inequality[-2, LessEqual, $CellContext`x, Less, 0]}, {(1/
+             2) $CellContext`x, 0 <= $CellContext`x <= 2}}, 0]] -> 
+       "Piecewise Function"}}, {{
+       Hold[$CellContext`n$$], 1}, 0, 10, 1}}, Typeset`size$$ = {
+    360., {179., 185.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`f$31016$$ = 
+    False, $CellContext`n$31017$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`f$$ = Identity, $CellContext`n$$ = 1}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`f$$, $CellContext`f$31016$$, False], 
+        Hold[$CellContext`n$$, $CellContext`n$31017$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> Quiet[
+        Show[
+         Plot[{
+           $CellContext`f$$[$CellContext`x], 
+           Evaluate[
+            $CellContext`fourier[$CellContext`f$$, $CellContext`n$$, \
+$CellContext`x]]}, {$CellContext`x, -4, 4}, PlotRange -> {{-4, 4}, {-4, 4}}, 
+          AspectRatio -> Automatic, PlotStyle -> {Blue, Red}]]], 
+      "Specifications" :> {{{$CellContext`f$$, Identity}, {
+         Identity -> "x", 
+          Function[$CellContext`x, 3 E^((-3) $CellContext`x^2)] -> 
+          "3\!\(\*SuperscriptBox[\(\[ExponentialE]\), \(\(-3\) \
+\*SuperscriptBox[\(x\), \(2\)]\)]\)", ArcTan -> 
+          "\!\(\*SuperscriptBox[\(tan\), \(-1\)]\)(x)", 
+          Function[$CellContext`x, SquareWave[$CellContext`x/4] + 1] -> 
+          "Square Wave", Function[$CellContext`x, 2 UnitStep[$CellContext`x]] -> 
+          "Unit Step", 
+          Function[$CellContext`x, TriangleWave[$CellContext`x/4] + 1] -> 
+          "Triangle Wave", 
+          Function[$CellContext`x, 2 SawtoothWave[$CellContext`x/2]] -> 
+          "Sawtooth Wave", Function[$CellContext`x, 
+            Piecewise[{{(3/4) $CellContext`x^2, 
+               
+               Inequality[-2, LessEqual, $CellContext`x, Less, 0]}, {(1/
+                2) $CellContext`x, 0 <= $CellContext`x <= 2}}, 0]] -> 
+          "Piecewise Function"}}, {{$CellContext`n$$, 1}, 0, 10, 1}}, 
+      "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{411., {243., 249.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.7767152238288107`*^9}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{759, 833},
+WindowMargins->{{94, Automatic}, {Automatic, 43}},
+FrontEndVersion->"10.4 for Microsoft Windows (64-bit) (April 11, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 176, 2, 144, "Title"],
+Cell[759, 26, 156, 2, 30, "Text"],
+Cell[CellGroupData[{
+Cell[940, 32, 99, 1, 63, "Section"],
+Cell[1042, 35, 959, 19, 125, "Text"],
+Cell[2004, 56, 512, 8, 106, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2553, 69, 91, 1, 63, "Section"],
+Cell[CellGroupData[{
+Cell[2669, 74, 102, 1, 43, "Subsection"],
+Cell[2774, 77, 1162, 33, 97, "Input"],
+Cell[3939, 112, 1872, 57, 163, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[5848, 174, 105, 1, 35, "Subsection"],
+Cell[CellGroupData[{
+Cell[5978, 179, 5270, 143, 391, "Input"],
+Cell[11251, 324, 4944, 96, 545, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16232, 425, 3868, 106, 307, "Input"],
+Cell[20103, 533, 3880, 75, 509, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
