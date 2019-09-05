@@ -44,7 +44,7 @@ The main function of this demonstration allows the user to specify a function an
 
 ### Monte Carlo Method
 
-<img src="images/monte-carlo-method-1.png" alt="Monte Carlo Method Image 1" width="300"/> <img src="images/monte-carlo-method-2.png" alt="Monte Carlo Method Image 2" width="300"/>
+<img src="images/monte-carlo-method-1.png" alt="Monte Carlo Method Image 1" height="200"/> <img src="images/monte-carlo-method-2.png" alt="Monte Carlo Method Image 2" height="200"/>
 
 Created 9/13/2016
 
