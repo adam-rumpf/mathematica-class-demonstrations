@@ -7,6 +7,7 @@ A large collection of _Mathematica_ demonstrations written by Adam Rumpf, sorted
 * [Overview](#overview)
 * [Calculus, Differential Equations, and Analysis](#calculus-differential-equations-and-analysis)
   * [Complex Newton's Method](#complex-newtons-method)
+  * [Crowd Escape Panic Model](#crowd-escape-panic-model)
   * [Monte Carlo Method](#monte-carlo-method)
   * [Taylor and Fourier Series Approximations](#taylor-and-fourier-series-approximations)
   * [Vector Kinematics](#vector-kinematics)
@@ -48,6 +49,22 @@ Created 2/23/2016
 This is a demonstration of how [Newton's Method](https://en.wikipedia.org/wiki/Newton%27s_method) works for complex-valued functions. Most Calculus students will learn about Newton's Method for finding roots of real-valued functions, and may be surprised to learn that it also works for complex numbers. They may also learn that the method does not necessarily always converge to the root nearest the initial guess due to "overshooting" in unexpected ways. For real numbers this phenomenon is not very interesting to look at, but for the complex numbers we can generate fascinating and beautiful fractal basins of attraction.
 
 The main function of this demonstration allows the user to specify a function and a few other parameters, and outputs a coloring of a portion of the complex plane demonstrating the basins of attraction of the different roots. Note that this may take a while to calculate for some large cases with many nodes. For this reason I would not recommend running the entire notebook, but rather running the initialization code and then evaluating one function at a time.
+
+### Crowd Escape Panic Model
+
+<img src="images/crowd-escape-panic-1.png" alt="Crowd Fluid Dynamics Image 1" width="300"/> <img src="images/crowd-escape-panic-2.png" alt="Crowd Fluid Dynamics Image 2" width="300"/>
+
+Created 5/1/2018
+
+[Notebook Link](../master/calc-diffeq-analysis/crowd-escape-panic.nb)
+
+This is an interactive version of a model described in the following 2000 [article](https://www.nature.com/articles/35035023):
+
+> D. Helbing, I. Farkas, and T. Vicsek. Simulating dynamical features of escape panic. _Nature_, 407:487-490, 2000.
+
+The article describes a dynamical systems model for crowds of people attempting to run to a building exit during a panic. The model is similar to those used in fluid dynamics. Each person is treated as a particle with a certain radius. Each particle attempts to move toward the exit, but they also repel each other if they get too close (incredibly strongly if they are within crush distance of each other). For each particle we can define a total force function that includes its own desired movement, repulsion from other particles and obstacles, body forces from intersecting particles and obstacles, and sliding friction past particles and obstacles. The total force can then be used to define the particle's acceleration vector, which in turn defines a system of ordinary differential equations to determine each particle's position as a function of time.
+
+This demonstration implements the model and displays an animation of the crowd as it tries to reach the exit. Controls allow the user to change the layout of the room, including obstacles and the size of the exit. Particles are colored according to the amount of crush force experienced from the surrounding particles, becoming more red as the force increases. A plot is also displayed in the corner of the animation, with the green line indicating the number of successful exits and the red line indicating the total crush force.
 
 ### Monte Carlo Method
 
