@@ -21,6 +21,7 @@ A large collection of _Mathematica_ demonstrations written by Adam Rumpf, sorted
 * [Just for Fun](#just-for-fun)
   * [Domino and Tromino Tiling](#domino-and-tromino-tiling)
   * [Dragon Curve](#dragon-curve)
+  * [Fractal Shoulder Angels and Devils](#fractal-shoulder-angels-and-devils)
   * [Pythagoras Tree](#pythagoras-tree)
   * [Spirograph](#spirograph)
 
@@ -218,9 +219,21 @@ One of the several equivalent constructions of the dragon curve involves taking 
 
 This Notebook defines a function that applies a recursive algorithm to draw a specified generation of dragon curve. Due to the recursive nature, the computational time increases exponentially as the generation number increases, so I would not recommend trying to draw anything past approximately 18 generations. I would also not recomment running the entire notebook at once, and instead running only specific blocks one-at-a-time.
 
+### Fractal Shoulder Angels and Devils
+
+<img src="images/fractal-angels-devils-1.png" alt="Fractal Shoulder Angels and Devils Image 1" width="300"/> <img src="images/fractal-angels-devils-2.png" alt="Fractal Shoulder Angels and Devils Image 2" width="300"/>
+
+Created 3/15/2016
+
+[Notebook Link](../master/fun/fractal-angels-devils.nb)
+
+This is a joke based on the shoulder angel/devil trope for representing a character's internal struggle over an ethical dilemma. Occasionally in films the idea of a shoulder angel is toyed with by giving the shoulder angel, itself, its own tiny shoulder angel and devil. I thought it would be funny to carry that out to its logical conclusion.
+
+The program generates fractal arrangements of shoulder angels and devils with adjustable parameters, including the relative scaling and position of each generation.
+
 ### Pythagoras Tree
 
-<img src="images/pythagoras-tree-1.png" alt="Pythagoras Tree Image 1" width="300"/> <img src="images/pythagoras-tree-2.png" alt="Pythagoras Tree Image 1" width="300"/>
+<img src="images/pythagoras-tree-1.png" alt="Pythagoras Tree Image 1" width="300"/> <img src="images/pythagoras-tree-2.png" alt="Pythagoras Tree Image 2" width="300"/>
 
 Created 1/6/2016
 
