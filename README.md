@@ -43,7 +43,7 @@ Many of the files in this folder are things that I wrote to show my calculus stu
 
 ### Complex Newton's Method
 
-<img src="images/complex-newtons-method-1.png" alt="Complex Newton's Method Image 1" width="300"/> <img src="images/complex-newtons-method-2.png" alt="Complex Newton's Method Image 2" width="300"/>
+<img src="images/complex-newtons-method-1.png" alt="Complex Newton's Method Image 1" height="300"/> <img src="images/complex-newtons-method-2.png" alt="Complex Newton's Method Image 2" height="300"/>
 
 Created 2/23/2016
 
@@ -55,7 +55,7 @@ The main function of this demonstration allows the user to specify a function an
 
 ### Complex Operations
 
-<img src="images/complex-operations-1.png" alt="Complex Operations Image 1" width="300"/> <img src="images/complex-operations-2.png" alt="Complex Operations Image 2" width="300"/>
+<img src="images/complex-operations-1.png" alt="Complex Operations Image 1" height="300"/> <img src="images/complex-operations-2.png" alt="Complex Operations Image 2" height="300"/>
 
 Created 3/20/2017
 
@@ -65,7 +65,7 @@ This is a lightweight visual demonstration of how familiar mathematical operatio
 
 ### Crowd Escape Panic Model
 
-<img src="images/crowd-escape-panic-1.png" alt="Crowd Fluid Dynamics Image 1" width="300"/> <img src="images/crowd-escape-panic-2.png" alt="Crowd Fluid Dynamics Image 2" width="300"/>
+<img src="images/crowd-escape-panic-1.png" alt="Crowd Fluid Dynamics Image 1" height="200"/> <img src="images/crowd-escape-panic-2.png" alt="Crowd Fluid Dynamics Image 2" height="200"/>
 
 Created 5/1/2018
 
@@ -93,7 +93,7 @@ This Notebook includes a visual demonstration of the Monte Carlo method applied 
 
 ### Taylor and Fourier Series Approximations
 
-<img src="images/taylor-series-1.png" alt="Taylor Series Image 1" width="300"/> <img src="images/fourier-series-1.png" alt="Fourier Series Image 1" width="300"/>
+<img src="images/taylor-series-1.png" alt="Taylor Series Image 1" height="300"/> <img src="images/fourier-series-1.png" alt="Fourier Series Image 1" height="300"/>
 
 Created 11/6/2017
 
@@ -105,7 +105,7 @@ This program includes two Manipulate environments: one for Taylor series and one
 
 ### Vector Kinematics
 
-<img src="images/vector-kinematics-1.png" alt="Vector Kinematics Image 1" width="300"/> <img src="images/vector-kinematics-2.png" alt="Vector Kinematics Image 2" width="300"/>
+<img src="images/vector-kinematics-1.png" alt="Vector Kinematics Image 1" height="300"/> <img src="images/vector-kinematics-2.png" alt="Vector Kinematics Image 2" height="300"/>
 
 Created 8/28/2017
 
@@ -119,7 +119,7 @@ Number theory is not really my area, so most of the files in this folder are rel
 
 ### Pascal's Triangle Fractals
 
-<img src="images/pascals-triangle-fractal-1.png" alt="Pascal's Triangle Fractals Image 1" width="300"/> <img src="images/pascals-triangle-fractal-2.png" alt="Pascal's Triangle Fractals Image 2" width="300"/>
+<img src="images/pascals-triangle-fractal-1.png" alt="Pascal's Triangle Fractals Image 1" height="300"/> <img src="images/pascals-triangle-fractal-2.png" alt="Pascal's Triangle Fractals Image 2" height="300"/>
 
 Created 6/28/2015
 
@@ -133,15 +133,15 @@ This program generates an instance of Pascal's triangle with the specified numbe
 
 ### Recamán's Sequence
 
-<img src="images/recaman-1.png" alt="Recamán's Sequence Image 1" width="300"/> <img src="images/recaman-2.png" alt="Recamán's Sequence Image 2" width="300"/>
+<img src="images/recaman-1.png" alt="Recamán's Sequence Image 1" height="150"/> <img src="images/recaman-2.png" alt="Recamán's Sequence Image 2" height="150"/>
 
 Created 8/25/2018
 
 [Notebook Link](../master/number-theory/recamans-sequence.nb)
 
-Recamán's Sequence (sequence [A005132](https://oeis.org/A005132) in the [OEIS](oeis.org)) is defined by an iterative process beginning at _0_, at step _n=0_. In step _n_, we either take _n_ steps backward or _n_ steps forward. We go backward if doing so would take us to a nonnegative number that has not yet been visited, and otherwise we go forward. It is conjectured that this sequence includes every nonnegative integer exactly once.
+Recamán's Sequence (sequence [A005132](https://oeis.org/A005132) in the [OEIS](oeis.org)) is defined by an iterative process beginning at 0, at step _n=0_. In step _n_, we either take _n_ steps backward or _n_ steps forward. We go backward if doing so would take us to a nonnegative number that has not yet been visited, and otherwise we go forward. It is conjectured that this sequence includes every nonnegative integer exactly once.
 
-This program is mostly meant for drawing pictures of Recamán's Sequence. Because each step is _1_ unit larger than the preceding step, the most common way to draw it is using semicircular arcs to trace the path of the sequence on the number line. Doing so leads to interesting spiral patterns that illustrate the phases of rapid increase and of repeatedly bouncing back and forth to fill in areas that were previously unexplored.
+This program is mostly meant for drawing pictures of Recamán's Sequence. Because each step is 1 unit larger than the preceding step, the most common way to draw it is using semicircular arcs to trace the path of the sequence on the number line. Doing so leads to interesting spiral patterns that illustrate the phases of rapid increase and of repeatedly bouncing back and forth to fill in areas that were previously unexplored.
 
 ### Remainder Graphs
 
@@ -167,7 +167,7 @@ Graph theory is close to my area of research. It is also a mathematical field th
 
 ### Dijkstra's Algorithm and A* Search
 
-<img src="images/dijkstras-algorithm-astar-search-1.png" alt="Dijkstra's Algorithm and A* Search Image 1" width="300"/> <img src="images/dijkstras-algorithm-astar-search-2.png" alt="Dijkstra's Algorithm and A* Search Image 2" width="300"/>
+<img src="images/dijkstras-algorithm-astar-search-1.png" alt="Dijkstra's Algorithm and A* Search Image 1" height="300"/> <img src="images/dijkstras-algorithm-astar-search-2.png" alt="Dijkstra's Algorithm and A* Search Image 2" height="300"/>
 
 Created 11/8/2017
 
@@ -183,7 +183,7 @@ A* search is a modified version of Dijkstra's algorithm which explicitly attempt
 
 ### Graph Untangler
 
-<img src="images/graph-untangler-1.png" alt="Graph Untangler Image 1" width="300"/> <img src="images/graph-untangler-2.png" alt="Graph Untangler Image 2" width="300"/>
+<img src="images/graph-untangler-1.png" alt="Graph Untangler Image 1" height="300"/> <img src="images/graph-untangler-2.png" alt="Graph Untangler Image 2" height="300"/>
 
 Created 2/5/2016
 
@@ -199,7 +199,7 @@ The files in this folder were simply made out of personal interest. Many of them
 
 ### Bézier Curves
 
-<img src="images/bezier-curves-1.png" alt="Bézier Curves Image 1" width="300"/> <img src="images/bezier-curves-2.png" alt="Bézier Curves Image 2" width="300"/>
+<img src="images/bezier-curves-1.png" alt="Bézier Curves Image 1" height="300"/> <img src="images/bezier-curves-2.png" alt="Bézier Curves Image 2" height="300"/>
 
 Created 9/8/2017
 
@@ -211,7 +211,7 @@ There are some interesting mathematical properties and applications of Bézier c
 
 ### Domino and Tromino Tiling
 
-<img src="images/domino-tiling-1.png" alt="Domino Tiling Image 1" width="300"/> <img src="images/tromino-tiling-1.png" alt="Tromino Tiling Image 1" width="300"/>
+<img src="images/domino-tiling-1.png" alt="Domino Tiling Image 1" height="300"/> <img src="images/tromino-tiling-1.png" alt="Tromino Tiling Image 1" height="300"/>
 
 Created 10/16/2017
 
@@ -257,7 +257,7 @@ The program generates fractal arrangements of shoulder angels and devils with ad
 
 ### Pythagoras Tree
 
-<img src="images/pythagoras-tree-1.png" alt="Pythagoras Tree Image 1" width="300"/> <img src="images/pythagoras-tree-2.png" alt="Pythagoras Tree Image 2" width="300"/>
+<img src="images/pythagoras-tree-1.png" alt="Pythagoras Tree Image 1" height="200"/> <img src="images/pythagoras-tree-2.png" alt="Pythagoras Tree Image 2" height="200"/>
 
 Created 1/6/2016
 
@@ -269,8 +269,7 @@ There is not much mathematical content here. The main purpose of the program is 
 
 ### Spirograph
 
-<img src="images/spirograph-1.png" alt="Spirograph Image 1" width="150"/> <img src="images/spirograph-2.png" alt="Spirograph Image 2" width="150"/>
-<img src="images/spirograph-3.png" alt="Spirograph Image 3" width="150"/> <img src="images/spirograph-4.png" alt="Spirograph Image 4" width="150"/>
+<img src="images/spirograph-1.png" alt="Spirograph Image 1" height="150"/> <img src="images/spirograph-2.png" alt="Spirograph Image 2" height="150"/> <img src="images/spirograph-3.png" alt="Spirograph Image 3" height="150"/> <img src="images/spirograph-4.png" alt="Spirograph Image 4" height="150"/>
 
 Created 10/27/2016
 
