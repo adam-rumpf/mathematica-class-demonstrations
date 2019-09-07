@@ -20,6 +20,7 @@ A large collection of _Mathematica_ demonstrations written by Adam Rumpf, sorted
   * [Dijkstra's Algorithm and A* Search](#dijkstras-algorithm-and-a-search)
   * [Graph Untangler](#graph-untangler)
 * [Just for Fun](#just-for-fun)
+  * [Bézier Curves](#bézier-curves)
   * [Domino and Tromino Tiling](#domino-and-tromino-tiling)
   * [Dragon Curve](#dragon-curve)
   * [Fractal Shoulder Angels and Devils](#fractal-shoulder-angels-and-devils)
@@ -196,6 +197,18 @@ This file contains a very simple function that accepts a _Mathematica_ Graph obj
 
 The files in this folder were simply made out of personal interest. Many of them are not serious attempts to demonstrate any mathematical concept, and are instead just made to solve an interesting puzzle or generate an interesting figure. I have still shown a few to my students, however, as demonstration of some things that can be done in _Mathematica_.
 
+### Bézier Curves
+
+<img src="images/bezier-curves-1.png" alt="Bézier Curves Image 1" width="300"/> <img src="images/bezier-curves-2.png" alt="Bézier Curves Image 2" width="300"/>
+
+Created 9/8/2017
+
+[Notebook Link](../master/fun/bezier-curves.nb)
+
+[Bézier Curves](https://en.wikipedia.org/wiki/B%C3%A9zier_curve) are parametric curves defined by a sequence of control points. Most people would be familiar with them from simple graphics programs like MS Paint. They are commonly used for drawing smooth curves that are easily adjustable by clicking and dragging the control points. The process of drawing a Bézier curve can be imagined by moving points at constant speed between each pair of control points, defining a new, smaller set of moving control points. This process is then repeated with the new set of even fewer control points, repeating until reaching only a single control point. The path of this single control point is the curve.
+
+There are some interesting mathematical properties and applications of Bézier curves, but my main interest was in watching their drawing process. This demonstration animates the process of drawing a Bézier curve for a given set of control points. I am not sure whether the program, itself, has much educational value, but it does look really cool.
+
 ### Domino and Tromino Tiling
 
 <img src="images/domino-tiling-1.png" alt="Domino Tiling Image 1" width="300"/> <img src="images/tromino-tiling-1.png" alt="Tromino Tiling Image 1" width="300"/>
@@ -232,7 +245,7 @@ This Notebook defines a function that applies a recursive algorithm to draw a sp
 
 ### Fractal Shoulder Angels and Devils
 
-<img src="images/fractal-angels-devils-1.png" alt="Fractal Shoulder Angels and Devils Image 1" height="300"/> <img src="images/fractal-angels-devils-2.png" alt="Fractal Shoulder Angels and Devils Image 2" height="300"/>
+<img src="images/fractal-angels-devils-1.png" alt="Fractal Shoulder Angels and Devils Image 1" height="200"/> <img src="images/fractal-angels-devils-2.png" alt="Fractal Shoulder Angels and Devils Image 2" height="200"/>
 
 Created 3/15/2016
 
