@@ -7,6 +7,7 @@ A large collection of _Mathematica_ demonstrations written by Adam Rumpf, sorted
 * [Overview](#overview)
 * [Calculus, Differential Equations, and Analysis](#calculus-differential-equations-and-analysis)
   * [Complex Newton's Method](#complex-newtons-method)
+  * [Complex Operations](#complex-operations)
   * [Crowd Escape Panic Model](#crowd-escape-panic-model)
   * [Monte Carlo Method](#monte-carlo-method)
   * [Taylor and Fourier Series Approximations](#taylor-and-fourier-series-approximations)
@@ -50,6 +51,16 @@ Created 2/23/2016
 This is a demonstration of how [Newton's Method](https://en.wikipedia.org/wiki/Newton%27s_method) works for complex-valued functions. Most Calculus students will learn about Newton's Method for finding roots of real-valued functions, and may be surprised to learn that it also works for complex numbers. They may also learn that the method does not necessarily always converge to the root nearest the initial guess due to "overshooting" in unexpected ways. For real numbers this phenomenon is not very interesting to look at, but for the complex numbers we can generate fascinating and beautiful fractal basins of attraction.
 
 The main function of this demonstration allows the user to specify a function and a few other parameters, and outputs a coloring of a portion of the complex plane demonstrating the basins of attraction of the different roots. Note that this may take a while to calculate for some large cases with many nodes. For this reason I would not recommend running the entire notebook, but rather running the initialization code and then evaluating one function at a time.
+
+### Complex Operations
+
+<img src="images/complex-operations-1.png" alt="Complex Operations Image 1" width="300"/> <img src="images/complex-operations-2.png" alt="Complex Operations Image 2" width="300"/>
+
+Created 3/20/2017
+
+[Notebook Link](../master/calc-diffeq-analysis/complex-operations.nb)
+
+This is a lightweight visual demonstration of how familiar mathematical operations (addition, multiplication, trigonometric functions, etc.) affect the complex numbers, displayed as vectors in the complex plane. The user can select an operation or function and then click and drag the input vector or vectors to see how this affects the output vector. In particular, it is interesting to look at how changing just the magnitude or just the angle of an input vector affects the output.
 
 ### Crowd Escape Panic Model
 
@@ -221,7 +232,7 @@ This Notebook defines a function that applies a recursive algorithm to draw a sp
 
 ### Fractal Shoulder Angels and Devils
 
-<img src="images/fractal-angels-devils-1.png" alt="Fractal Shoulder Angels and Devils Image 1" width="300"/> <img src="images/fractal-angels-devils-2.png" alt="Fractal Shoulder Angels and Devils Image 2" width="300"/>
+<img src="images/fractal-angels-devils-1.png" alt="Fractal Shoulder Angels and Devils Image 1" height="300"/> <img src="images/fractal-angels-devils-2.png" alt="Fractal Shoulder Angels and Devils Image 2" height="300"/>
 
 Created 3/15/2016
 
