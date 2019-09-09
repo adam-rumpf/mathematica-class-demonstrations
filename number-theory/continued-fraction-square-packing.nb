@@ -1,0 +1,919 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.4' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     34823,        911]
+NotebookOptionsPosition[     33091,        849]
+NotebookOutlinePosition[     33435,        864]
+CellTagsIndexPosition[     33392,        861]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Continued Fraction Square Packing", "Title",
+ CellChangeTimes->{{3.776600831050974*^9, 3.7766008318453026`*^9}, {
+  3.776980149167788*^9, 3.7769801527598066`*^9}, {3.7769843138385096`*^9, 
+  3.776984315947837*^9}}],
+
+Cell["Adam Rumpf, 5/23/2018", "Text",
+ CellChangeTimes->{{3.7766008347881403`*^9, 3.776600838290375*^9}, {
+  3.7769801364390087`*^9, 3.7769801466747713`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section",
+ CellChangeTimes->{{3.7766008459498987`*^9, 3.776600848547045*^9}}],
+
+Cell[TextData[{
+ "There is a geometric interpretation of continued fractions where, to \
+represent a number ",
+ Cell[BoxData[
+  FormBox["q", TraditionalForm]]],
+ ", we begin with a ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"1", "\[Times]", "q"}], TraditionalForm]]],
+ " rectangle and try filling it from left to right with ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"1", "\[Times]", "1"}], TraditionalForm]]],
+ " squares (this represents \[OpenCurlyDoubleQuote]skimming off\
+\[CloseCurlyDoubleQuote] the integer part of ",
+ Cell[BoxData[
+  FormBox["q", TraditionalForm]]],
+ "). This may leave some space on the right, resulting in a skinnier ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"1", "\[Times]", 
+    RowBox[{"(", 
+     RowBox[{"q", "-", 
+      RowBox[{"\[LeftFloor]", "q", "\[RightFloor]"}]}], ")"}]}], 
+   TraditionalForm]]],
+ " rectangle. Then fill it from top to bottom with ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"q", "-", 
+      RowBox[{"\[LeftFloor]", "q", "\[RightFloor]"}]}], ")"}], "\[Times]", 
+    RowBox[{"(", 
+     RowBox[{"q", "-", 
+      RowBox[{"\[LeftFloor]", "q", "\[RightFloor]"}]}], ")"}]}], 
+   TraditionalForm]]],
+ " rectangles (this represents \[OpenCurlyDoubleQuote]skimming off\
+\[CloseCurlyDoubleQuote] the integer part of ",
+ Cell[BoxData[
+  FormBox[
+   FractionBox["1", 
+    RowBox[{"q", "-", 
+     RowBox[{"\[LeftFloor]", "q", "\[RightFloor]"}]}]], TraditionalForm]]],
+ "). This may leave some space underneath. The process continues on like \
+this. If ",
+ Cell[BoxData[
+  FormBox["q", TraditionalForm]]],
+ " is irrational, the process never ends, so we have to just pick a finite \
+number of layers to draw."
+}], "Text",
+ CellChangeTimes->{{3.776600856235587*^9, 3.776600860481224*^9}, {
+  3.776982378665561*^9, 3.7769823849305663`*^9}}],
+
+Cell["\<\
+We can program this as an iterative process, where in each itration we begin \
+by knowing the coordinates of the top left corner, whether we are moving \
+right or down, and the amount of vertical or horizontal space to fill. If we \
+ever end up with zero space left over, we terminate early. Rather than always \
+moving down and to the right, we can continue to rotate clockwise to end up \
+with a spiral similar to the golden spiral.\
+\>", "Text",
+ CellChangeTimes->{{3.7769824192837067`*^9, 3.7769824452226496`*^9}}],
+
+Cell[TextData[{
+ "The main function defined below is called ",
+ StyleBox["boxes[]", "Code"],
+ ". It accepts two arguments: a number ",
+ Cell[BoxData[
+  FormBox["q", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " to approximate, and a number of iterations ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " to conduct. The output is a graphic of packed boxes corresponding to the \
+continued fraction representation of ",
+ Cell[BoxData[
+  FormBox["q", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", truncated after ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " iterations. All boxes generated within the same iteration are the same \
+size and color, which begins red and shifts towards violet in later \
+iterations. Any empty space left due to truncation error is gray."
+}], "Text",
+ CellChangeTimes->{{3.776982503368167*^9, 3.7769827075599003`*^9}, {
+  3.7769834425683856`*^9, 3.7769834450405807`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Code", "Section",
+ CellChangeTimes->{{3.776600864408964*^9, 3.7766008650447807`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Initialization", "Subsection",
+ CellChangeTimes->{{3.776600871130811*^9, 3.776600873087188*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"unit", " ", "vectors"}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{
+     RowBox[{"dir", "[", "0", "]"}], "=", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", "0"}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"dir", "[", "1", "]"}], "=", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", 
+       RowBox[{"-", "1"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"dir", "[", "2", "]"}], "=", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"-", "1"}], ",", "0"}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"dir", "[", "3", "]"}], "=", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "1"}], "}"}]}], ";"}]}]}]], "Input",
+ CellChangeTimes->{{3.7360800570146027`*^9, 3.736080124627257*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"given", " ", "a", " ", "starting", " ", "coordinate"}], ",", " ", 
+    RowBox[{"a", " ", "direction"}], ",", " ", 
+    RowBox[{"and", " ", "nonzero", " ", "fill", " ", "dimensions"}], ",", " ", 
+    RowBox[{
+    "generates", " ", "a", " ", "list", " ", "of", " ", "Rectangle", " ", 
+     "objects", " ", "filling", " ", "in", " ", "the", " ", "given", " ", 
+     "space", " ", "with", " ", "unit", " ", "boxes"}], ",", " ", 
+    RowBox[{
+    "and", " ", "also", " ", "outputs", " ", "the", " ", "new", " ", 
+     "starting", " ", "point"}], ",", " ", 
+    RowBox[{"leftover", " ", "dimensions"}], ",", " ", 
+    RowBox[{"and", " ", "direciton"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"boxgen", "[", 
+    RowBox[{"start_", ",", "d_", ",", "dim_"}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"rec", ",", "size", ",", "num", ",", "end", ",", "newdim", ",", 
+       RowBox[{"\[Epsilon]", "=", "0.001"}]}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"size", "=", 
+       RowBox[{"Min", "[", "dim", "]"}]}], ";", 
+      RowBox[{"(*", " ", 
+       RowBox[{"box", " ", "size"}], " ", "*)"}], "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"size", ">", "0"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"(*", " ", "nondegenerate", " ", "*)"}], 
+        "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"num", "=", 
+          RowBox[{"Quotient", "[", 
+           RowBox[{
+            RowBox[{"Max", "[", "dim", "]"}], ",", "size"}], "]"}]}], ";", 
+         RowBox[{"(*", " ", 
+          RowBox[{"number", " ", "of", " ", "boxes"}], " ", "*)"}], 
+         "\[IndentingNewLine]", 
+         RowBox[{"rec", "=", 
+          RowBox[{"Table", "[", 
+           RowBox[{
+            RowBox[{"Rectangle", "[", 
+             RowBox[{
+              RowBox[{"start", "+", 
+               RowBox[{"size", " ", "i", " ", 
+                RowBox[{"dir", "[", "d", "]"}]}]}], ",", 
+              RowBox[{"start", "+", 
+               RowBox[{"size", " ", "i", " ", 
+                RowBox[{"dir", "[", "d", "]"}]}], "+", 
+               RowBox[{"size", 
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"dir", "[", "d", "]"}], "+", 
+                  RowBox[{"dir", "[", 
+                   RowBox[{"Mod", "[", 
+                    RowBox[{
+                    RowBox[{"d", "-", "1"}], ",", "4"}], "]"}], "]"}]}], 
+                 ")"}]}]}]}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"i", ",", "0", ",", 
+              RowBox[{"num", "-", "1"}]}], "}"}]}], "]"}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"end", "=", 
+          RowBox[{"start", "+", 
+           RowBox[{"size", " ", 
+            RowBox[{"(", 
+             RowBox[{"num", "-", "1"}], ")"}], " ", 
+            RowBox[{"dir", "[", "d", "]"}]}], "+", 
+           RowBox[{"size", 
+            RowBox[{"(", 
+             RowBox[{
+              RowBox[{"dir", "[", "d", "]"}], "+", 
+              RowBox[{"dir", "[", 
+               RowBox[{"Mod", "[", 
+                RowBox[{
+                 RowBox[{"d", "-", "1"}], ",", "4"}], "]"}], "]"}]}], 
+             ")"}]}]}]}], ";", 
+         RowBox[{"(*", " ", 
+          RowBox[{"last", " ", "coordinate"}], " ", "*)"}], 
+         "\[IndentingNewLine]", 
+         RowBox[{"newdim", "=", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Mod", "[", 
+             RowBox[{
+              RowBox[{"Max", "[", "dim", "]"}], ",", "size"}], "]"}], ",", 
+            "size"}], "}"}]}]}], ",", 
+        RowBox[{"(*", " ", 
+         RowBox[{"leftover", " ", "space"}], " ", "*)"}], 
+        "\[IndentingNewLine]", 
+        RowBox[{"(*", " ", "degenerate", " ", "*)"}], "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"rec", "=", 
+          RowBox[{"{", 
+           RowBox[{"Rectangle", "[", 
+            RowBox[{"start", ",", "start"}], "]"}], "}"}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"end", "=", "start"}], ";", "\[IndentingNewLine]", 
+         RowBox[{"newdim", "=", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", "0"}], "}"}]}], ";"}]}], "\[IndentingNewLine]", 
+       "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"newdim", "[", 
+          RowBox[{"[", "1", "]"}], "]"}], "<", "\[Epsilon]"}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"newdim", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], "=", "0"}], ";"}]}], 
+       RowBox[{"(*", " ", 
+        RowBox[{"zero", " ", "out", " ", "dimension", " ", "if", " ", 
+         RowBox[{"it", "'"}], "s", " ", "small", " ", "enough"}], " ", "*)"}],
+        "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"{", 
+       RowBox[{"rec", ",", "end", ",", "newdim", ",", 
+        RowBox[{"Mod", "[", 
+         RowBox[{
+          RowBox[{"d", "+", "1"}], ",", "4"}], "]"}]}], "}"}]}]}], 
+    "\[IndentingNewLine]", "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.7360801783271914`*^9, 3.736080334535612*^9}, {
+   3.7360803717698936`*^9, 3.7360805122750187`*^9}, {3.736080668123734*^9, 
+   3.7360806734084682`*^9}, {3.736080759336176*^9, 3.7360807668926535`*^9}, {
+   3.7360808046512456`*^9, 3.7360808320771084`*^9}, 3.736080865222082*^9, {
+   3.736080940897481*^9, 3.7360809692488422`*^9}, {3.7360810071498756`*^9, 
+   3.736081087113485*^9}, {3.7360812014293213`*^9, 3.7360812352855043`*^9}, {
+   3.7360813234149165`*^9, 3.7360813509341726`*^9}, {3.736081408101227*^9, 
+   3.7360814089750657`*^9}, {3.7360814440349245`*^9, 3.736081536123255*^9}, {
+   3.7360816021130524`*^9, 3.7360816058598895`*^9}, {3.736081674710533*^9, 
+   3.7360816906405687`*^9}, {3.7360817506284313`*^9, 3.736081959908458*^9}, {
+   3.736093178479146*^9, 3.7360932305113163`*^9}, {3.736093305704095*^9, 
+   3.7360933079044027`*^9}, {3.7360940142424994`*^9, 
+   3.7360940359883695`*^9}, {3.736094083777033*^9, 3.736094148341344*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "given", " ", "a", " ", "list", " ", "of", " ", "rectangle", " ", 
+     "objects", " ", "and", " ", "a", " ", "color", " ", "vector"}], ",", " ", 
+    RowBox[{"displays", " ", "the", " ", "assembled", " ", "figure"}]}], " ", 
+   "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"showboxes", "[", 
+    RowBox[{"g_", ",", "c_"}], "]"}], ":=", 
+   RowBox[{"Graphics", "[", 
+    RowBox[{"Join", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"EdgeForm", "[", "Thick", "]"}], "}"}], ",", 
+      RowBox[{"Riffle", "[", 
+       RowBox[{"c", ",", "g"}], "]"}]}], "]"}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.736080457904791*^9, 3.736080480703726*^9}, {
+  3.736087570990632*^9, 3.7360876218864603`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"generates", " ", "the", " ", "box", " ", "colors"}], ",", " ", 
+    RowBox[{
+    "starting", " ", "with", " ", "a", " ", "background", " ", "color", " ", 
+     "and", " ", "then", " ", "generating", " ", "one", " ", "color", " ", 
+     "for", " ", "each", " ", "box"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"colgen", "[", "n_", "]"}], ":=", 
+   RowBox[{"Join", "[", 
+    RowBox[{
+     RowBox[{"{", "Gray", "}"}], ",", 
+     RowBox[{"Table", "[", 
+      RowBox[{
+       RowBox[{"Hue", "[", "i", "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"i", ",", "0", ",", "0.9", ",", 
+         FractionBox["0.9", 
+          RowBox[{"n", "-", "1"}]]}], "}"}]}], "]"}]}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.736092333612433*^9, 3.7360925331927905`*^9}, 
+   3.7360926042129316`*^9, {3.736092654308846*^9, 3.7360926594205723`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "given", " ", "a", " ", "starting", " ", "number", " ", "and", " ", "a", 
+     " ", "desired", " ", "number", " ", "of", " ", "terms"}], ",", " ", 
+    RowBox[{
+    "generates", " ", "the", " ", "graphics", " ", "object", " ", "of", " ", 
+     "the", " ", "corresponding", " ", "box", " ", "spiral"}], ",", " ", 
+    RowBox[{
+    "terminating", " ", "early", " ", "if", " ", "too", " ", "many", " ", 
+     "terms", " ", "are", " ", "specified"}]}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"boxes", "[", 
+    RowBox[{"q_", ",", "n_"}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"boxes", "=", 
+        RowBox[{"{", 
+         RowBox[{"{", 
+          RowBox[{"Rectangle", "[", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"0", ",", "0"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"q", ",", "1"}], "}"}]}], "]"}], "}"}], "}"}]}], ",", 
+       RowBox[{"colors", "=", 
+        RowBox[{"colgen", "[", "n", "]"}]}], ",", 
+       RowBox[{"start", "=", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0"}], "}"}]}], ",", 
+       RowBox[{"d", "=", "0"}], ",", 
+       RowBox[{"dim", "=", 
+        RowBox[{"{", 
+         RowBox[{"q", ",", "1"}], "}"}]}], ",", "temp"}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"Do", "[", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"temp", "=", 
+          RowBox[{"boxgen", "[", 
+           RowBox[{"start", ",", "d", ",", "dim"}], "]"}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"boxes", "=", 
+          RowBox[{"Append", "[", 
+           RowBox[{"boxes", ",", 
+            RowBox[{"temp", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}], "]"}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{"start", "=", 
+          RowBox[{"temp", "[", 
+           RowBox[{"[", "2", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{"dim", "=", 
+          RowBox[{"temp", "[", 
+           RowBox[{"[", "3", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{"d", "=", 
+          RowBox[{"temp", "[", 
+           RowBox[{"[", "4", "]"}], "]"}]}]}], ",", "\[IndentingNewLine]", 
+        RowBox[{"{", 
+         RowBox[{"i", ",", "1", ",", "n"}], "}"}]}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"showboxes", "[", 
+       RowBox[{"boxes", ",", "colors"}], "]"}]}]}], "\[IndentingNewLine]", 
+    "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.7360805445041513`*^9, 3.7360806283146477`*^9}, {
+  3.7360922416891747`*^9, 3.7360922576631327`*^9}, {3.73609270288992*^9, 
+  3.73609304147095*^9}, {3.7360930981495056`*^9, 3.7360931175558047`*^9}, {
+  3.7360933334479*^9, 3.736093352030561*^9}, {3.7360933951160917`*^9, 
+  3.736093436376603*^9}, {3.7360935754833403`*^9, 3.7360935762784815`*^9}, {
+  3.7360936512661033`*^9, 3.736093654200387*^9}, {3.7360939574267845`*^9, 
+  3.736093985336763*^9}, {3.7769824857777786`*^9, 3.7769824867514505`*^9}}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Demonstration", "Subsection",
+ CellChangeTimes->{{3.7766008885632277`*^9, 3.7766008904796133`*^9}}],
+
+Cell[TextData[{
+ "We can start with the example of ",
+ Cell[BoxData[
+  FormBox["2.75", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", which has a finite continued fraction representation ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"[", 
+    RowBox[{
+     RowBox[{"2", ";", "1"}], ",", "3"}], "]"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " since ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"2.75", "=", 
+    RowBox[{"2", "+", 
+     FractionBox["1", 
+      RowBox[{"1", "+", 
+       FractionBox["1", "3"]}]]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". In the picture below we can see these boxes forming a clockwise spiral: 2 \
+red, 1 cyan, and 3 magenta."
+}], "Text",
+ CellChangeTimes->{{3.776982726697847*^9, 3.7769827718563585`*^9}, {
+  3.776982888662174*^9, 3.776982914645914*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"boxes", "[", 
+  RowBox[{"2.75", ",", "3"}], "]"}]], "Input",
+ CellChangeTimes->{{3.776982774572897*^9, 3.776982789505536*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[
+  {GrayLevel[0.5], EdgeForm[Thickness[Large]], 
+   RectangleBox[{0, 0}, {2.75, 1}], 
+   {Hue[0.], RectangleBox[{0, 0}], RectangleBox[{1, 0}]}, 
+   {Hue[0.45], RectangleBox[{2., 1.}, {2.75, 0.25}]}, 
+   {Hue[0.9], RectangleBox[{2.75, 0.25}, {2.5, 0.}], 
+    RectangleBox[{2.5, 0.25}, {2.25, 0.}], 
+    RectangleBox[{2.25, 0.25}, {2., 0.}]}}]], "Output",
+ CellChangeTimes->{{3.7769827795526505`*^9, 3.7769827902482824`*^9}}]
+}, Open  ]],
+
+Cell[TextData[{
+ "Next we can try ",
+ Cell[BoxData[
+  FormBox[
+   SqrtBox["2"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", which has an infinite continued fraction representation ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"[", 
+    RowBox[{
+     RowBox[{"1", ";", "2"}], ",", "2", ",", "2", ",", "..."}], "]"}], 
+   TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", or ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SqrtBox["2"], "=", 
+    RowBox[{"1", "+", 
+     FractionBox["1", 
+      RowBox[{"2", "+", 
+       FractionBox["1", 
+        RowBox[{"2", "+", 
+         FractionBox["1", 
+          RowBox[{
+           RowBox[{"2", "+"}], "..."}]]}]]}]]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". In the picture below we can see these digits appear from the 1 red box, \
+followed by 2, each, of the green, blue, and magenta boxes. The leftover gray \
+space is left due to truncation error."
+}], "Text",
+ CellChangeTimes->{{3.776982801487709*^9, 3.7769828659425907`*^9}, {
+  3.776982917536992*^9, 3.776982962792703*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"boxes", "[", 
+  RowBox[{
+   SqrtBox["2"], ",", "4"}], "]"}]], "Input",
+ CellChangeTimes->{{3.776982868923668*^9, 3.776982880273841*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[
+  {GrayLevel[0.5], EdgeForm[Thickness[Large]], 
+   RectangleBox[{0, 0}, 
+    NCache[{2^Rational[1, 2], 1}, {1.4142135623730951`, 1}]], 
+   {Hue[0.], RectangleBox[{0, 0}]}, 
+   {Hue[0.3], 
+    RectangleBox[{1, 1}, 
+     NCache[{2^Rational[1, 2], 2 - 2^Rational[1, 2]}, {1.4142135623730951`, 
+      0.5857864376269049}]], 
+    RectangleBox[NCache[{1, 2 - 2^Rational[1, 2]}, {1, 0.5857864376269049}], 
+     NCache[{2^Rational[1, 2], 3 - 2 2^Rational[1, 2]}, {1.4142135623730951`, 
+      0.1715728752538097}]]}, 
+   {Hue[0.6], 
+    RectangleBox[
+     NCache[{2^Rational[1, 2], 3 - 2 2^Rational[1, 2]}, {1.4142135623730951`, 
+      0.1715728752538097}], 
+     NCache[{-1 + 2^Rational[1, 2] + 2 (-1 + 2^Rational[1, 2]), 2 - 2 
+       2^Rational[1, 2] + 2 (-1 + 2^Rational[1, 2])}, {1.2426406871192854`, 
+      0.}]], RectangleBox[
+     NCache[{-1 + 2^Rational[1, 2] + 2 (-1 + 2^Rational[1, 2]), 3 - 2 
+       2^Rational[1, 2]}, {1.2426406871192854`, 0.1715728752538097}], 
+     NCache[{-2 + 2^Rational[1, 2] + 4 (-1 + 2^Rational[1, 2]), 2 - 2 
+       2^Rational[1, 2] + 2 (-1 + 2^Rational[1, 2])}, {1.0710678118654757`, 
+      0.}]]}, 
+   {Hue[0.8999999999999999], 
+    RectangleBox[
+     NCache[{-2 + 2^Rational[1, 2] + 4 (-1 + 2^Rational[1, 2]), 2 - 2 
+       2^Rational[1, 2] + 2 (-1 + 2^Rational[1, 2])}, {1.0710678118654757`, 
+      0.}], NCache[{-1 + 4 (-1 + 2^Rational[1, 2]) + 
+       2 (1 - 2 (-1 + 2^Rational[1, 2])), 1 - 2^Rational[1, 2] + 
+       2 (-1 + 2^Rational[1, 2]) - 2 (1 - 2 (-1 + 2^Rational[1, 2]))}, {1., 
+      0.07106781186547573}]], 
+    RectangleBox[
+     NCache[{-2 + 2^Rational[1, 2] + 4 (-1 + 2^Rational[1, 2]), 1 - 2^
+       Rational[1, 2] + 2 (-1 + 2^Rational[1, 2]) - 
+       2 (1 - 2 (-1 + 2^Rational[1, 2]))}, {1.0710678118654757`, 
+      0.07106781186547573}], 
+     NCache[{-1 + 4 (-1 + 2^Rational[1, 2]) + 
+       2 (1 - 2 (-1 + 2^Rational[1, 2])), 2 (-1 + 2^Rational[1, 2]) - 
+       4 (1 - 2 (-1 + 2^Rational[1, 2]))}, {1., 
+      0.14213562373095145`}]]}}]], "Output",
+ CellChangeTimes->{{3.7769828742837667`*^9, 3.7769828804688*^9}}]
+}, Open  ]],
+
+Cell[TextData[{
+ "Taking more terms fills in some of this blank area, and also shifts the \
+rest of the colors since the color selection function defined above chooses \
+colors with hues evenly distributed on ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"[", 
+    RowBox[{"0", ",", "1"}], "]"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.7769829688567586`*^9, 3.7769830337108035`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"boxes", "[", 
+  RowBox[{
+   SqrtBox["2"], ",", "6"}], "]"}]], "Input",
+ CellChangeTimes->{3.7769830390900927`*^9}],
+
+Cell[BoxData[
+ GraphicsBox[
+  {GrayLevel[0.5], EdgeForm[Thickness[Large]], 
+   RectangleBox[{0, 0}, 
+    NCache[{2^Rational[1, 2], 1}, {1.4142135623730951`, 1}]], 
+   {Hue[0.], RectangleBox[{0, 0}]}, 
+   {Hue[0.18000000000000002`], 
+    RectangleBox[{1, 1}, 
+     NCache[{2^Rational[1, 2], 2 - 2^Rational[1, 2]}, {1.4142135623730951`, 
+      0.5857864376269049}]], 
+    RectangleBox[NCache[{1, 2 - 2^Rational[1, 2]}, {1, 0.5857864376269049}], 
+     NCache[{2^Rational[1, 2], 3 - 2 2^Rational[1, 2]}, {1.4142135623730951`, 
+      0.1715728752538097}]]}, 
+   {Hue[0.36000000000000004`], 
+    RectangleBox[
+     NCache[{2^Rational[1, 2], 3 - 2 2^Rational[1, 2]}, {1.4142135623730951`, 
+      0.1715728752538097}], 
+     NCache[{-1 + 2^Rational[1, 2] + 2 (-1 + 2^Rational[1, 2]), 2 - 2 
+       2^Rational[1, 2] + 2 (-1 + 2^Rational[1, 2])}, {1.2426406871192854`, 
+      0.}]], RectangleBox[
+     NCache[{-1 + 2^Rational[1, 2] + 2 (-1 + 2^Rational[1, 2]), 3 - 2 
+       2^Rational[1, 2]}, {1.2426406871192854`, 0.1715728752538097}], 
+     NCache[{-2 + 2^Rational[1, 2] + 4 (-1 + 2^Rational[1, 2]), 2 - 2 
+       2^Rational[1, 2] + 2 (-1 + 2^Rational[1, 2])}, {1.0710678118654757`, 
+      0.}]]}, 
+   {Hue[0.54], 
+    RectangleBox[
+     NCache[{-2 + 2^Rational[1, 2] + 4 (-1 + 2^Rational[1, 2]), 2 - 2 
+       2^Rational[1, 2] + 2 (-1 + 2^Rational[1, 2])}, {1.0710678118654757`, 
+      0.}], NCache[{-1 + 4 (-1 + 2^Rational[1, 2]) + 
+       2 (1 - 2 (-1 + 2^Rational[1, 2])), 1 - 2^Rational[1, 2] + 
+       2 (-1 + 2^Rational[1, 2]) - 2 (1 - 2 (-1 + 2^Rational[1, 2]))}, {1., 
+      0.07106781186547573}]], 
+    RectangleBox[
+     NCache[{-2 + 2^Rational[1, 2] + 4 (-1 + 2^Rational[1, 2]), 1 - 2^
+       Rational[1, 2] + 2 (-1 + 2^Rational[1, 2]) - 
+       2 (1 - 2 (-1 + 2^Rational[1, 2]))}, {1.0710678118654757`, 
+      0.07106781186547573}], 
+     NCache[{-1 + 4 (-1 + 2^Rational[1, 2]) + 
+       2 (1 - 2 (-1 + 2^Rational[1, 2])), 2 (-1 + 2^Rational[1, 2]) - 
+       4 (1 - 2 (-1 + 2^Rational[1, 2]))}, {1., 0.14213562373095145`}]]}, 
+   {Hue[0.7200000000000001], 
+    RectangleBox[
+     NCache[{-1 + 4 (-1 + 2^Rational[1, 2]) + 
+       2 (1 - 2 (-1 + 2^Rational[1, 2])), 2 (-1 + 2^Rational[1, 2]) - 
+       4 (1 - 2 (-1 + 2^Rational[1, 2]))}, {1., 0.14213562373095145`}], 
+     NCache[{2 (-1 + 2^Rational[1, 2]) + 2 (1 - 2 (-1 + 2^Rational[1, 2])) - 
+       2 (-1 + 2^Rational[1, 2] - 2 (1 - 2 (-1 + 2^Rational[1, 2]))), 1 - 
+       4 (1 - 2 (-1 + 2^Rational[1, 2])) - 
+       2 (-1 + 2^Rational[1, 2] - 2 (1 - 2 (-1 + 2^Rational[1, 2])))}, {
+      1.0294372515228583`, 0.1715728752538097}]], 
+    RectangleBox[
+     NCache[{2 (-1 + 2^Rational[1, 2]) + 2 (1 - 2 (-1 + 2^Rational[1, 2])) - 
+       2 (-1 + 2^Rational[1, 2] - 2 (1 - 2 (-1 + 2^Rational[1, 2]))), 
+       2 (-1 + 2^Rational[1, 2]) - 4 (1 - 2 (-1 + 2^Rational[1, 2]))}, {
+      1.0294372515228583`, 0.14213562373095145`}], 
+     NCache[{1 + 2 (1 - 2 (-1 + 2^Rational[1, 2])) - 
+       4 (-1 + 2^Rational[1, 2] - 2 (1 - 2 (-1 + 2^Rational[1, 2]))), 1 - 
+       4 (1 - 2 (-1 + 2^Rational[1, 2])) - 
+       2 (-1 + 2^Rational[1, 2] - 2 (1 - 2 (-1 + 2^Rational[1, 2])))}, {
+      1.0588745030457165`, 0.1715728752538097}]]}, 
+   {Hue[0.9000000000000001], 
+    RectangleBox[
+     NCache[{1 + 2 (1 - 2 (-1 + 2^Rational[1, 2])) - 
+       4 (-1 + 2^Rational[1, 2] - 2 (1 - 2 (-1 + 2^Rational[1, 2]))), 1 - 
+       4 (1 - 2 (-1 + 2^Rational[1, 2])) - 
+       2 (-1 + 2^Rational[1, 2] - 2 (1 - 2 (-1 + 2^Rational[1, 2])))}, {
+      1.0588745030457165`, 0.1715728752538097}], 
+     NCache[{2^Rational[1, 2] - 
+       4 (-1 + 2^Rational[1, 2] - 2 (1 - 2 (-1 + 2^Rational[1, 2]))) - 
+       2 (1 - 2 (-1 + 2^Rational[1, 2]) - 
+        2 (-1 + 2^Rational[1, 2] - 2 (1 - 2 (-1 + 2^Rational[1, 2])))), 2 - 2^
+       Rational[1, 2] - 2 (1 - 2 (-1 + 2^Rational[1, 2])) - 
+       2 (-1 + 2^Rational[1, 2] - 2 (1 - 2 (-1 + 2^Rational[1, 2]))) + 
+       2 (1 - 2 (-1 + 2^Rational[1, 2]) - 
+         2 (-1 + 2^Rational[1, 2] - 2 (1 - 2 (-1 + 2^Rational[1, 2]))))}, {
+      1.0710678118654757`, 0.1593795664340505}]], 
+    RectangleBox[
+     NCache[{1 + 2 (1 - 2 (-1 + 2^Rational[1, 2])) - 
+       4 (-1 + 2^Rational[1, 2] - 2 (1 - 2 (-1 + 2^Rational[1, 2]))), 2 - 2^
+       Rational[1, 2] - 2 (1 - 2 (-1 + 2^Rational[1, 2])) - 
+       2 (-1 + 2^Rational[1, 2] - 2 (1 - 2 (-1 + 2^Rational[1, 2]))) + 
+       2 (1 - 2 (-1 + 2^Rational[1, 2]) - 
+         2 (-1 + 2^Rational[1, 2] - 2 (1 - 2 (-1 + 2^Rational[1, 2]))))}, {
+      1.0588745030457165`, 0.1593795664340505}], 
+     NCache[{2^Rational[1, 2] - 
+       4 (-1 + 2^Rational[1, 2] - 2 (1 - 2 (-1 + 2^Rational[1, 2]))) - 
+       2 (1 - 2 (-1 + 2^Rational[1, 2]) - 
+        2 (-1 + 2^Rational[1, 2] - 2 (1 - 2 (-1 + 2^Rational[1, 2])))), 3 - 2 
+       2^Rational[1, 2] - 
+       2 (-1 + 2^Rational[1, 2] - 2 (1 - 2 (-1 + 2^Rational[1, 2]))) + 
+       4 (1 - 2 (-1 + 2^Rational[1, 2]) - 
+         2 (-1 + 2^Rational[1, 2] - 2 (1 - 2 (-1 + 2^Rational[1, 2]))))}, {
+      1.0710678118654757`, 0.14718625761429127`}]]}}]], "Output",
+ CellChangeTimes->{3.7769830393180237`*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "The golden spiral is generated by the golden ratio ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[Phi]", "=", 
+    FractionBox[
+     RowBox[{"1", "+", 
+      SqrtBox["5"]}], "2"]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", which has an infinite representation ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"[", 
+    RowBox[{
+     RowBox[{"1", ";", "1"}], ",", "1", ",", "1", ",", "..."}], "]"}], 
+   TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " or ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[Phi]", "=", 
+    RowBox[{"1", "+", 
+     FractionBox["1", 
+      RowBox[{"1", "+", 
+       FractionBox["1", 
+        RowBox[{"1", "+", 
+         FractionBox["1", 
+          RowBox[{
+           RowBox[{"1", "+"}], "..."}]]}]]}]]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". This is shown in the picture below by the fact that there is exactly one \
+box of each color and size."
+}], "Text",
+ CellChangeTimes->{{3.7769830544882174`*^9, 3.776983207806879*^9}, {
+  3.7769833380916176`*^9, 3.776983339949027*^9}, {3.7769833863772616`*^9, 
+  3.776983393517994*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"boxes", "[", 
+  RowBox[{"GoldenRatio", ",", "10"}], "]"}]], "Input",
+ CellChangeTimes->{{3.7769832093703804`*^9, 3.7769832213206477`*^9}}],
+
+Cell[BoxData[
+ GraphicsBox[
+  {GrayLevel[0.5], EdgeForm[Thickness[Large]], 
+   RectangleBox[{0, 0}, NCache[{GoldenRatio, 1}, {1.618033988749895, 1}]], 
+   {Hue[0.], RectangleBox[{0, 0}]}, 
+   {Hue[0.09999999999999999], 
+    RectangleBox[{1, 1}, 
+     NCache[{GoldenRatio, 2 - GoldenRatio}, {1.618033988749895, 
+      0.3819660112501051}]]}, 
+   {Hue[0.19999999999999998`], 
+    RectangleBox[
+     NCache[{GoldenRatio, 2 - GoldenRatio}, {1.618033988749895, 
+      0.3819660112501051}], 
+     NCache[{-2 + 2 GoldenRatio, 0}, {1.2360679774997898`, 0}]]}, 
+   {Hue[0.3], 
+    RectangleBox[NCache[{-2 + 2 GoldenRatio, 0}, {1.2360679774997898`, 0}], 
+     NCache[{1, -3 + 2 GoldenRatio}, {1, 0.2360679774997898}]]}, 
+   {Hue[0.39999999999999997`], 
+    RectangleBox[NCache[{1, -3 + 2 GoldenRatio}, {1, 0.2360679774997898}], 
+     NCache[{6 - 3 GoldenRatio, 2 - GoldenRatio}, {1.1458980337503153`, 
+      0.3819660112501051}]]}, 
+   {Hue[0.49999999999999994`], 
+    RectangleBox[
+     NCache[{6 - 3 GoldenRatio, 2 - GoldenRatio}, {1.1458980337503153`, 
+      0.3819660112501051}], 
+     NCache[{-2 + 2 GoldenRatio, 10 - 6 GoldenRatio}, {1.2360679774997898`, 
+      0.2917960675006306}]]}, 
+   {Hue[0.6], 
+    RectangleBox[
+     NCache[{-2 + 2 GoldenRatio, 10 - 6 GoldenRatio}, {1.2360679774997898`, 
+      0.2917960675006306}], 
+     NCache[{-15 + 10 GoldenRatio, -3 + 2 GoldenRatio}, {1.180339887498949, 
+      0.2360679774997898}]]}, 
+   {Hue[0.7], 
+    RectangleBox[
+     NCache[{-15 + 10 GoldenRatio, -3 + 2 GoldenRatio}, {1.180339887498949, 
+      0.2360679774997898}], 
+     NCache[{6 - 3 GoldenRatio, -24 + 15 GoldenRatio}, {1.1458980337503153`, 
+      0.2705098312484253}]]}, 
+   {Hue[0.7999999999999999], 
+    RectangleBox[
+     NCache[{6 - 3 GoldenRatio, -24 + 15 GoldenRatio}, {1.1458980337503153`, 
+      0.2705098312484253}], 
+     NCache[{40 - 24 GoldenRatio, 10 - 6 GoldenRatio}, {1.1671842700025223`, 
+      0.2917960675006306}]]}, 
+   {Hue[0.8999999999999999], 
+    RectangleBox[
+     NCache[{40 - 24 GoldenRatio, 10 - 6 GoldenRatio}, {1.1671842700025223`, 
+      0.2917960675006306}], 
+     NCache[{-15 + 10 GoldenRatio, 65 - 40 GoldenRatio}, {1.180339887498949, 
+      0.2786404500042039}]]}}]], "Output",
+ CellChangeTimes->{{3.7769832160372534`*^9, 3.7769832215345793`*^9}}]
+}, Open  ]],
+
+Cell["\<\
+Here is a Manipulate that allows the user to select a number between 1 and 2.\
+\>", "Text",
+ CellChangeTimes->{{3.7769832385211763`*^9, 3.776983256602491*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"boxes", "[", 
+    RowBox[{"q", ",", "10"}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"q", ",", 
+       SqrtBox["2"]}], "}"}], ",", "1", ",", "2"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.776983264982826*^9, 3.776983267110149*^9}, {
+  3.7769835501624637`*^9, 3.7769835655912685`*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`q$$ = 2^Rational[1, 2], Typeset`show$$ = 
+    True, Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`q$$], 2^Rational[1, 2]}, 1, 2}}, Typeset`size$$ = {
+    360., {127., 131.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`q$9301$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`q$$ = 2^Rational[1, 2]}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`q$$, $CellContext`q$9301$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, 
+      "Body" :> $CellContext`boxes[$CellContext`q$$, 10], 
+      "Specifications" :> {{{$CellContext`q$$, 2^Rational[1, 2]}, 1, 2}}, 
+      "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{411., {173., 179.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{
+  3.7769832702591496`*^9, {3.77698355149004*^9, 3.7769835663385906`*^9}}]
+}, Open  ]],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.776983545058086*^9, 3.7769835454039726`*^9}}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{759, 833},
+WindowMargins->{{229, Automatic}, {Automatic, 40}},
+FrontEndVersion->"10.4 for Microsoft Windows (64-bit) (April 11, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 220, 3, 90, "Title"],
+Cell[803, 27, 158, 2, 30, "Text"],
+Cell[CellGroupData[{
+Cell[986, 33, 99, 1, 63, "Section"],
+Cell[1088, 36, 1798, 51, 163, "Text"],
+Cell[2889, 89, 528, 8, 106, "Text"],
+Cell[3420, 99, 1002, 25, 106, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4459, 129, 91, 1, 63, "Section"],
+Cell[CellGroupData[{
+Cell[4575, 134, 102, 1, 43, "Subsection"],
+Cell[4680, 137, 866, 27, 112, "Input"],
+Cell[5549, 166, 6094, 139, 492, "Input"],
+Cell[11646, 307, 787, 20, 72, "Input"],
+Cell[12436, 329, 921, 22, 115, "Input"],
+Cell[13360, 353, 3073, 75, 312, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[16470, 433, 105, 1, 35, "Subsection"],
+Cell[16578, 436, 819, 25, 91, "Text"],
+Cell[CellGroupData[{
+Cell[17422, 465, 150, 3, 31, "Input"],
+Cell[17575, 470, 450, 9, 155, "Output"]
+}, Open  ]],
+Cell[18040, 482, 1051, 33, 130, "Text"],
+Cell[CellGroupData[{
+Cell[19116, 519, 160, 4, 43, "Input"],
+Cell[19279, 525, 2097, 42, 273, "Output"]
+}, Open  ]],
+Cell[21391, 570, 430, 11, 49, "Text"],
+Cell[CellGroupData[{
+Cell[21846, 585, 138, 4, 43, "Input"],
+Cell[21987, 591, 5062, 94, 273, "Output"]
+}, Open  ]],
+Cell[27064, 688, 1101, 35, 124, "Text"],
+Cell[CellGroupData[{
+Cell[28190, 727, 162, 3, 31, "Input"],
+Cell[28355, 732, 2287, 51, 243, "Output"]
+}, Open  ]],
+Cell[30657, 786, 169, 3, 30, "Text"],
+Cell[CellGroupData[{
+Cell[30851, 793, 393, 11, 43, "Input"],
+Cell[31247, 806, 1695, 34, 369, "Output"]
+}, Open  ]],
+Cell[32957, 843, 94, 1, 31, "Input"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

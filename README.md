@@ -13,6 +13,7 @@ A large collection of _Mathematica_ demonstrations written by Adam Rumpf, sorted
   * [Taylor and Fourier Series Approximations](#taylor-and-fourier-series-approximations)
   * [Vector Kinematics](#vector-kinematics)
 * [Number Theory](#number-theory)
+  * [Continued Fraction Square Packing](#continued-fraction-square-packing)
   * [Pascal's Triangle Fractals](#pascals-triangle-fractals)
   * [Recamán's Sequence](#recamáns-sequence)
   * [Remainder Graphs](#remainder-graphs)
@@ -65,7 +66,7 @@ This is a lightweight visual demonstration of how familiar mathematical operatio
 
 ### Crowd Escape Panic Model
 
-<img src="images/crowd-escape-panic-1.png" alt="Crowd Fluid Dynamics Image 1" height="200"/> <img src="images/crowd-escape-panic-2.png" alt="Crowd Fluid Dynamics Image 2" height="200"/>
+<img src="images/crowd-escape-panic-1.png" alt="Crowd Fluid Dynamics Image 1" height="180"/> <img src="images/crowd-escape-panic-2.png" alt="Crowd Fluid Dynamics Image 2" height="180"/>
 
 Created 5/1/2018
 
@@ -117,9 +118,25 @@ This demonstration is meant for elementary Calculus students encountering the co
 
 Number theory is not really my area, so most of the files in this folder are related to number sequences which give rise to interesting graphics that anybody can appreciate.
 
+### Continued Fraction Square Packing
+
+<img src="images/continued-fraction-boxes-1.png" alt="Continued Fraction Square Packing Image 1" height="200"/> <img src="images/continued-fraction-boxes-2.png" alt="Continued Fraction Square Packing Image 2" height="200"/>
+
+Created 5/23/2018
+
+[Notebook Link](../master/number-theory/continued-fraction-square-packing.nb)
+
+This is a program for constructing geometric pictures of [continued fractions](https://en.wikipedia.org/wiki/Continued_fraction). A continued fraction is a way to represent a real number as a sequence of integers, similar to how a decimal expansion is a way to represent a real number as a sequence of integers. The way to interpret a decimal expansion like "3.14159" is to recognize that each digit tells us the coefficient in a series of decreasing powers of 10, so the leading 3 should be multiplied by 1, then the 1 should be multiplied by 1/10, then the 4 should be multiplied by 1/100, and so on, and all of these values should be added together. Some numbers (like 2 and 564 and 5/8) can be represented exactly with finitely many decimal values, while others (like π and e and √2) cannot, but they can at least be approximated by specifying the first few terms and truncating the rest.
+
+The continued fraction representation of a number comes from iteratively taking its integer part and inverting its fractional part. Taking π as an example, the integer part is 3 and the fractional part is 0.14159..., so the first digit in our continued fraction representation is 3. Then we invert the fractional part to get 1/0.14159 = 7.06251.... That has an integer part of 7, so our second digit is 7. The fractional part can be inverted to get 1/0.06251... = 15.99659..., and so the next digit is 15. Going through the same process again will yield 1 and then 292 as the next two digits. Much like with the decimal representation, since π is irrational this process will never end, so we must choose to truncate it at some point. If we chose to do that here, then our continued fraction approximation of π would be expressed as [3; 7, 15, 1, 292], the sequence of digits that we just found. The way to interpret a continued fraction representation is to plug the digits into a sequence of nested fractions of the form 3+1/(7+1/(15+1/(1+1/292))).
+
+There is a geometric interpretation of this process, and that is what this program generates. Imagine that we draw a rectangle with height 1 and width π, and that we attempt to draw as many unit squares as we can inside this box. If we start at the lefthand side and continue to the right, we can fit exactly 3 squares before running out of room, and the remaining 1 by 0.14159... space will be empty. Now suppoose that we wish to fit as many squares of side length 0.14159... as possible into this empty space. We can rescale by multiplying everything by 1/0.14159... (which is 7.06251...), in which case the problem becomes trying to fit as many unit squares as possible into a 1 by 7.06251... unit space. The solution is obviously 7, with a remaining 1 by 0.06251... space. This process of iteratively packing squares and rescaling the gap is analogous to the above process of taking the unit part and inverting the fractional part, and it will produce the same sequence of integers.
+
+This box packing process is very much like the process for generating a [golden spiral](https://en.wikipedia.org/wiki/Golden_spiral), and in fact if we begin with rectangle whose dimensions are 1 by φ (the [golden ratio](https://en.wikipedia.org/wiki/Golden_ratio)) box the two processes are exactly the same. Because the golden spiral involves packing a single square in each iteration, this implies that the continued fraction representation of φ is [1; 1, 1, 1, 1, ...], which is indeed true. It is for this reason that φ is occasionally referred to as the ["most irrational"](http://www.ams.org/publicoutreach/feature-column/fcarc-irrational4) number. Because all of the digits in the continued fraction representation are inverted, large digits indicates that the term contributes a small value to the overall sum, and so truncating a large digit leads to smaller truncation error than truncating a small digit. Because all digits of φ's continued fraction are the smallest possible positive integer, truncating its continued fraction leads to the largest possible truncation error, making it the number with the worst possible rational approximations.
+
 ### Pascal's Triangle Fractals
 
-<img src="images/pascals-triangle-fractal-1.png" alt="Pascal's Triangle Fractals Image 1" height="300"/> <img src="images/pascals-triangle-fractal-2.png" alt="Pascal's Triangle Fractals Image 2" height="300"/>
+<img src="images/pascals-triangle-fractal-1.png" alt="Pascal's Triangle Fractals Image 1" height="250"/> <img src="images/pascals-triangle-fractal-2.png" alt="Pascal's Triangle Fractals Image 2" height="250"/>
 
 Created 6/28/2015
 
