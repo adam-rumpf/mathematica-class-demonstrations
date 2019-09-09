@@ -1,6 +1,6 @@
 ﻿# Mathematica Class Demonstrations
 
-A large collection of _Mathematica_ demonstrations written by Adam Rumpf, sorted according to the class that they are most likely to be useful for.
+A large collection of Mathematica demonstrations written by Adam Rumpf, sorted according to the class that they are most likely to be useful for.
 
 ## Table of Contents
 
@@ -20,6 +20,8 @@ A large collection of _Mathematica_ demonstrations written by Adam Rumpf, sorted
 * [Graph Theory](#graph-theory)
   * [Dijkstra's Algorithm and A* Search](#dijkstras-algorithm-and-a-search)
   * [Graph Untangler](#graph-untangler)
+* [Voting Theory](#voting-theory)
+  * [Comparison of Single-Winner Voting Systems](#comparison-of-single-winner-voting-systems)
 * [Just for Fun](#just-for-fun)
   * [Bézier Curves](#bézier-curves)
   * [Domino and Tromino Tiling](#domino-and-tromino-tiling)
@@ -30,7 +32,7 @@ A large collection of _Mathematica_ demonstrations written by Adam Rumpf, sorted
 
 ## Overview
 
-This repository contains a large collection of _Mathematica_ notebook files written during my time as a graduate student at Illinois Institute of Technology between 2014 and 2019, although I intend to add more over time. I originally started these projects as a way to teach myself _Mathematica_ for use as a calculus teaching assistant, but eventually started making demonstrations for topics of personal interest or for use in my own classes.
+This repository contains a large collection of Mathematica notebook files written during my time as a graduate student at Illinois Institute of Technology between 2014 and 2019, although I intend to add more over time. I originally started these projects as a way to teach myself Mathematica for use as a calculus teaching assistant, but eventually started making demonstrations for topics of personal interest or for use in my own classes.
 
 Some of these projects have been uploaded to the [_Wolfram Demonstrations Project_](http://demonstrations.wolfram.com/). My creator page can be found at http://demonstrations.wolfram.com/author.html?author=Adam+Rumpf.
 
@@ -120,7 +122,7 @@ Number theory is not really my area, so most of the files in this folder are rel
 
 ### Continued Fraction Square Packing
 
-<img src="images/continued-fraction-boxes-1.png" alt="Continued Fraction Square Packing Image 1" height="200"/> <img src="images/continued-fraction-boxes-2.png" alt="Continued Fraction Square Packing Image 2" height="200"/>
+<img src="images/continued-fraction-boxes-1.png" alt="Continued Fraction Square Packing Image 1" height="180"/> <img src="images/continued-fraction-boxes-2.png" alt="Continued Fraction Square Packing Image 2" height="180"/>
 
 Created 5/23/2018
 
@@ -208,11 +210,31 @@ Created 2/5/2016
 
 I wrote this as a tool for myself during my first graph theory course for the purposes of solving graph isomorphism problems. A common way to try to determine whether two different embeddings actually represent the same graph is to imagine that the vertices and edges can be moved around. If one graph can be manipulated to look like the other, then they must be isomorphic, and the physical movements which occurred are a physical representation of the bijection from one graph to the other.
 
-This file contains a very simple function that accepts a _Mathematica_ Graph object and produces a circular embedding of the graph. The vertices can be clicked and dragged to move them around.
+This file contains a very simple function that accepts a Mathematica Graph object and produces a circular embedding of the graph. The vertices can be clicked and dragged to move them around.
+
+## Voting Theory
+
+Voting theory is a subset of [social choice theory](https://en.wikipedia.org/wiki/Social_choice_theory) that concerns the study of election systems. While all branches of mathematics have some power to describe the natural world around us, I think that voting theory in particular is something that many people could benefit from since it can explain a lot of why the current political landscape is the way it is.
+
+For example, in the United States, why are there only two major political parties? Why are people so often coerced into holding their nose and voting for "the lesser of two evils" rather than for a third party candidate that they actually like? Why do presidential and congressional elections so often misrepresent the wishes of the actual majority? These are of course complicated issues involving things like moneyed interests and voter suppression, but even if none of that were in play the basic mechanisms that we use for voting would still produce these effects, and voting theory can help to explain why.
+
+### Comparison of Single-Winner Voting Systems
+
+<img src="images/single-winner-voting-systems-1.png" alt="Single-Winner Voting Systems Image 1" height="250"/> <img src="images/single-winner-voting-systems-2.png" alt="Single-Winner Voting Systems Image 2" height="250"/>
+
+Created 10/31/2017
+
+[Notebook Link](../master/voting-theory/single-winner-voting-systems.nb)
+
+[Demonstration Link](http://demonstrations.wolfram.com/ComparingVotingSystemsForANormalDistributionOfVoters/)
+
+This demonstration is based on an [interactive Flash demonstration](http://zesty.ca/voting/voteline/) by Ka-Ping Yee, which is meant to show how different, reasonable-seeming methods of evaluating ballots can affect the outcomes of single-winner elections. It also shows some of the problems that certain systems can have, such as the [spoiler effect](https://en.wikipedia.org/wiki/Spoiler_effect) and non-monotonicity.
+
+Most people do not think very much about election systems, and if you asked them to come up with a system for how to run a single-winner election they would probably just suggest the one method they are familiar with: everyone votes for a single candidate and the candidate with the most votes wins. This method is called [first-past-the-post](https://en.wikipedia.org/wiki/First-past-the-post_voting), and although it makes intuitive sense, it has a great many [problems](https://www.electionscience.org/voting-methods/spoiler-effect-top-5-ways-plurality-voting-fails/). Other election systems like [instant runoff voting](https://en.wikipedia.org/wiki/Instant-runoff_voting), [Borda count](https://en.wikipedia.org/wiki/Borda_count), and [approval voting](https://en.wikipedia.org/wiki/Approval_voting) are meant to avoid these problems, although they have varying degrees of success.
 
 ## Just for Fun
 
-The files in this folder were simply made out of personal interest. Many of them are not serious attempts to demonstrate any mathematical concept, and are instead just made to solve an interesting puzzle or generate an interesting figure. I have still shown a few to my students, however, as demonstration of some things that can be done in _Mathematica_.
+The files in this folder were simply made out of personal interest. Many of them are not serious attempts to demonstrate any mathematical concept, and are instead just made to solve an interesting puzzle or generate an interesting figure. I have still shown a few to my students, however, as demonstration of some things that can be done in Mathematica.
 
 ### Bézier Curves
 
