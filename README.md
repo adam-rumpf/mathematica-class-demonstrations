@@ -22,6 +22,7 @@ A large collection of Mathematica demonstrations written by Adam Rumpf, sorted a
   * [Graph Untangler](#graph-untangler)
 * [Voting Theory](#voting-theory)
   * [Comparison of Single-Winner Voting Systems](#comparison-of-single-winner-voting-systems)
+  * [Duverger's Law](#duvergers-law)
   * [Winner-Take-All Distortion](#winner-take-all-distortion)
 * [Just for Fun](#just-for-fun)
   * [Bézier Curves](#bézier-curves)
@@ -232,6 +233,18 @@ Created 10/31/2017
 This demonstration is based on an [interactive Flash demonstration](http://zesty.ca/voting/voteline/) by Ka-Ping Yee, which is meant to show how different, reasonable-seeming methods of evaluating ballots can affect the outcomes of single-winner elections. It also shows some of the problems that certain systems can have, such as the [spoiler effect](https://en.wikipedia.org/wiki/Spoiler_effect) and non-monotonicity.
 
 Most people do not think very much about election systems, and if you asked them to come up with a system for how to run a single-winner election they would probably just suggest the one method they are familiar with: everyone votes for a single candidate and the candidate with the most votes wins. This method is called [first-past-the-post](https://en.wikipedia.org/wiki/First-past-the-post_voting), and although it makes intuitive sense, it has a great many [problems](https://www.electionscience.org/voting-methods/spoiler-effect-top-5-ways-plurality-voting-fails/). Other election systems like [instant runoff voting](https://en.wikipedia.org/wiki/Instant-runoff_voting), [Borda count](https://en.wikipedia.org/wiki/Borda_count), and [approval voting](https://en.wikipedia.org/wiki/Approval_voting) are meant to avoid these problems, although they have varying degrees of success.
+
+### Duverger's Law
+
+<img src="images/duvergers-law-1.png" alt="Duverger's Law Image 1" height="300"/> <img src="images/duvergers-law-2.png" alt="Duverger's Law Image 2" height="300"/>
+
+Created 7/22/2015
+
+[Notebook Link](../master/voting-theory/duvergers-law.nb)
+
+[Duverger's law](https://en.wikipedia.org/wiki/Duverger%27s_law) is an empirical rule which holds that [first-past-the-post](https://en.wikipedia.org/wiki/First-past-the-post_voting) elections tend to result in a two-party system. This is the expected outcome from [tactical voting](https://en.wikipedia.org/wiki/Tactical_voting), wherein supporters of third-party candidates are coerced into abandoning their favorite candidate in favor of their preferred major party candidate in order to avoid the [spoiler effect](https://en.wikipedia.org/wiki/Spoiler_effect).
+
+This demonstration implements a simple tactical voting model based on a sequence of successive elections. We begin with a set of parties lying on a one-dimensional political spectrum, each with a given number of initial supporters. We then simulate a sequence of elections. The behavior assumption is that, if a person's preferred candidate did not win, they will consider shifting their support to the most successful candidate on their half of the political spectrum (centrist voters may shift in either direction because of this). There are parameters to adjust how quickly this occurs, as well as for introducing slight randomization.
 
 ### Winner-Take-All Distortion
 
