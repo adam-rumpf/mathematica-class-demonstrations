@@ -1,0 +1,1750 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.4' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     70363,       1742]
+NotebookOptionsPosition[     68202,       1663]
+NotebookOutlinePosition[     68545,       1678]
+CellTagsIndexPosition[     68502,       1675]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Karush-Kuhn-Tucker (KKT) Conditions", "Title",
+ CellChangeTimes->{{3.776600831050974*^9, 3.7766008318453026`*^9}, {
+  3.777118809145417*^9, 3.7771188211523933`*^9}}],
+
+Cell["Adam Rumpf, 5/7/2018", "Text",
+ CellChangeTimes->{{3.7766008347881403`*^9, 3.776600838290375*^9}, {
+  3.7771184159875317`*^9, 3.77711841718827*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section",
+ CellChangeTimes->{{3.7766008459498987`*^9, 3.776600848547045*^9}}],
+
+Cell["\<\
+This is a graphical representation of the KKT conditions applied to a 2D \
+constrained optimization problem of the form:\
+\>", "Text",
+ CellChangeTimes->{{3.776600856235587*^9, 3.776600860481224*^9}, {
+   3.7771256741950183`*^9, 3.7771257028156157`*^9}, 3.777126944865407*^9}],
+
+Cell[BoxData[Cell["\<\
+min  f(x,y)
+s.t. g(x,y) \[LessEqual] 0\
+\>"]], "DisplayFormula",
+ CellChangeTimes->{{3.777125713483322*^9, 3.777125769833762*^9}}],
+
+Cell[TextData[{
+ "In the main Manipulate environment defined below, the contour lines of the \
+objective function ",
+ Cell[BoxData[
+  FormBox["f", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and the constraint function ",
+ Cell[BoxData[
+  FormBox["g", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " are shown in gray and blue, respectively, with the feasible set being \
+shaded blue. ",
+ Cell[BoxData[
+  FormBox["g", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " is adjustable with the \[OpenCurlyDoubleQuote]low\[CloseCurlyDoubleQuote], \
+\[OpenCurlyDoubleQuote]mid\[CloseCurlyDoubleQuote], and \
+\[OpenCurlyDoubleQuote]high\[CloseCurlyDoubleQuote] controls, which move it \
+up and down the ",
+ Cell[BoxData[
+  FormBox["y", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "-axis. The solution to this optimization problem is the point ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", 
+    RowBox[{
+     SuperscriptBox["x", "*"], ",", 
+     SuperscriptBox["y", "*"]}], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " within the feasible region that achieves the lowest value of ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"f", "(", 
+    RowBox[{
+     SuperscriptBox["x", "*"], ",", 
+     SuperscriptBox["y", "*"]}], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", and is shown as a red dot in the upper left figure. Naturally the optimal \
+solution may change as ",
+ Cell[BoxData[
+  FormBox["g", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " changes."
+}], "Text",
+ CellChangeTimes->{{3.7771257900596333`*^9, 3.7771260418244405`*^9}, {
+  3.777126114610753*^9, 3.7771261148846664`*^9}, {3.7771269801578135`*^9, 
+  3.777126991780734*^9}}],
+
+Cell[TextData[{
+ "The user may click and drag the top left plot to select a candidate \
+solution. The other parts of the figure will display whether or not the \
+chosen point satisfies the various KKT conditions, displaying \
+\[OpenCurlyDoubleQuote]",
+ StyleBox["\[Checkmark]",
+  FontColor->RGBColor[0., 0.5019607843137255, 0.]],
+ "\[CloseCurlyDoubleQuote] if the condition is satisfied and \
+\[OpenCurlyDoubleQuote]",
+ StyleBox["X",
+  FontColor->RGBColor[1, 0, 0]],
+ "\[CloseCurlyDoubleQuote] if not. Try moving the point around to watch how \
+this effects the evaluations of the various conditions. Also try coming up \
+with solutions that satisfy some conditions but not others, which should help \
+to explain why all of them are necessary for optimality."
+}], "Text",
+ CellChangeTimes->{{3.7771261280124865`*^9, 3.7771262159326286`*^9}, {
+  3.7771262675206237`*^9, 3.777126339889524*^9}, {3.7771270112365403`*^9, 
+  3.7771270366027837`*^9}}],
+
+Cell["To explain the different parts of the display:", "Text",
+ CellChangeTimes->{{3.7771263625365906`*^9, 3.7771263778594174`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "The top left shows the chosen point and the feasible set, and corresponds \
+to the primal feasibility condition, which simply states that the point must \
+lie inside the feasible set. The chosen point is also accompanied by a black \
+and a blue vector which show the gradients of ",
+ Cell[BoxData[
+  FormBox["f", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and ",
+ Cell[BoxData[
+  FormBox["g", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", respectively."
+}], "Item",
+ CellChangeTimes->{{3.777126386350711*^9, 3.7771264749064655`*^9}, {
+  3.777127067116784*^9, 3.7771270781368303`*^9}}],
+
+Cell[TextData[{
+ "The top right shows an expanded view of the ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[Del]", "f"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[Del]", "g"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " vectors from the top left, and corresponds to the stationarity condition, \
+which is that ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"\[Del]", "f"}], "=", 
+    RowBox[{
+     RowBox[{"-", "\[Mu]"}], " ", 
+     RowBox[{"\[Del]", "g"}]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " for some constant ",
+ Cell[BoxData[
+  FormBox["\[Mu]", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". This is satisfied either if ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"\[Del]", "f"}], "=", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " (in which case ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[Mu]", "=", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ") or if ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[Del]", "f"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[Del]", "g"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " are collinear (in which case ",
+ Cell[BoxData[
+  FormBox["\[Mu]", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " is the scaling factor of ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[Del]", "g"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " relative to ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[Del]", "f"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ")."
+}], "Item",
+ CellChangeTimes->{{3.777126386350711*^9, 3.7771264350263767`*^9}, {
+  3.777126478001033*^9, 3.777126573881668*^9}}],
+
+Cell[TextData[{
+ "The bottom left shows a combination of the dual feasibility and \
+complementary slackness constraints. Both concern the constant ",
+ Cell[BoxData[
+  FormBox["\[Mu]", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " defined in the stationarity condition, which only exists if stationarity \
+is satisfied. If stationarity is not satisfied then ",
+ Cell[BoxData[
+  FormBox["\[Mu]", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " is undefined and nothing is displayed. Otherwise, the display shows the \
+point ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", 
+    RowBox[{"\[Mu]", ",", "g"}], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " on the ",
+ Cell[BoxData[
+  FormBox["\[Mu]", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " versus ",
+ Cell[BoxData[
+  FormBox["g", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " axis. Complementary slackness states that ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"\[Mu]", " ", "g"}], "=", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", which is equivalent to requiring that at least one out of ",
+ Cell[BoxData[
+  FormBox["\[Mu]", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and ",
+ Cell[BoxData[
+  FormBox["g", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " be zero. Dual feasibility is ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[Mu]", "\[GreaterEqual]", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " while primal feasibility is ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"g", "\[LessEqual]", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", and combining all of this tells us that the optimal solution must have ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", 
+    RowBox[{"\[Mu]", ",", "g"}], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " somewhere on either the positive ",
+ Cell[BoxData[
+  FormBox["\[Mu]", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "-axis or the negative ",
+ Cell[BoxData[
+  FormBox["g", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "-axis."
+}], "Item",
+ CellChangeTimes->{{3.777126386350711*^9, 3.7771264350263767`*^9}, {
+  3.777126478001033*^9, 3.777126891949521*^9}, {3.777127159560687*^9, 
+  3.7771271608643456`*^9}, {3.7771272619176874`*^9, 3.7771272808349743`*^9}}],
+
+Cell["\<\
+The bottom right does not correspond to any KKT condition, and simply prints \
+the objective values of the global optimum and of the current solution.\
+\>", "Item",
+ CellChangeTimes->{{3.777126386350711*^9, 3.7771264350263767`*^9}, {
+   3.777126478001033*^9, 3.7771269223826995`*^9}, 3.7771271751398635`*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Code", "Section",
+ CellChangeTimes->{{3.776600864408964*^9, 3.7766008650447807`*^9}, 
+   3.777125823976014*^9}],
+
+Cell[CellGroupData[{
+
+Cell["Initialization", "Subsection",
+ CellChangeTimes->{{3.776600871130811*^9, 3.776600873087188*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", "objective", " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"f", "[", 
+    RowBox[{"x_", ",", "y_"}], "]"}], ":=", 
+   RowBox[{
+    SuperscriptBox[
+     RowBox[{"(", 
+      RowBox[{"x", "-", "0.5"}], ")"}], "2"], "+", 
+    RowBox[{"0.5", 
+     SuperscriptBox["y", "4"]}], "-", 
+    RowBox[{"0.5", 
+     SuperscriptBox[
+      RowBox[{"(", 
+       RowBox[{"y", "+", "0.5"}], ")"}], "2"]}]}]}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.7336127826971807`*^9, 3.7336128068006086`*^9}, {
+   3.73361286521133*^9, 3.7336130011876526`*^9}, {3.733613035368051*^9, 
+   3.7336133256231823`*^9}, {3.7336134146345196`*^9, 
+   3.7336135725265937`*^9}, {3.733614469251754*^9, 3.7336146383568044`*^9}, {
+   3.7336150480425553`*^9, 3.7336150546438403`*^9}, {3.7336916025042534`*^9, 
+   3.7336916545633802`*^9}, {3.7336918438483243`*^9, 3.733691891993596*^9}, {
+   3.7336919503244815`*^9, 3.7336920050653753`*^9}, {3.7337002861115007`*^9, 
+   3.7337003372595*^9}, 3.734350171336928*^9},
+ CellID->397256323],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"unconstrained", " ", "min"}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"fmin", "=", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"x", ",", "y"}], "}"}], "/.", 
+     RowBox[{
+      RowBox[{"NMinimize", "[", 
+       RowBox[{
+        RowBox[{"f", "[", 
+         RowBox[{"x", ",", "y"}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"x", ",", "y"}], "}"}]}], "]"}], "[", 
+      RowBox[{"[", "2", "]"}], "]"}]}]}], ";"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.7336127826971807`*^9, 3.7336128068006086`*^9}, {
+  3.73361286521133*^9, 3.7336130011876526`*^9}, {3.733613035368051*^9, 
+  3.7336133256231823`*^9}, {3.7336134146345196`*^9, 3.7336135725265937`*^9}, {
+  3.733614469251754*^9, 3.7336146383568044`*^9}, {3.7336150480425553`*^9, 
+  3.7336150546438403`*^9}, {3.7336916025042534`*^9, 3.7336916545633802`*^9}, {
+  3.7336918438483243`*^9, 3.733691891993596*^9}, {3.7336919503244815`*^9, 
+  3.7336920050653753`*^9}, {3.7337002861115007`*^9, 3.7337003372595*^9}, {
+  3.734350171336928*^9, 3.734350175702366*^9}},
+ CellID->497508409],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "boundary", " ", "function", " ", "with", " ", "adjustable", " ", 
+    "offset"}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"g", "[", 
+    RowBox[{"x_", ",", "y_", ",", "c_"}], "]"}], ":=", 
+   RowBox[{"y", "-", "c", "+", 
+    SuperscriptBox["x", "2"]}]}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.7336127826971807`*^9, 3.7336128068006086`*^9}, {
+  3.73361286521133*^9, 3.7336130011876526`*^9}, {3.733613035368051*^9, 
+  3.7336133256231823`*^9}, {3.7336134146345196`*^9, 3.7336135725265937`*^9}, {
+  3.733614469251754*^9, 3.7336146383568044`*^9}, {3.7336150480425553`*^9, 
+  3.7336150546438403`*^9}, {3.7336916025042534`*^9, 3.7336916545633802`*^9}, {
+  3.7336918438483243`*^9, 3.733691891993596*^9}, {3.7336919503244815`*^9, 
+  3.7336920050653753`*^9}, {3.7337002861115007`*^9, 3.7337003372595*^9}, {
+  3.734350171336928*^9, 3.734350186502345*^9}},
+ CellID->1469992292],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "constraint", " ", "offset", " ", "to", " ", "put", " ", "min", " ", "on", 
+    " ", "boundary"}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"co", "=", 
+    RowBox[{"c", "/.", 
+     RowBox[{
+      RowBox[{"NSolve", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"g", "[", 
+          RowBox[{
+           RowBox[{"fmin", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], ",", 
+           RowBox[{"fmin", "[", 
+            RowBox[{"[", "2", "]"}], "]"}], ",", "c"}], "]"}], "\[Equal]", 
+         "0"}], ",", "c"}], "]"}], "[", 
+      RowBox[{"[", 
+       RowBox[{"1", ",", "1"}], "]"}], "]"}]}]}], ";"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.7336127826971807`*^9, 3.7336128068006086`*^9}, {
+  3.73361286521133*^9, 3.7336130011876526`*^9}, {3.733613035368051*^9, 
+  3.7336133256231823`*^9}, {3.7336134146345196`*^9, 3.7336135725265937`*^9}, {
+  3.733614469251754*^9, 3.7336146383568044`*^9}, {3.7336150480425553`*^9, 
+  3.7336150546438403`*^9}, {3.7336916025042534`*^9, 3.7336916545633802`*^9}, {
+  3.7336918438483243`*^9, 3.733691891993596*^9}, {3.7336919503244815`*^9, 
+  3.7336920050653753`*^9}, {3.7337002861115007`*^9, 3.7337003372595*^9}, {
+  3.734350171336928*^9, 3.734350193681265*^9}},
+ CellID->1508576556],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "global", " ", "min", " ", "for", " ", "different", " ", "boundary", " ", 
+    "offsets"}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"sol", "[", "c_", "]"}], ":=", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"x", ",", "y"}], "}"}], "/.", 
+    RowBox[{
+     RowBox[{"NMinimize", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"f", "[", 
+          RowBox[{"x", ",", "y"}], "]"}], ",", 
+         RowBox[{
+          RowBox[{"g", "[", 
+           RowBox[{"x", ",", "y", ",", "c"}], "]"}], "\[Equal]", "0"}]}], 
+        "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", "y"}], "}"}]}], "]"}], "[", 
+     RowBox[{"[", "2", "]"}], "]"}]}]}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.7336127826971807`*^9, 3.7336128068006086`*^9}, {
+  3.73361286521133*^9, 3.7336130011876526`*^9}, {3.733613035368051*^9, 
+  3.7336133256231823`*^9}, {3.7336134146345196`*^9, 3.7336135725265937`*^9}, {
+  3.733614469251754*^9, 3.7336146383568044`*^9}, {3.7336150480425553`*^9, 
+  3.7336150546438403`*^9}, {3.7336916025042534`*^9, 3.7336916545633802`*^9}, {
+  3.7336918438483243`*^9, 3.733691891993596*^9}, {3.7336919503244815`*^9, 
+  3.7336920050653753`*^9}, {3.7337002861115007`*^9, 3.7337003372595*^9}, {
+  3.734350171336928*^9, 3.7343501988450317`*^9}},
+ CellID->1454240210],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "global", " ", "min", " ", "for", " ", "specific", " ", "boundary", " ", 
+    "offsets"}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"sol1", "=", 
+    RowBox[{"sol", "[", "0", "]"}]}], ";"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.7336127826971807`*^9, 3.7336128068006086`*^9}, {
+  3.73361286521133*^9, 3.7336130011876526`*^9}, {3.733613035368051*^9, 
+  3.7336133256231823`*^9}, {3.7336134146345196`*^9, 3.7336135725265937`*^9}, {
+  3.733614469251754*^9, 3.7336146383568044`*^9}, {3.7336150480425553`*^9, 
+  3.7336150546438403`*^9}, {3.7336916025042534`*^9, 3.7336916545633802`*^9}, {
+  3.7336918438483243`*^9, 3.733691891993596*^9}, {3.7336919503244815`*^9, 
+  3.7336920050653753`*^9}, {3.7337002861115007`*^9, 3.7337003372595*^9}, {
+  3.734350171336928*^9, 3.7343502059210157`*^9}},
+ CellID->903822963],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"sol2", "=", 
+   RowBox[{"sol", "[", "co", "]"}]}], ";"}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.7336127826971807`*^9, 3.7336128068006086`*^9}, {
+  3.73361286521133*^9, 3.7336130011876526`*^9}, {3.733613035368051*^9, 
+  3.7336133256231823`*^9}, {3.7336134146345196`*^9, 3.7336135725265937`*^9}, {
+  3.733614469251754*^9, 3.7336146383568044`*^9}, {3.7336150480425553`*^9, 
+  3.7336150546438403`*^9}, {3.7336916025042534`*^9, 3.7336916545633802`*^9}, {
+  3.7336918438483243`*^9, 3.733691891993596*^9}, {3.7336919503244815`*^9, 
+  3.7336920050653753`*^9}, {3.7337002861115007`*^9, 3.7337003372595*^9}, {
+  3.734350171336928*^9, 3.734350206944914*^9}},
+ CellID->914876956],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"sol3", "=", 
+   RowBox[{"sol", "[", "2", "]"}]}], ";"}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.7336127826971807`*^9, 3.7336128068006086`*^9}, {
+  3.73361286521133*^9, 3.7336130011876526`*^9}, {3.733613035368051*^9, 
+  3.7336133256231823`*^9}, {3.7336134146345196`*^9, 3.7336135725265937`*^9}, {
+  3.733614469251754*^9, 3.7336146383568044`*^9}, {3.7336150480425553`*^9, 
+  3.7336150546438403`*^9}, {3.7336916025042534`*^9, 3.7336916545633802`*^9}, {
+  3.7336918438483243`*^9, 3.733691891993596*^9}, {3.7336919503244815`*^9, 
+  3.7336920050653753`*^9}, {3.7337002861115007`*^9, 3.7337003372595*^9}, {
+  3.734350171336928*^9, 3.734350206944914*^9}},
+ CellID->354086972],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "contour", " ", "levels", " ", "necessary", " ", "to", " ", "line", " ", 
+    "up", " ", "with", " ", "global", " ", "mins"}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"cont1", "=", 
+    RowBox[{"f", "[", 
+     RowBox[{
+      RowBox[{"sol1", "[", 
+       RowBox[{"[", "1", "]"}], "]"}], ",", 
+      RowBox[{"sol1", "[", 
+       RowBox[{"[", "2", "]"}], "]"}]}], "]"}]}], ";"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.7336127826971807`*^9, 3.7336128068006086`*^9}, {
+  3.73361286521133*^9, 3.7336130011876526`*^9}, {3.733613035368051*^9, 
+  3.7336133256231823`*^9}, {3.7336134146345196`*^9, 3.7336135725265937`*^9}, {
+  3.733614469251754*^9, 3.7336146383568044`*^9}, {3.7336150480425553`*^9, 
+  3.7336150546438403`*^9}, {3.7336916025042534`*^9, 3.7336916545633802`*^9}, {
+  3.7336918438483243`*^9, 3.733691891993596*^9}, {3.7336919503244815`*^9, 
+  3.7336920050653753`*^9}, {3.7337002861115007`*^9, 3.7337003372595*^9}, {
+  3.734350171336928*^9, 3.7343502156978397`*^9}},
+ CellID->1400703910],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"cont3", "=", 
+   RowBox[{"f", "[", 
+    RowBox[{
+     RowBox[{"sol3", "[", 
+      RowBox[{"[", "1", "]"}], "]"}], ",", 
+     RowBox[{"sol3", "[", 
+      RowBox[{"[", "2", "]"}], "]"}]}], "]"}]}], ";"}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.7336127826971807`*^9, 3.7336128068006086`*^9}, {
+  3.73361286521133*^9, 3.7336130011876526`*^9}, {3.733613035368051*^9, 
+  3.7336133256231823`*^9}, {3.7336134146345196`*^9, 3.7336135725265937`*^9}, {
+  3.733614469251754*^9, 3.7336146383568044`*^9}, {3.7336150480425553`*^9, 
+  3.7336150546438403`*^9}, {3.7336916025042534`*^9, 3.7336916545633802`*^9}, {
+  3.7336918438483243`*^9, 3.733691891993596*^9}, {3.7336919503244815`*^9, 
+  3.7336920050653753`*^9}, {3.7337002861115007`*^9, 3.7337003372595*^9}, {
+  3.734350171336928*^9, 3.734350219072916*^9}},
+ CellID->462552567],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"contdiff", "=", 
+   RowBox[{"cont1", "-", "cont3"}]}], ";"}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.7336127826971807`*^9, 3.7336128068006086`*^9}, {
+  3.73361286521133*^9, 3.7336130011876526`*^9}, {3.733613035368051*^9, 
+  3.7336133256231823`*^9}, {3.7336134146345196`*^9, 3.7336135725265937`*^9}, {
+  3.733614469251754*^9, 3.7336146383568044`*^9}, {3.7336150480425553`*^9, 
+  3.7336150546438403`*^9}, {3.7336916025042534`*^9, 3.7336916545633802`*^9}, {
+  3.7336918438483243`*^9, 3.733691891993596*^9}, {3.7336919503244815`*^9, 
+  3.7336920050653753`*^9}, {3.7337002861115007`*^9, 3.7337003372595*^9}, {
+  3.734350171336928*^9, 3.734350220861703*^9}},
+ CellID->230191429],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "calculate", " ", "smallest", " ", "angle", " ", "between", " ", "two", 
+    " ", "vectors"}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"angle", "[", 
+    RowBox[{"u_", ",", "v_"}], "]"}], ":=", 
+   RowBox[{"N", "[", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{
+        RowBox[{"Norm", "[", "u", "]"}], "\[NotEqual]", "0"}], "&&", 
+       RowBox[{
+        RowBox[{"Norm", "[", "v", "]"}], "\[NotEqual]", "0"}]}], ",", 
+      RowBox[{"ArcCos", "[", 
+       RowBox[{"Abs", "[", 
+        FractionBox[
+         RowBox[{"u", ".", "v"}], 
+         RowBox[{
+          RowBox[{"Norm", "[", "u", "]"}], 
+          RowBox[{"Norm", "[", "v", "]"}]}]], "]"}], "]"}], ",", "0"}], "]"}],
+     "]"}]}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.7336127826971807`*^9, 3.7336128068006086`*^9}, {
+  3.73361286521133*^9, 3.7336130011876526`*^9}, {3.733613035368051*^9, 
+  3.7336133256231823`*^9}, {3.7336134146345196`*^9, 3.7336135725265937`*^9}, {
+  3.733614469251754*^9, 3.7336146383568044`*^9}, {3.7336150480425553`*^9, 
+  3.7336150546438403`*^9}, {3.7336916025042534`*^9, 3.7336916545633802`*^9}, {
+  3.7336918438483243`*^9, 3.733691891993596*^9}, {3.7336919503244815`*^9, 
+  3.7336920050653753`*^9}, {3.7337002861115007`*^9, 3.7337003372595*^9}, {
+  3.734350171336928*^9, 3.734350220861703*^9}},
+ CellID->1209298956]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Demonstration", "Subsection",
+ CellChangeTimes->{{3.7766008885632277`*^9, 3.7766008904796133`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"flag", "=", "True"}], ",", "reddot", ",", "boundary", ",", 
+       "snap", ",", "fgrad", ",", "ggrad", ",", "fgrado", ",", "ggrado", ",", 
+       RowBox[{"\[Mu]", "=", "0"}], ",", "gval", ",", 
+       RowBox[{"tol", "=", "0.05"}], ",", "tempsnap", ",", "temp", ",", 
+       "plot1", ",", "plot2", ",", "plot3", ",", "plot4", ",", 
+       RowBox[{"pfeas", "=", "False"}], ",", 
+       RowBox[{"static", "=", "False"}]}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"reddot", "=", 
+       RowBox[{"Switch", "[", 
+        RowBox[{
+        "c", ",", "0", ",", "sol1", ",", "co", ",", "sol2", ",", "2", ",", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"flag", "\[Equal]", "False"}], ",", "sol3", ",", "fmin"}], 
+          "]"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+       "snap", " ", "to", " ", "boundary", " ", "if", " ", "barely", " ", 
+        "outside", " ", "it"}], " ", "*)"}], "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"g", "[", 
+          RowBox[{
+           RowBox[{"pt", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], ",", 
+           RowBox[{"pt", "[", 
+            RowBox[{"[", "2", "]"}], "]"}], ",", "c"}], "]"}], "\[LessEqual]",
+          "0"}], ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"snap", "=", "pt"}], ";", "\[IndentingNewLine]", 
+         RowBox[{"pfeas", "=", "True"}]}], ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"tempsnap", "=", 
+          RowBox[{"RegionNearest", "[", 
+           RowBox[{
+            RowBox[{"ImplicitRegion", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"g", "[", 
+                RowBox[{"x", ",", "y", ",", "c"}], "]"}], "\[Equal]", "0"}], 
+              ",", 
+              RowBox[{"{", 
+               RowBox[{"x", ",", "y"}], "}"}]}], "]"}], ",", "pt"}], "]"}]}], 
+         ";", "\[IndentingNewLine]", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"EuclideanDistance", "[", 
+             RowBox[{"tempsnap", ",", "pt"}], "]"}], "\[LessEqual]", "0.15"}],
+            ",", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"snap", "=", "tempsnap"}], ";", "\[IndentingNewLine]", 
+            RowBox[{"pfeas", "=", "True"}]}], ",", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"snap", "=", "pt"}], ";"}]}], "\[IndentingNewLine]", 
+          "]"}], ";"}]}], "\[IndentingNewLine]", "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+       "snap", " ", "to", " ", "exact", " ", "solution", " ", "if", " ", 
+        "near", " ", "it"}], " ", "*)"}], "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"EuclideanDistance", "[", 
+          RowBox[{"snap", ",", "reddot"}], "]"}], "\[LessEqual]", "0.15"}], 
+        ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"snap", "=", "reddot"}], ";"}]}], "\[IndentingNewLine]", 
+       "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"fgrado", "=", 
+       RowBox[{"fgrad", "=", 
+        RowBox[{
+         RowBox[{"Grad", "[", 
+          RowBox[{
+           RowBox[{"f", "[", 
+            RowBox[{"x", ",", "y"}], "]"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"x", ",", "y"}], "}"}]}], "]"}], "/.", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"x", "\[Rule]", 
+            RowBox[{"snap", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}], ",", 
+           RowBox[{"y", "\[Rule]", 
+            RowBox[{"snap", "[", 
+             RowBox[{"[", "2", "]"}], "]"}]}]}], "}"}]}]}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"pt", "=", "snap"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+        RowBox[{"normalize", " ", 
+         RowBox[{"\[Del]", "f"}]}], ",", " ", 
+        RowBox[{"unless", " ", "it", " ", "is", " ", "zero"}]}], " ", "*)"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Norm", "[", "fgrad", "]"}], ">", "0.1"}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"fgrad", "/=", 
+         RowBox[{"3", 
+          RowBox[{"Norm", "[", "fgrad", "]"}]}]}], ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"fgrad", "=", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", "0"}], "}"}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{"static", "=", "True"}], ";"}]}], "\[IndentingNewLine]", 
+       "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{
+        RowBox[{"normalize", " ", 
+         RowBox[{"\[Del]", "g"}]}], ",", " ", 
+        RowBox[{"unless", " ", "it", " ", "is", " ", "zero"}]}], " ", "*)"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"ggrado", "=", 
+       RowBox[{"ggrad", "=", 
+        RowBox[{
+         RowBox[{"Grad", "[", 
+          RowBox[{
+           RowBox[{"g", "[", 
+            RowBox[{"x", ",", "y", ",", "c"}], "]"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"x", ",", "y"}], "}"}]}], "]"}], "/.", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"x", "\[Rule]", 
+            RowBox[{"snap", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}], ",", 
+           RowBox[{"y", "\[Rule]", 
+            RowBox[{"snap", "[", 
+             RowBox[{"[", "2", "]"}], "]"}]}]}], "}"}]}]}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Norm", "[", "ggrad", "]"}], ">", "0.1"}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"ggrad", "/=", 
+         RowBox[{"2", 
+          RowBox[{"Norm", "[", "ggrad", "]"}]}]}], ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"ggrad", "=", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", "0"}], "}"}]}], ";"}]}], "\[IndentingNewLine]", 
+       "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{"draw", " ", "feasible", " ", 
+        RowBox[{"curve", "/", "region"}]}], " ", "*)"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"flag", "\[Equal]", "False"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"boundary", "=", 
+         RowBox[{"ContourPlot", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"g", "[", 
+             RowBox[{"x", ",", "y", ",", "c"}], "]"}], "\[Equal]", "0"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"x", ",", 
+             RowBox[{"-", "4"}], ",", "2"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"y", ",", 
+             RowBox[{"-", "4"}], ",", "2"}], "}"}], ",", 
+           RowBox[{"ContourStyle", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{"Thick", ",", "Blue"}], "}"}]}]}], "]"}]}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"boundary", "=", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"RegionPlot", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"g", "[", 
+                RowBox[{"x", ",", "y", ",", "c"}], "]"}], "\[LessEqual]", 
+               "0"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"x", ",", 
+                RowBox[{"-", "4"}], ",", "2"}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"y", ",", 
+                RowBox[{"-", "4"}], ",", "2"}], "}"}], ",", 
+              RowBox[{"BoundaryStyle", "\[Rule]", 
+               RowBox[{"{", 
+                RowBox[{"Thick", ",", "Blue"}], "}"}]}]}], "]"}], ",", 
+            "\[IndentingNewLine]", 
+            RowBox[{"ContourPlot", "[", 
+             RowBox[{
+              RowBox[{"g", "[", 
+               RowBox[{"x", ",", "y", ",", "c"}], "]"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"x", ",", 
+                RowBox[{"-", "4"}], ",", "2"}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"y", ",", 
+                RowBox[{"-", "4"}], ",", "2"}], "}"}], ",", 
+              RowBox[{"ContourShading", "\[Rule]", "None"}], ",", 
+              RowBox[{"ContourStyle", "\[Rule]", "Blue"}], ",", 
+              RowBox[{"Contours", "\[Rule]", 
+               RowBox[{"Table", "[", 
+                RowBox[{"k", ",", 
+                 RowBox[{"{", 
+                  RowBox[{"k", ",", 
+                   RowBox[{"-", "0.2"}], ",", 
+                   RowBox[{"-", "10"}], ",", 
+                   RowBox[{"-", "0.2"}]}], "}"}]}], "]"}]}]}], "]"}]}], 
+           "}"}]}], ";"}]}], "\[IndentingNewLine]", "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{"calculate", " ", "\[Mu]", " ", "and", " ", "gval"}], " ", 
+       "*)"}], "\[IndentingNewLine]", 
+      RowBox[{"gval", "=", 
+       RowBox[{"g", "[", 
+        RowBox[{
+         RowBox[{"snap", "[", 
+          RowBox[{"[", "1", "]"}], "]"}], ",", 
+         RowBox[{"snap", "[", 
+          RowBox[{"[", "2", "]"}], "]"}], ",", "c"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Norm", "[", "fgrad", "]"}], "\[Equal]", "0"}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"\[Mu]", "=", "0"}], ",", "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"angle", "[", 
+             RowBox[{"fgrad", ",", "ggrad"}], "]"}], "\[LessEqual]", "tol"}], 
+           ",", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"static", "=", "True"}], ";", "\[IndentingNewLine]", 
+            RowBox[{"temp", "=", "1"}], ";", "\[IndentingNewLine]", 
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"Abs", "[", 
+                RowBox[{"ggrad", "[", 
+                 RowBox[{"[", "2", "]"}], "]"}], "]"}], ">", 
+               RowBox[{"Abs", "[", 
+                RowBox[{"ggrad", "[", 
+                 RowBox[{"[", "1", "]"}], "]"}], "]"}]}], ",", 
+              "\[IndentingNewLine]", 
+              RowBox[{
+               RowBox[{"temp", "=", "2"}], ";"}]}], "\[IndentingNewLine]", 
+             "]"}], ";", "\[IndentingNewLine]", 
+            RowBox[{"\[Mu]", "=", 
+             RowBox[{"-", 
+              FractionBox[
+               RowBox[{"fgrado", "[", 
+                RowBox[{"[", "temp", "]"}], "]"}], 
+               RowBox[{"ggrado", "[", 
+                RowBox[{"[", "temp", "]"}], "]"}]]}]}]}], ",", 
+           "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"\[Mu]", "=", "Infinity"}], ";"}]}], 
+          "\[IndentingNewLine]", "]"}], ";"}]}], "\[IndentingNewLine]", "]"}],
+       ";", "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{"display", " ", "combined", " ", "plot"}], " ", "*)"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"plot1", "=", 
+       RowBox[{"Show", "[", 
+        RowBox[{
+         RowBox[{"ContourPlot", "[", 
+          RowBox[{
+           RowBox[{"f", "[", 
+            RowBox[{"x", ",", "y"}], "]"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"x", ",", 
+             RowBox[{"-", "1"}], ",", "2"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"y", ",", 
+             RowBox[{"-", "1"}], ",", "2"}], "}"}], ",", 
+           RowBox[{"Contours", "\[Rule]", 
+            RowBox[{"Table", "[", 
+             RowBox[{
+              RowBox[{"cont3", "+", 
+               RowBox[{"contdiff", " ", "k"}]}], ",", 
+              RowBox[{"{", 
+               RowBox[{"k", ",", "0", ",", "20"}], "}"}]}], "]"}]}], ",", 
+           RowBox[{"ContourShading", "\[Rule]", "None"}], ",", 
+           RowBox[{"ContourStyle", "\[Rule]", "LightGray"}]}], "]"}], ",", 
+         "boundary", ",", 
+         RowBox[{"Graphics", "[", 
+          RowBox[{"{", 
+           RowBox[{"LightGray", ",", 
+            RowBox[{"PointSize", "[", "Large", "]"}], ",", 
+            RowBox[{"Point", "[", "fmin", "]"}]}], "}"}], "]"}], ",", 
+         RowBox[{"Graphics", "[", 
+          RowBox[{"{", 
+           RowBox[{"Red", ",", 
+            RowBox[{"PointSize", "[", "Large", "]"}], ",", 
+            RowBox[{"Point", "[", "reddot", "]"}]}], "}"}], "]"}], ",", 
+         RowBox[{"Graphics", "[", 
+          RowBox[{"{", 
+           RowBox[{"Blue", ",", 
+            RowBox[{"Arrow", "[", 
+             RowBox[{"{", 
+              RowBox[{"snap", ",", 
+               RowBox[{"snap", "+", "ggrad"}]}], "}"}], "]"}], ",", "Black", 
+            ",", 
+            RowBox[{"Arrow", "[", 
+             RowBox[{"{", 
+              RowBox[{"snap", ",", 
+               RowBox[{"snap", "+", "fgrad"}]}], "}"}], "]"}], ",", 
+            RowBox[{"PointSize", "[", "Large", "]"}], ",", 
+            RowBox[{"Point", "[", "snap", "]"}]}], "}"}], "]"}], ",", 
+         RowBox[{"Graphics", "[", 
+          RowBox[{"{", 
+           RowBox[{"If", "[", 
+            RowBox[{
+             RowBox[{"pfeas", "\[Equal]", "True"}], ",", 
+             RowBox[{"Text", "[", 
+              RowBox[{
+               RowBox[{"Style", "[", 
+                RowBox[{"\"\<\[Checkmark]\>\"", ",", 
+                 RowBox[{"Darker", "@", "Green"}], ",", "14"}], "]"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"1.75", ",", "1.75"}], "}"}]}], "]"}], ",", 
+             RowBox[{"Text", "[", 
+              RowBox[{
+               RowBox[{"Style", "[", 
+                RowBox[{"\"\<\[CapitalChi]\>\"", ",", "Red"}], "]"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"1.75", ",", "1.75"}], "}"}]}], "]"}]}], "]"}], "}"}],
+           "]"}], ",", 
+         RowBox[{"PlotLabel", "\[Rule]", "\"\<primal feasibility\>\""}]}], 
+        "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"plot2", "=", 
+       RowBox[{"Show", "[", 
+        RowBox[{
+         RowBox[{"Graphics", "[", 
+          RowBox[{"{", 
+           RowBox[{"Thick", ",", "Blue", ",", 
+            RowBox[{"Arrow", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"0", ",", "0"}], "}"}], ",", 
+               RowBox[{"If", "[", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"Max", "[", 
+                   RowBox[{"Abs", "[", "ggrado", "]"}], "]"}], "\[LessEqual]",
+                   "3"}], ",", "ggrado", ",", 
+                 RowBox[{"3", 
+                  FractionBox["ggrado", 
+                   RowBox[{"Max", "[", 
+                    RowBox[{"Abs", "[", "ggrado", "]"}], "]"}]]}]}], "]"}]}], 
+              "}"}], "]"}], ",", "Black", ",", 
+            RowBox[{"Arrow", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"0", ",", "0"}], "}"}], ",", 
+               RowBox[{"If", "[", 
+                RowBox[{
+                 RowBox[{
+                  RowBox[{"Max", "[", 
+                   RowBox[{"Abs", "[", "fgrado", "]"}], "]"}], "\[LessEqual]",
+                   "3"}], ",", "fgrado", ",", 
+                 RowBox[{"3", 
+                  FractionBox["fgrado", 
+                   RowBox[{"Max", "[", 
+                    RowBox[{"Abs", "[", "fgrado", "]"}], "]"}]]}]}], "]"}]}], 
+              "}"}], "]"}]}], "}"}], "]"}], ",", 
+         RowBox[{"Graphics", "[", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{"static", "\[Equal]", "True"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Text", "[", 
+               RowBox[{
+                RowBox[{"Style", "[", 
+                 RowBox[{"\"\<\[Checkmark]\>\"", ",", 
+                  RowBox[{"Darker", "@", "Green"}], ",", "14"}], "]"}], ",", 
+                RowBox[{"{", 
+                 RowBox[{"2.5", ",", "2.5"}], "}"}]}], "]"}], ",", 
+              RowBox[{"If", "[", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"Norm", "[", "fgrad", "]"}], "\[Equal]", "0"}], ",", 
+                RowBox[{"Text", "[", 
+                 RowBox[{
+                  RowBox[{"Row", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"\"\<\[Del]\>\"", ",", 
+                    RowBox[{"Style", "[", 
+                    RowBox[{"\"\<f\>\"", ",", "Italic"}], "]"}], ",", 
+                    "\"\< = 0\>\""}], "}"}], "]"}], ",", 
+                  RowBox[{"{", 
+                   RowBox[{"2.5", ",", "2.0"}], "}"}]}], "]"}], ",", 
+                RowBox[{"Text", "[", 
+                 RowBox[{
+                  RowBox[{"Row", "[", 
+                   RowBox[{"{", 
+                    RowBox[{"\"\<\[Del]\>\"", ",", 
+                    RowBox[{"Style", "[", 
+                    RowBox[{"\"\<f\>\"", ",", "Italic"}], "]"}], ",", 
+                    RowBox[{"\"\< = \>\"", "<>", 
+                    RowBox[{"ToString", "[", 
+                    RowBox[{"PaddedForm", "[", 
+                    RowBox[{
+                    RowBox[{"-", "\[Mu]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"2", ",", "1"}], "}"}]}], "]"}], "]"}], "<>", 
+                    "\"\<\[Del]\>\""}], ",", 
+                    RowBox[{"Style", "[", 
+                    RowBox[{"\"\<g\>\"", ",", "Italic"}], "]"}]}], "}"}], 
+                   "]"}], ",", 
+                  RowBox[{"{", 
+                   RowBox[{"3.0", ",", "2.0"}], "}"}], ",", 
+                  RowBox[{"{", 
+                   RowBox[{"1", ",", "0"}], "}"}]}], "]"}]}], "]"}]}], "}"}], 
+            ",", 
+            RowBox[{"{", 
+             RowBox[{"Text", "[", 
+              RowBox[{
+               RowBox[{"Style", "[", 
+                RowBox[{"\"\<\[CapitalChi]\>\"", ",", "Red"}], "]"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"2.5", ",", "2.5"}], "}"}]}], "]"}], "}"}]}], "]"}], 
+          "]"}], ",", 
+         RowBox[{"Axes", "\[Rule]", "True"}], ",", 
+         RowBox[{"PlotRange", "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "3"}], ",", "3"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "3"}], ",", "3"}], "}"}]}], "}"}]}], ",", 
+         RowBox[{"AspectRatio", "\[Rule]", "1"}], ",", 
+         RowBox[{"PlotLabel", "\[Rule]", "\"\<stationarity\>\""}], ",", 
+         RowBox[{"AxesStyle", "\[Rule]", "Gray"}]}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"plot3", "=", 
+       RowBox[{"Show", "[", 
+        RowBox[{
+         RowBox[{"ListPlot", "[", 
+          RowBox[{
+           RowBox[{"{", "}"}], ",", 
+           RowBox[{"PlotRange", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"-", "3"}], ",", "3"}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"-", "3"}], ",", "3"}], "}"}]}], "}"}]}], ",", 
+           RowBox[{"AspectRatio", "\[Rule]", "1"}], ",", 
+           RowBox[{"AxesLabel", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Row", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"Style", "[", 
+                  RowBox[{"\"\<g\>\"", ",", "Italic"}], "]"}], ",", 
+                 "\"\<(\>\"", ",", 
+                 RowBox[{"Style", "[", 
+                  RowBox[{"\"\<x\>\"", ",", "Italic"}], "]"}], ",", 
+                 "\"\<,y)\>\""}], "}"}], "]"}], ",", "\"\<\[Mu]\>\""}], 
+             "}"}]}], ",", 
+           RowBox[{
+           "PlotLabel", "\[Rule]", 
+            "\"\<dual feasibility and\\ncomplementary slackness\>\""}], ",", 
+           RowBox[{"AxesStyle", "\[Rule]", 
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{"\[Mu]", "\[Equal]", "Infinity"}], ",", "LightGray", 
+              ",", "Gray"}], "]"}]}], ",", 
+           RowBox[{"TicksStyle", "\[Rule]", 
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{"\[Mu]", "\[Equal]", "Infinity"}], ",", "LightGray", 
+              ",", "Gray"}], "]"}]}]}], "]"}], ",", 
+         RowBox[{"Graphics", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Thickness", "[", "0.03", "]"}], ",", 
+            RowBox[{"Arrowheads", "[", "0.1", "]"}], ",", 
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{"\[Mu]", "\[Equal]", "Infinity"}], ",", "LightGray", 
+              ",", "Gray"}], "]"}], ",", 
+            RowBox[{"Arrow", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"0", ",", "0"}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"-", "3"}], ",", "0"}], "}"}]}], "}"}], "]"}], ",", 
+            RowBox[{"Arrow", "[", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"0", ",", "0"}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"0", ",", "3"}], "}"}]}], "}"}], "]"}], ",", 
+            RowBox[{"PointSize", "[", "0.03", "]"}], ",", 
+            RowBox[{"Point", "[", 
+             RowBox[{"{", 
+              RowBox[{"0", ",", "0"}], "}"}], "]"}], ",", "Black", ",", 
+            RowBox[{"PointSize", "[", "0.075", "]"}], ",", 
+            RowBox[{"Point", "[", 
+             RowBox[{"{", 
+              RowBox[{"gval", ",", 
+               RowBox[{"Min", "[", 
+                RowBox[{"\[Mu]", ",", "100"}], "]"}]}], "}"}], "]"}]}], "}"}],
+           "]"}], ",", 
+         RowBox[{"Graphics", "[", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{"\[Mu]", "\[Equal]", "Infinity"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Text", "[", 
+               RowBox[{
+                RowBox[{"Style", "[", 
+                 RowBox[{"\"\<\[CapitalChi]\>\"", ",", "Red"}], "]"}], ",", 
+                RowBox[{"{", 
+                 RowBox[{"2.5", ",", "2.5"}], "}"}]}], "]"}], ",", 
+              RowBox[{"Text", "[", 
+               RowBox[{"\"\<\[Mu] DNE\>\"", ",", 
+                RowBox[{"{", 
+                 RowBox[{"3.0", ",", "2.0"}], "}"}], ",", 
+                RowBox[{"{", 
+                 RowBox[{"1", ",", "0"}], "}"}]}], "]"}]}], "}"}], ",", 
+            RowBox[{"If", "[", 
+             RowBox[{
+              RowBox[{"\[Mu]", "<", "0"}], ",", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"Text", "[", 
+                 RowBox[{
+                  RowBox[{"Style", "[", 
+                   RowBox[{"\"\<\[CapitalChi]\>\"", ",", "Red"}], "]"}], ",", 
+                  RowBox[{"{", 
+                   RowBox[{"2.5", ",", "2.5"}], "}"}]}], "]"}], ",", 
+                RowBox[{"Text", "[", 
+                 RowBox[{"\"\<\[Mu] < 0\>\"", ",", 
+                  RowBox[{"{", 
+                   RowBox[{"3.0", ",", "2.0"}], "}"}], ",", 
+                  RowBox[{"{", 
+                   RowBox[{"1", ",", "0"}], "}"}]}], "]"}]}], "}"}], ",", 
+              RowBox[{"If", "[", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"\[Mu]", "\[Equal]", "0"}], "&&", 
+                 RowBox[{
+                  RowBox[{"Abs", "[", "gval", "]"}], "\[LessEqual]", 
+                  "0.01"}]}], ",", 
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"Text", "[", 
+                   RowBox[{
+                    RowBox[{"Style", "[", 
+                    RowBox[{"\"\<\[Checkmark]\>\"", ",", 
+                    RowBox[{"Darker", "@", "Green"}], ",", "14"}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"2.5", ",", "2.5"}], "}"}]}], "]"}], ",", 
+                  RowBox[{"Text", "[", 
+                   RowBox[{"\"\<\[Mu] = 0\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{"3.0", ",", "2.0"}], "}"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"1", ",", "0"}], "}"}]}], "]"}], ",", 
+                  RowBox[{"Text", "[", 
+                   RowBox[{
+                    RowBox[{"Row", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Style", "[", 
+                    RowBox[{"\"\<g\>\"", ",", "Italic"}], "]"}], ",", 
+                    "\"\< = 0\>\""}], "}"}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"3.0", ",", "1.5"}], "}"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"1", ",", "0"}], "}"}]}], "]"}]}], "}"}], ",", 
+                RowBox[{"If", "[", 
+                 RowBox[{
+                  RowBox[{"\[Mu]", "\[Equal]", "0"}], ",", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"Text", "[", 
+                    RowBox[{
+                    RowBox[{"Style", "[", 
+                    RowBox[{"\"\<\[Checkmark]\>\"", ",", 
+                    RowBox[{"Darker", "@", "Green"}], ",", "14"}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"2.5", ",", "2.5"}], "}"}]}], "]"}], ",", 
+                    RowBox[{"Text", "[", 
+                    RowBox[{"\"\<\[Mu] = 0\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{"3.0", ",", "2.0"}], "}"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"1", ",", "0"}], "}"}]}], "]"}]}], "}"}], ",", 
+                  RowBox[{"If", "[", 
+                   RowBox[{
+                    RowBox[{
+                    RowBox[{"Abs", "[", "gval", "]"}], "\[LessEqual]", 
+                    "0.01"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Text", "[", 
+                    RowBox[{
+                    RowBox[{"Style", "[", 
+                    RowBox[{"\"\<\[Checkmark]\>\"", ",", 
+                    RowBox[{"Darker", "@", "Green"}], ",", "14"}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"2.5", ",", "2.5"}], "}"}]}], "]"}], ",", 
+                    RowBox[{"Text", "[", 
+                    RowBox[{
+                    RowBox[{"Row", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Style", "[", 
+                    RowBox[{"\"\<g\>\"", ",", "Italic"}], "]"}], ",", 
+                    "\"\< = 0\>\""}], "}"}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"3.0", ",", "2.0"}], "}"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"1", ",", "0"}], "}"}]}], "]"}]}], "}"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Text", "[", 
+                    RowBox[{
+                    RowBox[{"Style", "[", 
+                    RowBox[{"\"\<\[CapitalChi]\>\"", ",", "Red"}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"2.5", ",", "2.5"}], "}"}]}], "]"}], ",", 
+                    RowBox[{"Text", "[", 
+                    RowBox[{"\"\<\[Mu] \[NotEqual] 0\>\"", ",", 
+                    RowBox[{"{", 
+                    RowBox[{"3.0", ",", "2.0"}], "}"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"1", ",", "0"}], "}"}]}], "]"}], ",", 
+                    RowBox[{"Text", "[", 
+                    RowBox[{
+                    RowBox[{"Row", "[", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"Style", "[", 
+                    RowBox[{"\"\<g\>\"", ",", "Italic"}], "]"}], ",", 
+                    "\"\< \[NotEqual] 0\>\""}], "}"}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"3.0", ",", "1.5"}], "}"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"1", ",", "0"}], "}"}]}], "]"}]}], "}"}]}], 
+                   "]"}]}], "]"}]}], "]"}]}], "]"}]}], "]"}], "]"}]}], 
+        "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"plot4", "=", 
+       RowBox[{"Show", "[", 
+        RowBox[{
+         RowBox[{"Graphics", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"Text", "[", 
+             RowBox[{"\"\<optimal solution: \>\"", ",", 
+              RowBox[{"{", 
+               RowBox[{"0", ",", "0.75"}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"1", ",", "0"}], "}"}]}], "]"}], ",", 
+            RowBox[{"Text", "[", 
+             RowBox[{
+              RowBox[{"ToString", "[", 
+               RowBox[{"PaddedForm", "[", 
+                RowBox[{
+                 RowBox[{"f", "[", 
+                  RowBox[{
+                   RowBox[{"reddot", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], ",", 
+                   RowBox[{"reddot", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}], "]"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"3", ",", "2"}], "}"}]}], "]"}], "]"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"0.25", ",", "0.75"}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"1", ",", "0"}], "}"}]}], "]"}], ",", 
+            RowBox[{"Text", "[", 
+             RowBox[{"\"\<current solution: \>\"", ",", 
+              RowBox[{"{", 
+               RowBox[{"0", ",", "0.6"}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"1", ",", "0"}], "}"}]}], "]"}], ",", 
+            RowBox[{"Text", "[", 
+             RowBox[{
+              RowBox[{"ToString", "[", 
+               RowBox[{"PaddedForm", "[", 
+                RowBox[{
+                 RowBox[{"f", "[", 
+                  RowBox[{
+                   RowBox[{"snap", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], ",", 
+                   RowBox[{"snap", "[", 
+                    RowBox[{"[", "2", "]"}], "]"}]}], "]"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"3", ",", "2"}], "}"}]}], "]"}], "]"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"0.25", ",", "0.6"}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"1", ",", "0"}], "}"}]}], "]"}]}], "}"}], "]"}], ",", 
+         RowBox[{"PlotRange", "\[Rule]", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "1"}], ",", "0.45"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"-", "1"}], ",", "1"}], "}"}]}], "}"}]}], ",", 
+         RowBox[{"PlotLabel", "\[Rule]", "\"\<objective values\>\""}]}], 
+        "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"Grid", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"plot1", ",", "plot2"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"plot3", ",", "plot4"}], "}"}]}], "}"}], ",", 
+        RowBox[{"Spacings", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{"3", ",", "3"}], "}"}]}]}], "]"}]}]}], 
+    "\[IndentingNewLine]", "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"c", ",", "0", ",", "\"\<boundary height\>\""}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"0", "\[Rule]", "\"\<low\>\""}], ",", 
+       RowBox[{"co", "\[Rule]", "\"\<mid\>\""}], ",", 
+       RowBox[{"2", "\[Rule]", "\"\<high\>\""}]}], "}"}], ",", 
+     "RadioButton"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"pt", ",", 
+       RowBox[{"{", 
+        RowBox[{"0", ",", 
+         RowBox[{"-", "0.5"}]}], "}"}]}], "}"}], ",", "Locator"}], "}"}], ",", 
+   RowBox[{"SaveDefinitions", "\[Rule]", "True"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.733710911207263*^9, 3.733710964052863*^9}, {
+   3.733712760293764*^9, 3.733713017579294*^9}, {3.7337130827340617`*^9, 
+   3.733713240740919*^9}, {3.7337256836692305`*^9, 3.733725730950269*^9}, 
+   3.7343503373412333`*^9, {3.7343533801983337`*^9, 3.734353380457962*^9}, {
+   3.734353417607127*^9, 3.734353452403431*^9}, {3.734353484984374*^9, 
+   3.734353497540268*^9}, {3.734353566403919*^9, 3.7343535754381123`*^9}, {
+   3.734353658502899*^9, 3.7343538733699207`*^9}, {3.734356082162867*^9, 
+   3.7343561028826017`*^9}, {3.734356268196096*^9, 3.734356288793807*^9}, {
+   3.734356424665277*^9, 3.7343564435438013`*^9}, {3.734376774552061*^9, 
+   3.734376774635579*^9}, {3.734376806385276*^9, 3.734376813062851*^9}, {
+   3.7343768519069242`*^9, 3.734376856255231*^9}, {3.734376929479501*^9, 
+   3.734376958133651*^9}, {3.7347210354346795`*^9, 3.7347210795933895`*^9}, {
+   3.7347211149415483`*^9, 3.7347211354037085`*^9}, {3.7347211773195076`*^9, 
+   3.734721186235363*^9}, {3.734722128591287*^9, 3.7347221563207684`*^9}, {
+   3.734722202229187*^9, 3.7347223237881384`*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`c$$ = 2, $CellContext`pt$$ = {
+    0.8699999999999999, 0.9899999999999998}, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`c$$], 0, "boundary height"}, {
+      0 -> "low", 1.1346461771193157` -> "mid", 2 -> "high"}}, {{
+       Hold[$CellContext`pt$$], {0, -0.5}}, Automatic}}, Typeset`size$$ = {
+    399., {224., 230.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = False, $CellContext`c$1559$$ = False}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`c$$ = 0, $CellContext`pt$$ = {0, -0.5}}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`c$$, $CellContext`c$1559$$, False]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`flag$ = 
+         True, $CellContext`reddot$, $CellContext`boundary$, \
+$CellContext`snap$, $CellContext`fgrad$, $CellContext`ggrad$, \
+$CellContext`fgrado$, $CellContext`ggrado$, $CellContext`\[Mu]$ = 
+         0, $CellContext`gval$, $CellContext`tol$ = 
+         0.05, $CellContext`tempsnap$, $CellContext`temp$, \
+$CellContext`plot1$, $CellContext`plot2$, $CellContext`plot3$, \
+$CellContext`plot4$, $CellContext`pfeas$ = False, $CellContext`static$ = 
+         False}, $CellContext`reddot$ = 
+         Switch[$CellContext`c$$, 
+           0, $CellContext`sol1, $CellContext`co, $CellContext`sol2, 2, 
+           
+           If[$CellContext`flag$ == 
+            False, $CellContext`sol3, $CellContext`fmin]]; If[$CellContext`g[
+            Part[$CellContext`pt$$, 1], 
+            Part[$CellContext`pt$$, 2], $CellContext`c$$] <= 
+          0, $CellContext`snap$ = $CellContext`pt$$; $CellContext`pfeas$ = 
+           True, $CellContext`tempsnap$ = RegionNearest[
+             
+             ImplicitRegion[$CellContext`g[$CellContext`x, $CellContext`y, \
+$CellContext`c$$] == 0, {$CellContext`x, $CellContext`y}], $CellContext`pt$$]; 
+          If[EuclideanDistance[$CellContext`tempsnap$, $CellContext`pt$$] <= 
+            0.15, $CellContext`snap$ = $CellContext`tempsnap$; \
+$CellContext`pfeas$ = True, $CellContext`snap$ = $CellContext`pt$$; Null]; 
+          Null]; If[
+         EuclideanDistance[$CellContext`snap$, $CellContext`reddot$] <= 
+          0.15, $CellContext`snap$ = $CellContext`reddot$; 
+          Null]; $CellContext`fgrado$ = ($CellContext`fgrad$ = ReplaceAll[
+            Grad[
+             $CellContext`f[$CellContext`x, $CellContext`y], {$CellContext`x, \
+$CellContext`y}], {$CellContext`x -> 
+             Part[$CellContext`snap$, 1], $CellContext`y -> 
+             Part[$CellContext`snap$, 
+               2]}]); $CellContext`pt$$ = $CellContext`snap$; 
+        If[Norm[$CellContext`fgrad$] > 0.1, 
+          
+          DivideBy[$CellContext`fgrad$, 3 
+           Norm[$CellContext`fgrad$]], $CellContext`fgrad$ = {0, 
+            0}; $CellContext`static$ = True; 
+          Null]; $CellContext`ggrado$ = ($CellContext`ggrad$ = ReplaceAll[
+            Grad[
+             $CellContext`g[$CellContext`x, $CellContext`y, \
+$CellContext`c$$], {$CellContext`x, $CellContext`y}], {$CellContext`x -> 
+             Part[$CellContext`snap$, 1], $CellContext`y -> 
+             Part[$CellContext`snap$, 2]}]); 
+        If[Norm[$CellContext`ggrad$] > 0.1, 
+          
+          DivideBy[$CellContext`ggrad$, 2 
+           Norm[$CellContext`ggrad$]], $CellContext`ggrad$ = {0, 0}; Null]; 
+        If[$CellContext`flag$ == False, $CellContext`boundary$ = 
+          ContourPlot[$CellContext`g[$CellContext`x, $CellContext`y, \
+$CellContext`c$$] == 0, {$CellContext`x, -4, 2}, {$CellContext`y, -4, 2}, 
+            ContourStyle -> {Thick, Blue}], $CellContext`boundary$ = {
+             
+             RegionPlot[$CellContext`g[$CellContext`x, $CellContext`y, \
+$CellContext`c$$] <= 0, {$CellContext`x, -4, 2}, {$CellContext`y, -4, 2}, 
+              BoundaryStyle -> {Thick, Blue}], 
+             ContourPlot[
+              $CellContext`g[$CellContext`x, $CellContext`y, \
+$CellContext`c$$], {$CellContext`x, -4, 2}, {$CellContext`y, -4, 2}, 
+              ContourShading -> None, ContourStyle -> Blue, Contours -> 
+              Table[$CellContext`k, {$CellContext`k, -0.2, -10, -0.2}]]}; 
+          Null]; $CellContext`gval$ = $CellContext`g[
+           Part[$CellContext`snap$, 1], 
+           Part[$CellContext`snap$, 2], $CellContext`c$$]; 
+        If[Norm[$CellContext`fgrad$] == 0, $CellContext`\[Mu]$ = 0, 
+          If[$CellContext`angle[$CellContext`fgrad$, $CellContext`ggrad$] <= \
+$CellContext`tol$, $CellContext`static$ = True; $CellContext`temp$ = 1; If[Abs[
+                Part[$CellContext`ggrad$, 2]] > Abs[
+                Part[$CellContext`ggrad$, 1]], $CellContext`temp$ = 2; 
+              Null]; $CellContext`\[Mu]$ = -(
+               Part[$CellContext`fgrado$, $CellContext`temp$]/
+               Part[$CellContext`ggrado$, $CellContext`temp$]), $CellContext`\
+\[Mu]$ = Infinity; Null]; Null]; $CellContext`plot1$ = Show[
+           ContourPlot[
+            $CellContext`f[$CellContext`x, $CellContext`y], {$CellContext`x, \
+-1, 2}, {$CellContext`y, -1, 2}, Contours -> 
+            Table[$CellContext`cont3 + $CellContext`contdiff $CellContext`k, \
+{$CellContext`k, 0, 20}], ContourShading -> None, ContourStyle -> 
+            LightGray], $CellContext`boundary$, 
+           Graphics[{LightGray, 
+             PointSize[Large], 
+             Point[$CellContext`fmin]}], 
+           Graphics[{Red, 
+             PointSize[Large], 
+             Point[$CellContext`reddot$]}], 
+           Graphics[{Blue, 
+             
+             Arrow[{$CellContext`snap$, $CellContext`snap$ + \
+$CellContext`ggrad$}], Black, 
+             
+             Arrow[{$CellContext`snap$, $CellContext`snap$ + \
+$CellContext`fgrad$}], 
+             PointSize[Large], 
+             Point[$CellContext`snap$]}], 
+           Graphics[{
+             If[$CellContext`pfeas$ == True, 
+              Text[
+               Style["\[Checkmark]", 
+                Darker[Green], 14], {1.75, 1.75}], 
+              Text[
+               Style["\[CapitalChi]", Red], {1.75, 1.75}]]}], PlotLabel -> 
+           "primal feasibility"]; $CellContext`plot2$ = Show[
+           Graphics[{Thick, Blue, 
+             Arrow[{{0, 0}, 
+               If[Max[
+                  Abs[$CellContext`ggrado$]] <= 3, $CellContext`ggrado$, 
+                3 ($CellContext`ggrado$/Max[
+                  Abs[$CellContext`ggrado$]])]}], Black, 
+             Arrow[{{0, 0}, 
+               If[Max[
+                  Abs[$CellContext`fgrado$]] <= 3, $CellContext`fgrado$, 
+                3 ($CellContext`fgrado$/Max[
+                  Abs[$CellContext`fgrado$]])]}]}], 
+           Graphics[
+            If[$CellContext`static$ == True, {
+              Text[
+               Style["\[Checkmark]", 
+                Darker[Green], 14], {2.5, 2.5}], 
+              If[Norm[$CellContext`fgrad$] == 0, 
+               Text[
+                Row[{"\[Del]", 
+                  Style["f", Italic], " = 0"}], {2.5, 2.}], 
+               Text[
+                Row[{"\[Del]", 
+                  Style["f", Italic], 
+                  StringJoin[" = ", 
+                   ToString[
+                    PaddedForm[-$CellContext`\[Mu]$, {2, 1}]], "\[Del]"], 
+                  Style["g", Italic]}], {3., 2.}, {1, 0}]]}, {
+              Text[
+               Style["\[CapitalChi]", Red], {2.5, 2.5}]}]], Axes -> True, 
+           PlotRange -> {{-3, 3}, {-3, 3}}, AspectRatio -> 1, PlotLabel -> 
+           "stationarity", AxesStyle -> Gray]; $CellContext`plot3$ = Show[
+           
+           ListPlot[{}, PlotRange -> {{-3, 3}, {-3, 3}}, AspectRatio -> 1, 
+            AxesLabel -> {
+              Row[{
+                Style["g", Italic], "(", 
+                Style["x", Italic], ",y)"}], "\[Mu]"}, PlotLabel -> 
+            "dual feasibility and\ncomplementary slackness", AxesStyle -> 
+            If[$CellContext`\[Mu]$ == Infinity, LightGray, Gray], TicksStyle -> 
+            If[$CellContext`\[Mu]$ == Infinity, LightGray, Gray]], 
+           Graphics[{
+             Thickness[0.03], 
+             Arrowheads[0.1], 
+             If[$CellContext`\[Mu]$ == Infinity, LightGray, Gray], 
+             Arrow[{{0, 0}, {-3, 0}}], 
+             Arrow[{{0, 0}, {0, 3}}], 
+             PointSize[0.03], 
+             Point[{0, 0}], Black, 
+             PointSize[0.075], 
+             Point[{$CellContext`gval$, 
+               Min[$CellContext`\[Mu]$, 100]}]}], 
+           Graphics[
+            If[$CellContext`\[Mu]$ == Infinity, {
+              Text[
+               Style["\[CapitalChi]", Red], {2.5, 2.5}], 
+              Text["\[Mu] DNE", {3., 2.}, {1, 0}]}, 
+             If[$CellContext`\[Mu]$ < 0, {
+               Text[
+                Style["\[CapitalChi]", Red], {2.5, 2.5}], 
+               Text["\[Mu] < 0", {3., 2.}, {1, 0}]}, 
+              If[
+               
+               And[$CellContext`\[Mu]$ == 0, Abs[$CellContext`gval$] <= 
+                0.01], {
+                Text[
+                 Style["\[Checkmark]", 
+                  Darker[Green], 14], {2.5, 2.5}], 
+                Text["\[Mu] = 0", {3., 2.}, {1, 0}], 
+                Text[
+                 Row[{
+                   Style["g", Italic], " = 0"}], {3., 1.5}, {1, 0}]}, 
+               If[$CellContext`\[Mu]$ == 0, {
+                 Text[
+                  Style["\[Checkmark]", 
+                   Darker[Green], 14], {2.5, 2.5}], 
+                 Text["\[Mu] = 0", {3., 2.}, {1, 0}]}, 
+                If[Abs[$CellContext`gval$] <= 0.01, {
+                  Text[
+                   Style["\[Checkmark]", 
+                    Darker[Green], 14], {2.5, 2.5}], 
+                  Text[
+                   Row[{
+                    Style["g", Italic], " = 0"}], {3., 2.}, {1, 0}]}, {
+                  Text[
+                   Style["\[CapitalChi]", Red], {2.5, 2.5}], 
+                  Text["\[Mu] \[NotEqual] 0", {3., 2.}, {1, 0}], 
+                  Text[
+                   Row[{
+                    Style["g", Italic], " \[NotEqual] 0"}], {3., 1.5}, {1, 
+                   0}]}]]]]]]]; $CellContext`plot4$ = Show[
+           Graphics[{
+             Text["optimal solution: ", {0, 0.75}, {1, 0}], 
+             Text[
+              ToString[
+               PaddedForm[
+                $CellContext`f[
+                 Part[$CellContext`reddot$, 1], 
+                 Part[$CellContext`reddot$, 2]], {3, 2}]], {0.25, 0.75}, {1, 
+              0}], 
+             Text["current solution: ", {0, 0.6}, {1, 0}], 
+             Text[
+              ToString[
+               PaddedForm[
+                $CellContext`f[
+                 Part[$CellContext`snap$, 1], 
+                 Part[$CellContext`snap$, 2]], {3, 2}]], {0.25, 0.6}, {1, 
+              0}]}], PlotRange -> {{-1, 0.45}, {-1, 1}}, PlotLabel -> 
+           "objective values"]; 
+        Grid[{{$CellContext`plot1$, $CellContext`plot2$}, \
+{$CellContext`plot3$, $CellContext`plot4$}}, Spacings -> {3, 3}]], 
+      "Specifications" :> {{{$CellContext`c$$, 0, "boundary height"}, {
+         0 -> "low", 1.1346461771193157` -> "mid", 2 -> "high"}, ControlType -> 
+         RadioButton}, {{$CellContext`pt$$, {0, -0.5}}, Automatic, 
+         ControlType -> Locator}}, "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{456., {269., 275.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    Initialization:>({$CellContext`sol1 = {
+        0.36446826383842706`, -0.13283711410400653`}, $CellContext`co = 
+       1.1346461771193157`, $CellContext`sol2 = {0.5, 
+        0.8846461771193157}, $CellContext`sol3 = {0.9999882619375345, 
+        1.000023468982254}, $CellContext`fmin = {0.5, 
+        0.8846461771193157}, $CellContext`g[
+         Pattern[$CellContext`x, 
+          Blank[]], 
+         Pattern[$CellContext`y, 
+          Blank[]], 
+         Pattern[$CellContext`c, 
+          
+          Blank[]]] := $CellContext`y - $CellContext`c + $CellContext`x^2, \
+$CellContext`f[
+         Pattern[$CellContext`x, 
+          Blank[]], 
+         Pattern[$CellContext`y, 
+          Blank[]]] := ($CellContext`x - 0.5)^2 + 0.5 $CellContext`y^4 - 
+        0.5 ($CellContext`y + 0.5)^2, $CellContext`angle[
+         Pattern[$CellContext`u, 
+          Blank[]], 
+         Pattern[$CellContext`v, 
+          Blank[]]] := N[
+         If[
+          And[Norm[$CellContext`u] != 0, Norm[$CellContext`v] != 0], 
+          ArcCos[
+           Abs[
+           Dot[$CellContext`u, $CellContext`v]/(Norm[$CellContext`u] 
+            Norm[$CellContext`v])]], 
+          0]], $CellContext`cont3 = -0.3750000020565476, \
+$CellContext`contdiff = 0.3261202465183239}; Typeset`initDone$$ = True),
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.7771190399487333`*^9}]
+}, {2}]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{759, 833},
+WindowMargins->{{99, Automatic}, {Automatic, 52}},
+FrontEndVersion->"10.4 for Microsoft Windows (64-bit) (April 11, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 171, 2, 144, "Title"],
+Cell[754, 26, 154, 2, 30, "Text"],
+Cell[CellGroupData[{
+Cell[933, 32, 99, 1, 63, "Section"],
+Cell[1035, 35, 286, 5, 49, "Text"],
+Cell[1324, 42, 153, 4, 48, "DisplayFormula"],
+Cell[1480, 48, 1705, 47, 129, "Text"],
+Cell[3188, 97, 945, 18, 106, "Text"],
+Cell[4136, 117, 132, 1, 30, "Text"],
+Cell[CellGroupData[{
+Cell[4293, 122, 626, 15, 62, "Item"],
+Cell[4922, 139, 1759, 63, 79, "Item"],
+Cell[6684, 204, 2305, 68, 134, "Item"],
+Cell[8992, 274, 318, 5, 45, "Item"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9359, 285, 117, 2, 63, "Section"],
+Cell[CellGroupData[{
+Cell[9501, 291, 102, 1, 43, "Subsection"],
+Cell[9606, 294, 1064, 25, 52, "Input",
+ InitializationCell->True,
+ CellID->397256323],
+Cell[10673, 321, 1134, 26, 52, "Input",
+ InitializationCell->True,
+ CellID->497508409],
+Cell[11810, 349, 969, 20, 52, "Input",
+ InitializationCell->True,
+ CellID->1469992292],
+Cell[12782, 371, 1322, 31, 52, "Input",
+ InitializationCell->True,
+ CellID->1508576556],
+Cell[14107, 404, 1387, 34, 52, "Input",
+ InitializationCell->True,
+ CellID->1454240210],
+Cell[15497, 440, 904, 18, 52, "Input",
+ InitializationCell->True,
+ CellID->903822963],
+Cell[16404, 460, 723, 13, 31, "Input",
+ InitializationCell->True,
+ CellID->914876956],
+Cell[17130, 475, 722, 13, 31, "Input",
+ InitializationCell->True,
+ CellID->354086972],
+Cell[17855, 490, 1095, 24, 52, "Input",
+ InitializationCell->True,
+ CellID->1400703910],
+Cell[18953, 516, 868, 18, 31, "Input",
+ InitializationCell->True,
+ CellID->462552567],
+Cell[19824, 536, 727, 13, 31, "Input",
+ InitializationCell->True,
+ CellID->230191429],
+Cell[20554, 551, 1425, 34, 96, "Input",
+ InitializationCell->True,
+ CellID->1209298956]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[22016, 590, 105, 1, 35, "Subsection"],
+Cell[CellGroupData[{
+Cell[22146, 595, 32592, 778, 2584, "Input"],
+Cell[54741, 1375, 13412, 282, 561, "Output"]
+}, {2}]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

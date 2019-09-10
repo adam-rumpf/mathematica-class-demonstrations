@@ -9,6 +9,7 @@ A large collection of Mathematica demonstrations written by Adam Rumpf, sorted a
   * [Complex Newton's Method](#complex-newtons-method)
   * [Complex Operations](#complex-operations)
   * [Crowd Escape Panic Model](#crowd-escape-panic-model)
+  * [Karush-Kuhn-Tucker (KKT) Conditions](#karush-kuhn-tucker-kkt-conditions)
   * [Monte Carlo Method](#monte-carlo-method)
   * [Taylor and Fourier Series Approximations](#taylor-and-fourier-series-approximations)
   * [Vector Kinematics](#vector-kinematics)
@@ -85,6 +86,22 @@ This is an interactive version of a model described in the following 2000 [artic
 The article describes a dynamical systems model for crowds of people attempting to run to a building exit during a panic. The model is similar to those used in fluid dynamics. Each person is treated as a particle with a certain radius. Each particle attempts to move toward the exit, but they also repel each other if they get too close (incredibly strongly if they are within crush distance of each other). For each particle we can define a total force function that includes its own desired movement, repulsion from other particles and obstacles, body forces from intersecting particles and obstacles, and sliding friction past particles and obstacles. The total force can then be used to define the particle's acceleration vector, which in turn defines a system of ordinary differential equations to determine each particle's position as a function of time.
 
 This demonstration implements the model and displays an animation of the crowd as it tries to reach the exit. Controls allow the user to change the layout of the room, including obstacles and the size of the exit. Particles are colored according to the amount of crush force experienced from the surrounding particles, becoming more red as the force increases. A plot is also displayed in the corner of the animation, with the green line indicating the number of successful exits and the red line indicating the total crush force.
+
+### Karush-Kuhn-Tucker (KKT) Conditions
+
+<img src="images/kkt-conditions-1.png" alt="KKT Conditions Image 1" height="400"/> <img src="images/kkt-conditions-2.png" alt="KKT Conditions 2" height="400"/>
+
+Created 5/7/2018
+
+[Notebook Link](../master/calc-diffeq-analysis/kkt-conditions.nb)
+
+[Demonstration Link](http://demonstrations.wolfram.com/KarushKuhnTuckerKKTConditionsForNonlinearProgrammingWithIneq/)
+
+This is a graphical demonstration of the [KKT conditions](https://en.wikipedia.org/wiki/Karush%E2%80%93Kuhn%E2%80%93Tucker_conditions) applied to a constrained nonlinear optimization problem. The KKT conditions generalize the method of [Lagrange multipliers](https://en.wikipedia.org/wiki/Lagrange_multipliers) to allow for inequality constraints as well as equality constraints. They provide a set of algebraic conditions involving the objective function, the constraint functions, and their derivatives, which give necessary (and under the right circumstances sufficient) conditions for optimality. This provides us with a solution method for the optimization problem, since we can simply solve the system of equations defined by the KKT conditions.
+
+There are four parts to the KKT conditions: _stationarity_, _primal feasibility_, _dual feasibility_, and _complementary slackness_. _Stationarity_ ensures local optimality, and essentially means that the objective function should "flatten out" at the optimal solution (specifically, this requires that the gradient of the objective function be either zero or collinear with the gradients of the constraint functions). _Primal feasibility_ is obvious, and just means that the given constraints must be satisfied. Stationarity and primal feasibility are both present in the method of Lagrange multipliers, while dual feasibility and complementary slackness are unique to the KKT conditions, and are there to deal with the possibility of the optimal solution lying strictly inside of the feasible set rather than on its boundary. Specifically, _dual feasibility_ ensures that an optimal solution lie on the correct side of the boundary, while _complementary slackness_ ensures that an interior optimal solution has a stationary objective.
+
+This demonstration shows a 2D constrained optimization problem with a single inequality constraint. In the top left window, the contour lines of the objective are shown in gray, the feasible set (with its contour lines) is shaded blue, and the optimal solution is shown as a red dot. The user can click and drag to select a solution, and the KKT conditions for that solution will be shown in the other windows. Try moving the selected point around and watching how the conditions change in response.
 
 ### Monte Carlo Method
 
@@ -182,7 +199,7 @@ As an example, suppose we wish to know whether 42,959 is divisible by 7. The pro
 
 With this graph in place, we begin at position 0 and then read the digits of 42,959 from left to right. Each time we read a digit, we advance around the black circuit that number of steps. Between each digit, we follow the green arrow that leads out of the current position. In this case, we begin at 0 and read the first digit, "4". Then we advance 4 places to position 4, and then follow the green arrow to position 5. The next digit is "2", so we advance 2 to arrive at 0, and then follow the green arrow to remain at 0. Next we take "9" steps to 2, follow the green arrow to 6, advance "5" digits to 4, follow the green arrow to 5, and finally advance "9" digits to arrive back at 0. The final position is the remainder after division by 7. In this case it is 0, indicating that 42,959 is, indeed, divisible by 7.
 
-The reasons for why this method works are worth figuring out for oneself (see the article linked above). It also generalizes to any base besides 7, and doing so produces some interesting graphical representations of why the well-known divisibility tests that students learn in basic arithmetic work. For example, the graphs resulting from 2, 5, and 10 all have the property that every green arrow points to 0, indicating that, no matter where the black arrows take us, we will always reset our position to 0 between steps. As a result, only the final digit matters, which is exactly what students learn for 2, 5, and 10. The graphs resulting from 3 and 9 both have the property that every green arrow is a loop, making them essentially meaningless. As a result, only the total number of steps taken on the black arrows (which is the sum of all digits) matters, and that is exactly what students learn for 3 and 9. 11 is also rather interesting.
+The reasons for why this method works are worth figuring out for oneself (see the article linked above). It also generalizes to any modulus besides 7, and doing so produces some interesting graphical representations of why the well-known divisibility tests that students learn in basic arithmetic work. For example, the graphs resulting from 2, 5, and 10 all have the property that every green arrow points to 0, indicating that, no matter where the black arrows take us, we will always reset our position to 0 between steps. As a result only the final digit matters, which is exactly what students learn for 2, 5, and 10. The graphs resulting from 3 and 9 both have the property that every green arrow is a loop, making them essentially meaningless. As a result only the total number of steps taken on the black arrows (which is the sum of all digits) matters, and that is exactly what students learn for 3 and 9. 11 is also rather interesting.
 
 ## Graph Theory
 
@@ -246,7 +263,7 @@ Created 7/22/2015
 
 [Duverger's law](https://en.wikipedia.org/wiki/Duverger%27s_law) is an empirical rule which holds that [first-past-the-post](https://en.wikipedia.org/wiki/First-past-the-post_voting) elections tend to result in a two-party system. This is the expected outcome from [tactical voting](https://en.wikipedia.org/wiki/Tactical_voting), wherein supporters of third-party candidates are coerced into abandoning their favorite candidate in favor of their preferred major party candidate in order to avoid the [spoiler effect](https://en.wikipedia.org/wiki/Spoiler_effect).
 
-This demonstration implements a simple tactical voting model based on a sequence of successive elections. We begin with a set of parties lying on a one-dimensional political spectrum, each with a given number of initial supporters. We then simulate a sequence of elections. The behavior assumption is that, if a person's preferred candidate did not win, they will consider shifting their support to the most successful candidate on their half of the political spectrum (centrist voters may shift in either direction because of this). There are parameters to adjust how quickly this occurs, as well as for introducing slight randomization.
+This demonstration implements a simple tactical voting model based on a sequence of successive elections. We begin with a set of parties lying on a one-dimensional political spectrum, each with a given number of initial supporters. We then simulate a sequence of elections. The behavioral assumption is that, if a person's preferred candidate did not win, they will consider shifting their support to the most successful candidate on their half of the political spectrum (centrist voters may shift in either direction because of this). There are parameters to adjust how quickly this occurs, as well as for introducing slight randomization.
 
 ### Winner-Take-All Distortion
 
