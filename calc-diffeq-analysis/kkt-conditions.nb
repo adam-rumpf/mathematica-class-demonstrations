@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     70363,       1742]
-NotebookOptionsPosition[     68202,       1663]
-NotebookOutlinePosition[     68545,       1678]
-CellTagsIndexPosition[     68502,       1675]
+NotebookDataLength[     67609,       1677]
+NotebookOptionsPosition[     65448,       1598]
+NotebookOutlinePosition[     65791,       1613]
+CellTagsIndexPosition[     65748,       1610]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -1158,112 +1158,57 @@ Cell[BoxData[
                    RowBox[{"3.0", ",", "2.0"}], "}"}], ",", 
                   RowBox[{"{", 
                    RowBox[{"1", ",", "0"}], "}"}]}], "]"}]}], "}"}], ",", 
+              "\[IndentingNewLine]", 
               RowBox[{"If", "[", 
                RowBox[{
-                RowBox[{
-                 RowBox[{"\[Mu]", "\[Equal]", "0"}], "&&", 
-                 RowBox[{
-                  RowBox[{"Abs", "[", "gval", "]"}], "\[LessEqual]", 
-                  "0.01"}]}], ",", 
+                RowBox[{"gval", ">", "0.01"}], ",", "\[IndentingNewLine]", 
                 RowBox[{"{", 
                  RowBox[{
                   RowBox[{"Text", "[", 
                    RowBox[{
                     RowBox[{"Style", "[", 
-                    RowBox[{"\"\<\[Checkmark]\>\"", ",", 
-                    RowBox[{"Darker", "@", "Green"}], ",", "14"}], "]"}], ",", 
+                    RowBox[{"\"\<X\>\"", ",", "Red"}], "]"}], ",", 
                     RowBox[{"{", 
                     RowBox[{"2.5", ",", "2.5"}], "}"}]}], "]"}], ",", 
                   RowBox[{"Text", "[", 
-                   RowBox[{"\"\<\[Mu] = 0\>\"", ",", 
+                   RowBox[{"\"\<g > 0\>\"", ",", 
                     RowBox[{"{", 
                     RowBox[{"3.0", ",", "2.0"}], "}"}], ",", 
                     RowBox[{"{", 
-                    RowBox[{"1", ",", "0"}], "}"}]}], "]"}], ",", 
-                  RowBox[{"Text", "[", 
-                   RowBox[{
-                    RowBox[{"Row", "[", 
-                    RowBox[{"{", 
-                    RowBox[{
-                    RowBox[{"Style", "[", 
-                    RowBox[{"\"\<g\>\"", ",", "Italic"}], "]"}], ",", 
-                    "\"\< = 0\>\""}], "}"}], "]"}], ",", 
-                    RowBox[{"{", 
-                    RowBox[{"3.0", ",", "1.5"}], "}"}], ",", 
-                    RowBox[{"{", 
                     RowBox[{"1", ",", "0"}], "}"}]}], "]"}]}], "}"}], ",", 
+                "\[IndentingNewLine]", 
                 RowBox[{"If", "[", 
                  RowBox[{
-                  RowBox[{"\[Mu]", "\[Equal]", "0"}], ",", 
+                  RowBox[{
+                   RowBox[{"\[Mu]", "\[NotEqual]", "0"}], "&&", 
+                   RowBox[{
+                    RowBox[{"Abs", "[", "gval", "]"}], ">", "0.01"}]}], ",", 
+                  "\[IndentingNewLine]", 
                   RowBox[{"{", 
                    RowBox[{
                     RowBox[{"Text", "[", 
                     RowBox[{
                     RowBox[{"Style", "[", 
-                    RowBox[{"\"\<\[Checkmark]\>\"", ",", 
-                    RowBox[{"Darker", "@", "Green"}], ",", "14"}], "]"}], ",", 
+                    RowBox[{"\"\<X\>\"", ",", "Red"}], "]"}], ",", 
                     RowBox[{"{", 
                     RowBox[{"2.5", ",", "2.5"}], "}"}]}], "]"}], ",", 
                     RowBox[{"Text", "[", 
-                    RowBox[{"\"\<\[Mu] = 0\>\"", ",", 
+                    RowBox[{"\"\<\[Mu]g \[NotEqual] 0\>\"", ",", 
                     RowBox[{"{", 
                     RowBox[{"3.0", ",", "2.0"}], "}"}], ",", 
                     RowBox[{"{", 
                     RowBox[{"1", ",", "0"}], "}"}]}], "]"}]}], "}"}], ",", 
-                  RowBox[{"If", "[", 
-                   RowBox[{
-                    RowBox[{
-                    RowBox[{"Abs", "[", "gval", "]"}], "\[LessEqual]", 
-                    "0.01"}], ",", 
-                    RowBox[{"{", 
-                    RowBox[{
-                    RowBox[{"Text", "[", 
+                  "\[IndentingNewLine]", 
+                  RowBox[{"{", 
+                   RowBox[{"Text", "[", 
                     RowBox[{
                     RowBox[{"Style", "[", 
                     RowBox[{"\"\<\[Checkmark]\>\"", ",", 
                     RowBox[{"Darker", "@", "Green"}], ",", "14"}], "]"}], ",", 
                     RowBox[{"{", 
-                    RowBox[{"2.5", ",", "2.5"}], "}"}]}], "]"}], ",", 
-                    RowBox[{"Text", "[", 
-                    RowBox[{
-                    RowBox[{"Row", "[", 
-                    RowBox[{"{", 
-                    RowBox[{
-                    RowBox[{"Style", "[", 
-                    RowBox[{"\"\<g\>\"", ",", "Italic"}], "]"}], ",", 
-                    "\"\< = 0\>\""}], "}"}], "]"}], ",", 
-                    RowBox[{"{", 
-                    RowBox[{"3.0", ",", "2.0"}], "}"}], ",", 
-                    RowBox[{"{", 
-                    RowBox[{"1", ",", "0"}], "}"}]}], "]"}]}], "}"}], ",", 
-                    RowBox[{"{", 
-                    RowBox[{
-                    RowBox[{"Text", "[", 
-                    RowBox[{
-                    RowBox[{"Style", "[", 
-                    RowBox[{"\"\<\[CapitalChi]\>\"", ",", "Red"}], "]"}], ",", 
-                    RowBox[{"{", 
-                    RowBox[{"2.5", ",", "2.5"}], "}"}]}], "]"}], ",", 
-                    RowBox[{"Text", "[", 
-                    RowBox[{"\"\<\[Mu] \[NotEqual] 0\>\"", ",", 
-                    RowBox[{"{", 
-                    RowBox[{"3.0", ",", "2.0"}], "}"}], ",", 
-                    RowBox[{"{", 
-                    RowBox[{"1", ",", "0"}], "}"}]}], "]"}], ",", 
-                    RowBox[{"Text", "[", 
-                    RowBox[{
-                    RowBox[{"Row", "[", 
-                    RowBox[{"{", 
-                    RowBox[{
-                    RowBox[{"Style", "[", 
-                    RowBox[{"\"\<g\>\"", ",", "Italic"}], "]"}], ",", 
-                    "\"\< \[NotEqual] 0\>\""}], "}"}], "]"}], ",", 
-                    RowBox[{"{", 
-                    RowBox[{"3.0", ",", "1.5"}], "}"}], ",", 
-                    RowBox[{"{", 
-                    RowBox[{"1", ",", "0"}], "}"}]}], "]"}]}], "}"}]}], 
-                   "]"}]}], "]"}]}], "]"}]}], "]"}]}], "]"}], "]"}]}], 
-        "]"}]}], ";", "\[IndentingNewLine]", 
+                    RowBox[{"2.5", ",", "2.5"}], "}"}]}], "]"}], "}"}]}], 
+                 "\[IndentingNewLine]", "]"}]}], "]"}]}], "]"}]}], "]"}], 
+          "]"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
       RowBox[{"plot4", "=", 
        RowBox[{"Show", "[", 
         RowBox[{
@@ -1371,26 +1316,29 @@ Cell[BoxData[
    3.734376958133651*^9}, {3.7347210354346795`*^9, 3.7347210795933895`*^9}, {
    3.7347211149415483`*^9, 3.7347211354037085`*^9}, {3.7347211773195076`*^9, 
    3.734721186235363*^9}, {3.734722128591287*^9, 3.7347221563207684`*^9}, {
-   3.734722202229187*^9, 3.7347223237881384`*^9}}],
+   3.734722202229187*^9, 3.7347223237881384`*^9}, {3.7771284243066673`*^9, 
+   3.7771284247075424`*^9}, {3.7771285774546003`*^9, 3.777128742025126*^9}, {
+   3.7771287967568626`*^9, 3.7771289940128164`*^9}, {3.7771290329089146`*^9, 
+   3.7771290386811934`*^9}, {3.7771291018683496`*^9, 3.777129138788444*^9}, {
+   3.777129171921985*^9, 3.7771291721319203`*^9}}],
 
 Cell[BoxData[
  TagBox[
   StyleBox[
-   DynamicModuleBox[{$CellContext`c$$ = 2, $CellContext`pt$$ = {
-    0.8699999999999999, 0.9899999999999998}, Typeset`show$$ = True, 
-    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
-    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
-    "\"untitled\"", Typeset`specs$$ = {{{
+   DynamicModuleBox[{$CellContext`c$$ = 0, $CellContext`pt$$ = {0.5, 
+    0.8846461771193157}, Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
        Hold[$CellContext`c$$], 0, "boundary height"}, {
       0 -> "low", 1.1346461771193157` -> "mid", 2 -> "high"}}, {{
        Hold[$CellContext`pt$$], {0, -0.5}}, Automatic}}, Typeset`size$$ = {
     399., {224., 230.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
-    Typeset`skipInitDone$$ = False, $CellContext`c$1559$$ = False}, 
+    Typeset`skipInitDone$$ = False, $CellContext`c$15181$$ = False}, 
     DynamicBox[Manipulate`ManipulateBoxes[
      1, StandardForm, 
       "Variables" :> {$CellContext`c$$ = 0, $CellContext`pt$$ = {0, -0.5}}, 
       "ControllerVariables" :> {
-        Hold[$CellContext`c$$, $CellContext`c$1559$$, False]}, 
+        Hold[$CellContext`c$$, $CellContext`c$15181$$, False]}, 
       "OtherVariables" :> {
        Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
         Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
@@ -1559,36 +1507,21 @@ $CellContext`fgrad$}],
                Text[
                 Style["\[CapitalChi]", Red], {2.5, 2.5}], 
                Text["\[Mu] < 0", {3., 2.}, {1, 0}]}, 
-              If[
-               
-               And[$CellContext`\[Mu]$ == 0, Abs[$CellContext`gval$] <= 
-                0.01], {
+              If[$CellContext`gval$ > 0.01, {
                 Text[
-                 Style["\[Checkmark]", 
-                  Darker[Green], 14], {2.5, 2.5}], 
-                Text["\[Mu] = 0", {3., 2.}, {1, 0}], 
-                Text[
-                 Row[{
-                   Style["g", Italic], " = 0"}], {3., 1.5}, {1, 0}]}, 
-               If[$CellContext`\[Mu]$ == 0, {
+                 Style["X", Red], {2.5, 2.5}], 
+                Text["g > 0", {3., 2.}, {1, 0}]}, 
+               If[
+                
+                And[$CellContext`\[Mu]$ != 0, Abs[$CellContext`gval$] > 
+                 0.01], {
+                 Text[
+                  Style["X", Red], {2.5, 2.5}], 
+                 Text["\[Mu]g \[NotEqual] 0", {3., 2.}, {1, 0}]}, {
                  Text[
                   Style["\[Checkmark]", 
-                   Darker[Green], 14], {2.5, 2.5}], 
-                 Text["\[Mu] = 0", {3., 2.}, {1, 0}]}, 
-                If[Abs[$CellContext`gval$] <= 0.01, {
-                  Text[
-                   Style["\[Checkmark]", 
-                    Darker[Green], 14], {2.5, 2.5}], 
-                  Text[
-                   Row[{
-                    Style["g", Italic], " = 0"}], {3., 2.}, {1, 0}]}, {
-                  Text[
-                   Style["\[CapitalChi]", Red], {2.5, 2.5}], 
-                  Text["\[Mu] \[NotEqual] 0", {3., 2.}, {1, 0}], 
-                  Text[
-                   Row[{
-                    Style["g", Italic], " \[NotEqual] 0"}], {3., 1.5}, {1, 
-                   0}]}]]]]]]]; $CellContext`plot4$ = Show[
+                   Darker[Green], 14], {2.5, 
+                  2.5}]}]]]]]]; $CellContext`plot4$ = Show[
            Graphics[{
              Text["optimal solution: ", {0, 0.75}, {1, 0}], 
              Text[
@@ -1655,7 +1588,9 @@ $CellContext`contdiff = 0.3261202465183239}; Typeset`initDone$$ = True),
    Deployed->True,
    StripOnInput->False],
   Manipulate`InterpretManipulate[1]]], "Output",
- CellChangeTimes->{3.7771190399487333`*^9}]
+ CellChangeTimes->{3.7771190399487333`*^9, 3.777128259781436*^9, 
+  3.777128996447837*^9, 3.777129040416851*^9, 3.7771291402486687`*^9, 
+  3.7771291744736814`*^9}]
 }, {2}]]
 }, Open  ]]
 }, Open  ]]
@@ -1738,8 +1673,8 @@ Cell[20554, 551, 1425, 34, 96, "Input",
 Cell[CellGroupData[{
 Cell[22016, 590, 105, 1, 35, "Subsection"],
 Cell[CellGroupData[{
-Cell[22146, 595, 32592, 778, 2584, "Input"],
-Cell[54741, 1375, 13412, 282, 561, "Output"]
+Cell[22146, 595, 30391, 727, 2524, "Input"],
+Cell[52540, 1324, 12859, 268, 561, "Output"]
 }, {2}]]
 }, Open  ]]
 }, Open  ]]
