@@ -22,6 +22,7 @@ A large collection of Mathematica demonstrations written by Adam Rumpf, sorted a
   * [Graph Untangler](#graph-untangler)
 * [Voting Theory](#voting-theory)
   * [Comparison of Single-Winner Voting Systems](#comparison-of-single-winner-voting-systems)
+  * [Winner-Take-All Distortion](#winner-take-all-distortion)
 * [Just for Fun](#just-for-fun)
   * [Bézier Curves](#bézier-curves)
   * [Domino and Tromino Tiling](#domino-and-tromino-tiling)
@@ -220,7 +221,7 @@ For example, in the United States, why are there only two major political partie
 
 ### Comparison of Single-Winner Voting Systems
 
-<img src="images/single-winner-voting-systems-1.png" alt="Single-Winner Voting Systems Image 1" height="250"/> <img src="images/single-winner-voting-systems-2.png" alt="Single-Winner Voting Systems Image 2" height="250"/>
+<img src="images/single-winner-voting-systems-1.png" alt="Single-Winner Voting Systems Image 1" height="220"/> <img src="images/single-winner-voting-systems-2.png" alt="Single-Winner Voting Systems Image 2" height="220"/>
 
 Created 10/31/2017
 
@@ -231,6 +232,22 @@ Created 10/31/2017
 This demonstration is based on an [interactive Flash demonstration](http://zesty.ca/voting/voteline/) by Ka-Ping Yee, which is meant to show how different, reasonable-seeming methods of evaluating ballots can affect the outcomes of single-winner elections. It also shows some of the problems that certain systems can have, such as the [spoiler effect](https://en.wikipedia.org/wiki/Spoiler_effect) and non-monotonicity.
 
 Most people do not think very much about election systems, and if you asked them to come up with a system for how to run a single-winner election they would probably just suggest the one method they are familiar with: everyone votes for a single candidate and the candidate with the most votes wins. This method is called [first-past-the-post](https://en.wikipedia.org/wiki/First-past-the-post_voting), and although it makes intuitive sense, it has a great many [problems](https://www.electionscience.org/voting-methods/spoiler-effect-top-5-ways-plurality-voting-fails/). Other election systems like [instant runoff voting](https://en.wikipedia.org/wiki/Instant-runoff_voting), [Borda count](https://en.wikipedia.org/wiki/Borda_count), and [approval voting](https://en.wikipedia.org/wiki/Approval_voting) are meant to avoid these problems, although they have varying degrees of success.
+
+### Winner-Take-All Distortion
+
+<img src="images/winner-take-all-distortion-1.png" alt="Winner-Take-All Distortion Image 1" height="400"/> <img src="images/winner-take-all-distortion-2.png" alt="Winner-Take-All Distortion Image 2" height="400"/>
+
+Created 11/26/2016
+
+[Notebook Link](../master/voting-theory/winner-take-all-distortion.nb)
+
+This is a demonstration of how the preferences of the voter base can be distorted when their results are aggregated across a series of winner-take-all elections. For a variety of purposes voters are usually grouped into electoral districts. Rather than simply tabulating all individual votes, instead a separate winner-take-all election is run within each district, and only the district-level results are used to determine the overall result. For example, in the United States, presidential elections are carried out using the [Electoral College](https://en.wikipedia.org/wiki/Electoral_college) where, in essence, each state runs its own statewide presidential election, and whomever wins in the state receives all of that state's support for the purposes of determining the overall result.
+
+This can distort the actual preferences of the voters due to [wasted votes](https://en.wikipedia.org/wiki/Wasted_vote). For the purposes of a winner-take-all election, winning with 51% of the vote is as good as winning with 100% of the vote, so winning by narrow margins in a large number of districts can cause a candidate's advantage to expand to far beyond what it would be if every individual were polled directly. If this occurs in enough districts it can change the outcomes of elections to allow someone to win even if another candidate receives more votes. This same effect can also occur for elections with multiple winners, like congressional elections, which may result in the numbers of congressional seats won by each party being significantly different from their actual support among the voter base.
+
+Incidentally, the Electoral College also distorts results by directly giving a disproportinately large amoung of weight to smaller states (and the Senate does the same thing to an even greater extent), but even if each state were to receive representation proportional to their population, the winner-take-all aspect of the election would still distort results. Among other things it tends to push out third party candidates, since the only way for a small party to win even a single seat would be to have a large enough amount of support concentrated in a single district to achieve a plurality there.
+
+The net effect of all of this is that the geographic distribution of a party's voters can determine the party's success in an election. This also makes the system susceptible to things like [gerrymandering](https://en.wikipedia.org/wiki/Gerrymandering), wherein electoral districts are drawn to intentionally distort results in favor of one party, but as this demonstration shows it can also occur even without intentional interference. There are different electoral systems, like [direct representation](https://en.wikipedia.org/wiki/Direct_representation) and [mixed-member proportional representation](https://en.wikipedia.org/wiki/Mixed-member_proportional_representation), which are immune to these issues, but at least within the United States a person's voting power is largely determined simply by where they happen to live.
 
 ## Just for Fun
 
