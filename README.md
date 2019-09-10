@@ -6,6 +6,7 @@ A large collection of Mathematica demonstrations written by Adam Rumpf, sorted a
 
 * [Overview](#overview)
 * [Calculus, Differential Equations, and Analysis](#calculus-differential-equations-and-analysis)
+  * [Bifurcation Analysis](#bifurcation-analysis)
   * [Complex Newton's Method](#complex-newtons-method)
   * [Complex Operations](#complex-operations)
   * [Crowd Escape Panic Model](#crowd-escape-panic-model)
@@ -48,6 +49,20 @@ In order to download just a single file, navigate to its section below and click
 ## Calculus, Differential Equations, and Analysis
 
 Many of the files in this folder are things that I wrote to show my calculus students, either demonstrating material from class or demonstrating material from later classes that indirectly involve the concepts from basic calculus. This includes a variety of material related to fractals, dynamical systems, computational mathematics, and complex analysis.
+
+### Bifurcation Analysis
+
+<img src="images/bifurcation-analysis-1.png" alt="Bifurcation Analysis Image 1" height="200"/> <img src="images/bifurcation-analysis-2.png" alt="Bifurcation Analysis Image 2" height="200"/>
+
+Created 2/23/2016
+
+[Notebook Link](../master/calc-diffeq-analysis/bifurcation-analysis.nb)
+
+This Notebook contains a collection of examples of common types of [bifurcation](https://en.wikipedia.org/wiki/Bifurcation_theory), including: [saddle-node bifurcation](https://en.wikipedia.org/wiki/Saddle-node_bifurcation), [transcritical bifurcation](https://en.wikipedia.org/wiki/Transcritical_bifurcation), [pitchfork bifurcation](https://en.wikipedia.org/wiki/Pitchfork_bifurcation), and [Hopf bifurcation](https://en.wikipedia.org/wiki/Hopf_bifurcation). For each type of bifurcation an example ODE system is given, the bifurcation analysis is presented, and finally a Manipulate environment is given to show how manipulating the parameter causes the equilibria to change.
+
+A bifurcation occurs in a dynamical system when changing a parameter causes the qualitative behavior of the system to change. Varying the parameters of an ODE system will of course always cause the exact solution to change, but in some cases these changes are so extreme that the fundamental behavior of the system is completely different. Equilibria may appear or disappear, or may switch from being stable to being unstable, or the directions of orbits may change. The different types of bifurcation mentioned above describe different types of qualitative change.
+
+Bifurcation analysis highlights one of the major differences between a dynamical systems class and a differential equations class: dynamical systems usually tends to focus on describing qualitative behaviors of a system, whereas differential equations usually tends to focus on methods of exact or numerical solution. For me, personally, I find that the dynamical systems approach is usually more interesting and more immediately useful, and I believe that most aspects of math education would benefit from focusing less on calculation and more on fundamental understanding.
 
 ### Complex Newton's Method
 

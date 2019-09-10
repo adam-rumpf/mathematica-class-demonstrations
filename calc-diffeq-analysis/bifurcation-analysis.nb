@@ -1,0 +1,1960 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.4' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     69409,       1952]
+NotebookOptionsPosition[     66965,       1870]
+NotebookOutlinePosition[     67308,       1885]
+CellTagsIndexPosition[     67265,       1882]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Bifurcation Analysis", "Title",
+ CellChangeTimes->{{3.776600831050974*^9, 3.7766008318453026`*^9}, {
+  3.7771302217782173`*^9, 3.7771302252764606`*^9}}],
+
+Cell["Adam Rumpf, 2/20/2017", "Text",
+ CellChangeTimes->{{3.7766008347881403`*^9, 3.776600838290375*^9}, {
+  3.7771302419672003`*^9, 3.7771302444085283`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section",
+ CellChangeTimes->{{3.7766008459498987`*^9, 3.776600848547045*^9}}],
+
+Cell[TextData[{
+ "Below is a sequence of examples of four common types of bifurcation: \
+saddle-node, transcritical, pitchfork, and Hopf. For each example we provide \
+a specific autonomous ODE system which displays that type of bifurcation. In \
+all examples, ",
+ Cell[BoxData[
+  FormBox["x", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and ",
+ Cell[BoxData[
+  FormBox["y", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " represent functions of time ",
+ Cell[BoxData[
+  FormBox["t", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " while ",
+ Cell[BoxData[
+  FormBox["r", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " represents the single parameter which will be varied to create the \
+bifurcation."
+}], "Text",
+ CellChangeTimes->{{3.776600856235587*^9, 3.776600860481224*^9}, {
+  3.777136540361297*^9, 3.777136541839939*^9}, {3.7771392486350613`*^9, 
+  3.777139425884313*^9}}],
+
+Cell[TextData[{
+ "As a review, a bifurcation occurs when changing the value of the parameter ",
+ Cell[BoxData[
+  FormBox["r", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " causes a qualitative change to the equilibria of the system. The specific \
+type of qualitative change determiens the type of bifurcation, but in general \
+it describes a change in the number or the stability of the equilibria. We \
+can attempt to look for bifurcations by solving for the equilibria ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", 
+    RowBox[{
+     SuperscriptBox["x", "*"], ",", 
+     SuperscriptBox["y", "*"]}], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " by setting ",
+ Cell[BoxData[
+  FormBox[
+   FractionBox[
+    RowBox[{"\[DifferentialD]", "x"}], 
+    RowBox[{"\[DifferentialD]", "t"}]], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   FractionBox[
+    RowBox[{"\[DifferentialD]", "y"}], 
+    RowBox[{"\[DifferentialD]", "t"}]], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " equal to 0. In general these equilibria will be functions of ",
+ Cell[BoxData[
+  FormBox["r", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", and we can look at how the equilibria change as ",
+ Cell[BoxData[
+  FormBox["r", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " changes. For example, some values of ",
+ Cell[BoxData[
+  FormBox["r", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " will cause several equilibria to merge into one, or to become imaginary, \
+in which case the number of equilibria depends on ",
+ Cell[BoxData[
+  FormBox["r", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.777136538540001*^9, 3.7771366108791237`*^9}, {
+  3.7771394295820074`*^9, 3.7771394393980103`*^9}, {3.7771396211951604`*^9, 
+  3.7771399003029437`*^9}}],
+
+Cell[TextData[{
+ "A bifurcation also occurs when the stability of an equilibrium changes. In \
+order to evaluate the stability of an equilibrium, we examine the eigenvalues \
+of the Jacobian matrix. Given an ODE system ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     FractionBox[
+      RowBox[{"\[DifferentialD]", "x"}], 
+      RowBox[{"\[DifferentialD]", "t"}]], "=", 
+     RowBox[{"f", "(", 
+      RowBox[{"x", ",", "y"}], ")"}]}], ",", 
+    RowBox[{
+     FractionBox[
+      RowBox[{"\[DifferentialD]", "y"}], 
+      RowBox[{"\[DifferentialD]", "t"}]], "=", 
+     RowBox[{"g", "(", 
+      RowBox[{"x", ",", "y"}], ")"}]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", the Jacobian evaluated at the equilibrium ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", 
+    RowBox[{
+     SuperscriptBox["x", "*"], ",", 
+     SuperscriptBox["y", "*"]}], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " is"
+}], "Text",
+ CellChangeTimes->{{3.7771399068080826`*^9, 3.7771399540139265`*^9}, {
+  3.7771399910351863`*^9, 3.7771400245503855`*^9}, {3.777140131720338*^9, 
+  3.777140144319103*^9}}],
+
+Cell[TextData[Cell[BoxData[
+ FormBox[
+  RowBox[{
+   SuperscriptBox["J", "*"], "=", 
+   SubscriptBox[
+    RowBox[{"(", GridBox[{
+       {
+        FractionBox[
+         RowBox[{"\[PartialD]", "f"}], 
+         RowBox[{"\[PartialD]", "x"}]], 
+        FractionBox[
+         RowBox[{"\[PartialD]", "f"}], 
+         RowBox[{"\[PartialD]", "y"}]]},
+       {
+        FractionBox[
+         RowBox[{"\[PartialD]", "g"}], 
+         RowBox[{"\[PartialD]", "x"}]], 
+        FractionBox[
+         RowBox[{"\[PartialD]", "g"}], 
+         RowBox[{"\[PartialD]", "y"}]]}
+      }], ")"}], 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{"x", ",", "y"}], ")"}], "=", 
+     RowBox[{"(", 
+      RowBox[{
+       SuperscriptBox["x", "*"], ",", 
+       SuperscriptBox["y", "*"]}], ")"}]}]]}], TraditionalForm]],
+ FormatType->"TraditionalForm"]], "Text",
+ CellChangeTimes->{{3.7771399729132023`*^9, 3.7771399843240213`*^9}, {
+  3.77714002741781*^9, 3.777140100754119*^9}, {3.7771401471975985`*^9, 
+  3.7771401633902807`*^9}, {3.7771427843909597`*^9, 3.7771427935276084`*^9}}],
+
+Cell[TextData[{
+ "If all eigenvalues have negative real parts, then ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", 
+    RowBox[{
+     SuperscriptBox["x", "*"], ",", 
+     SuperscriptBox["y", "*"]}], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " is stable. Otherwise it is unstable. Further classifications (like being a \
+saddle point, or orbiting in a particular direction) can also be made. As \
+with the equilibria, themselves, the eigenvalues of the Jacobian are \
+functions of ",
+ Cell[BoxData[
+  FormBox["r", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", and the signs of their real parts may depend on ",
+ Cell[BoxData[
+  FormBox["r", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", which leads to other types of bifurcation"
+}], "Text",
+ CellChangeTimes->{{3.777140172105179*^9, 3.777140290076988*^9}, {
+  3.777140339810768*^9, 3.777140349130089*^9}}],
+
+Cell[TextData[{
+ "Note that, in the case of a one-dimensional ODE system ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    FractionBox[
+     RowBox[{"\[DifferentialD]", "x"}], 
+     RowBox[{"\[DifferentialD]", "t"}]], "=", 
+    RowBox[{"f", "(", "x", ")"}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", the Jacobian ",
+ Cell[BoxData[
+  FormBox[
+   SuperscriptBox["J", "*"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " reduces to simply the scalar ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    FractionBox[
+     RowBox[{"\[PartialD]", "f"}], 
+     RowBox[{"\[PartialD]", "x"}]], 
+    SubscriptBox["|", 
+     RowBox[{"x", "=", 
+      SuperscriptBox["x", "*"]}]]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", in which case we can look directly at the value of ",
+ Cell[BoxData[
+  FormBox[
+   FractionBox[
+    RowBox[{"\[PartialD]", "f"}], 
+    RowBox[{"\[PartialD]", "x"}]], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " rather than having to look at eigenvalues."
+}], "Text",
+ CellChangeTimes->{{3.7771402937021027`*^9, 3.777140434198078*^9}}],
+
+Cell[TextData[{
+ "Each section below describes a different type of bifurcation. First an ODE \
+system will be presented, then a bifurcation analysis will be conducted by \
+hand, and finally a Manipulate environment will be defined to show a \
+visualization of the bifurcation in action. In all cases there is a slider to \
+control the value of ",
+ Cell[BoxData[
+  FormBox["r", TraditionalForm]]],
+ ". Equilibria will be shown in red on the stream plot, either as a line (for \
+the 1D case) or a point (in the 2D case). For the 1D cases, to the right of \
+the stream plot will be a plot of the equilibrium values as a function of ",
+ Cell[BoxData[
+  FormBox["r", TraditionalForm]]],
+ ". In all cases, solid lines and filled dots correspond to stable \
+equilibria, while dotted lines and hollow dots correspond to unstable \
+equilibria."
+}], "Text",
+ CellChangeTimes->{{3.777140451556507*^9, 3.7771406396788273`*^9}, {
+  3.777143704620434*^9, 3.7771437074667997`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Saddle-Node Bifurcation", "Section",
+ CellChangeTimes->{{3.7766008885632277`*^9, 3.7766008904796133`*^9}, {
+  3.777136401274056*^9, 3.777136416298379*^9}}],
+
+Cell["\<\
+A saddle-node bifurcation occurs when two equilibria collide and annihilate \
+each other (or, if moving in the other direction, when two equilibria are \
+spontaneously generated out of nothing). Specifically this can occur when \
+changing the parameters causes a pair of equilibria to simultaneously become \
+real or imaginary. The example below concerns the 1D system:\
+\>", "Text",
+ CellChangeTimes->{{3.777136412348218*^9, 3.777136502673601*^9}, {
+  3.777140654593788*^9, 3.77714069874934*^9}}],
+
+Cell[BoxData[Cell[TextData[Cell[BoxData[
+  FormBox[
+   RowBox[{
+    FractionBox[
+     RowBox[{"\[DifferentialD]", "x"}], 
+     RowBox[{"\[DifferentialD]", "t"}]], "=", 
+    RowBox[{
+     SuperscriptBox["x", "2"], "-", "r"}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"]], "DisplayFormula"]], "Text",
+ CellChangeTimes->{{3.77713651537531*^9, 3.7771365309974613`*^9}, 
+   3.7771366535696325`*^9, {3.7771370336200256`*^9, 3.7771370357424736`*^9}}],
+
+Cell[TextData[{
+ "Setting ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    FractionBox[
+     RowBox[{"\[DifferentialD]", "x"}], 
+     RowBox[{"\[DifferentialD]", "t"}]], "=", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and solving, we find that the equilibria are ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["x", "*"], "=", 
+    RowBox[{"\[PlusMinus]", 
+     SqrtBox["r"]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". We can consider different cases depending on the value of ",
+ Cell[BoxData[
+  FormBox["r", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ":"
+}], "Text",
+ CellChangeTimes->{{3.7771366384229493`*^9, 3.777136834022626*^9}, {
+  3.777136865290258*^9, 3.77713686612399*^9}, {3.77713704004583*^9, 
+  3.77713704004583*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "If ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"r", ">", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", then ",
+ Cell[BoxData[
+  FormBox[
+   SqrtBox["r"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " is real, and thus we have two real equilibria."
+}], "Item",
+ CellChangeTimes->{{3.7771368388776255`*^9, 3.777136876907528*^9}, {
+  3.777137050530507*^9, 3.77713706427261*^9}}],
+
+Cell[TextData[{
+ "If ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"r", "<", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", then ",
+ Cell[BoxData[
+  FormBox[
+   SqrtBox["r"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " is imaginary, and thus we have no real equilibria."
+}], "Item",
+ CellChangeTimes->{{3.7771368388776255`*^9, 3.7771369074951057`*^9}, {
+  3.777137071701436*^9, 3.77713707583746*^9}, {3.7771407238414207`*^9, 
+  3.7771407246057043`*^9}}],
+
+Cell[TextData[{
+ "If ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"r", "=", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", then we have exactly one unique equilibrium of ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["x", "*"], "=", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "."
+}], "Item",
+ CellChangeTimes->{{3.7771368388776255`*^9, 3.777136930784681*^9}, {
+  3.777140737329257*^9, 3.7771407382486253`*^9}}]
+}, Open  ]],
+
+Cell[TextData[{
+ "We can conduct stability analysis by evaluating ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     FractionBox["\[PartialD]", 
+      RowBox[{"\[PartialD]", "x"}]], 
+     RowBox[{"(", 
+      RowBox[{
+       SuperscriptBox["x", "2"], "-", "r"}], ")"}]}], "=", 
+    RowBox[{"2", "x"}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " at ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"x", "=", 
+    RowBox[{"\[PlusMinus]", 
+     SqrtBox["r"]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". In the case of ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"r", ">", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", clearly ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["x", "*"], "=", 
+    SqrtBox["r"]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " yields a positive Jacobian while ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["x", "*"], "=", 
+    RowBox[{"-", 
+     SqrtBox["r"]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " yields a negative one, and so ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["x", "*"], "=", 
+    SqrtBox["r"]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " should be unstable while ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["x", "*"], "=", 
+    RowBox[{"-", 
+     SqrtBox["r"]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " is stable."
+}], "Text",
+ CellChangeTimes->{{3.7771369512069955`*^9, 3.777136989791237*^9}, {
+  3.777137243411868*^9, 3.7771372995028796`*^9}, {3.7771373330059586`*^9, 
+  3.777137413841439*^9}, {3.7771374519786773`*^9, 3.777137512637171*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"TableForm", "[", 
+    RowBox[{"{", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Show", "[", 
+        RowBox[{
+         RowBox[{"StreamPlot", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"1", ",", 
+             RowBox[{
+              SuperscriptBox["x", "2"], "-", "r"}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"t", ",", 
+             RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"x", ",", 
+             RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+           RowBox[{
+           "PlotLabel", "\[Rule]", "\"\<stream plot (x versus t)\>\""}]}], 
+          "]"}], ",", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"r", "\[GreaterEqual]", "0"}], ",", 
+           RowBox[{"Graphics", "[", 
+            RowBox[{"{", 
+             RowBox[{"Red", ",", "Thick", ",", 
+              RowBox[{"Line", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"-", "2"}], ",", 
+                   RowBox[{"-", 
+                    SqrtBox["r"]}]}], "}"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"2", ",", 
+                   RowBox[{"-", 
+                    SqrtBox["r"]}]}], "}"}]}], "}"}], "]"}], ",", "Dashed", 
+              ",", 
+              RowBox[{"Line", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"-", "2"}], ",", 
+                   SqrtBox["r"]}], "}"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"2", ",", 
+                   SqrtBox["r"]}], "}"}]}], "}"}], "]"}]}], "}"}], "]"}], ",", 
+           RowBox[{"Graphics", "[", 
+            RowBox[{"{", "}"}], "]"}]}], "]"}]}], "]"}], ",", 
+       RowBox[{"Show", "[", 
+        RowBox[{
+         RowBox[{"Plot", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Piecewise", "[", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"-", 
+                   SqrtBox["rr"]}], ",", 
+                  RowBox[{"rr", "\[GreaterEqual]", "0"}]}], "}"}], "}"}], ",",
+                "Nothing"}], "]"}], ",", 
+             RowBox[{"Piecewise", "[", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"{", 
+                 RowBox[{
+                  SqrtBox["rr"], ",", 
+                  RowBox[{"rr", "\[GreaterEqual]", "0"}]}], "}"}], "}"}], ",",
+                "Nothing"}], "]"}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"rr", ",", 
+             RowBox[{"-", "2.001"}], ",", "r"}], "}"}], ",", 
+           RowBox[{"PlotStyle", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Directive", "[", 
+               RowBox[{"Red", ",", "Thick"}], "]"}], ",", 
+              RowBox[{"Directive", "[", 
+               RowBox[{"Red", ",", "Thick", ",", "Dashed"}], "]"}]}], "}"}]}],
+            ",", 
+           RowBox[{"PlotRange", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"-", "2"}], ",", "2"}], "}"}]}], "}"}]}], ",", 
+           RowBox[{"AspectRatio", "\[Rule]", "1"}], ",", 
+           RowBox[{"Frame", "\[Rule]", "True"}], ",", 
+           RowBox[{"Axes", "\[Rule]", "False"}], ",", 
+           RowBox[{
+           "PlotLabel", "\[Rule]", 
+            "\"\<equilibria (\!\(\*SuperscriptBox[\(x\), \(*\)]\) versus r)\>\
+\""}]}], "]"}], ",", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"r", "\[GreaterEqual]", "0"}], ",", 
+           RowBox[{"Graphics", "[", 
+            RowBox[{"{", 
+             RowBox[{"Red", ",", 
+              RowBox[{"PointSize", "[", "Large", "]"}], ",", 
+              RowBox[{"Point", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{"r", ",", 
+                   SqrtBox["r"]}], "}"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"r", ",", 
+                   RowBox[{"-", 
+                    SqrtBox["r"]}]}], "}"}]}], "}"}], "]"}], ",", "White", 
+              ",", 
+              RowBox[{"PointSize", "[", "Medium", "]"}], ",", 
+              RowBox[{"Point", "[", 
+               RowBox[{"{", 
+                RowBox[{"r", ",", 
+                 SqrtBox["r"]}], "}"}], "]"}]}], "}"}], "]"}], ",", 
+           RowBox[{"Graphics", "[", 
+            RowBox[{"{", "}"}], "]"}]}], "]"}]}], "]"}]}], "}"}], "}"}], 
+    "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"r", ",", "1"}], "}"}], ",", 
+     RowBox[{"-", "2"}], ",", "2"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.77713657768003*^9, 3.7771365828765388`*^9}, {
+  3.7771370214122696`*^9, 3.7771370243627615`*^9}, {3.7771371027777557`*^9, 
+  3.777137152180356*^9}, {3.777137522168996*^9, 3.7771379841682105`*^9}, {
+  3.7771380242901864`*^9, 3.7771384015864058`*^9}, {3.7771385034820766`*^9, 
+  3.7771385543943424`*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`r$$ = 1, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`r$$], 1}, -2, 2}}, Typeset`size$$ = {
+    387., {96.5, 102.5}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`r$359$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`r$$ = 1}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`r$$, $CellContext`r$359$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> TableForm[{{
+          Show[
+           
+           StreamPlot[{
+            1, $CellContext`x^2 - $CellContext`r$$}, {$CellContext`t, -2, 
+             2}, {$CellContext`x, -2, 2}, PlotLabel -> 
+            "stream plot (x versus t)"], 
+           If[$CellContext`r$$ >= 0, 
+            Graphics[{Red, Thick, 
+              
+              Line[{{-2, -Sqrt[$CellContext`r$$]}, {
+                2, -Sqrt[$CellContext`r$$]}}], Dashed, 
+              Line[{{-2, 
+                 Sqrt[$CellContext`r$$]}, {2, 
+                 Sqrt[$CellContext`r$$]}}]}], 
+            Graphics[{}]]], 
+          Show[
+           Plot[{
+             
+             Piecewise[{{-Sqrt[$CellContext`rr], $CellContext`rr >= 0}}, 
+              Nothing], 
+             Piecewise[{{
+                Sqrt[$CellContext`rr], $CellContext`rr >= 0}}, 
+              Nothing]}, {$CellContext`rr, -2.001, $CellContext`r$$}, 
+            PlotStyle -> {
+              Directive[Red, Thick], 
+              Directive[Red, Thick, Dashed]}, PlotRange -> {{-2, 2}, {-2, 2}},
+             AspectRatio -> 1, Frame -> True, Axes -> False, PlotLabel -> 
+            "equilibria (\!\(\*SuperscriptBox[\(x\), \(*\)]\) versus r)"], 
+           If[$CellContext`r$$ >= 0, 
+            Graphics[{Red, 
+              PointSize[Large], 
+              Point[{{$CellContext`r$$, 
+                 Sqrt[$CellContext`r$$]}, {$CellContext`r$$, -
+                 Sqrt[$CellContext`r$$]}}], White, 
+              PointSize[Medium], 
+              Point[{$CellContext`r$$, 
+                Sqrt[$CellContext`r$$]}]}], 
+            Graphics[{}]]]}}], 
+      "Specifications" :> {{{$CellContext`r$$, 1}, -2, 2}}, "Options" :> {}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{438., {144., 150.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.7771379244304895`*^9, 3.777137972818993*^9}, {
+   3.777138035688207*^9, 3.7771380603054132`*^9}, {3.7771381204860187`*^9, 
+   3.777138178429568*^9}, {3.777138214210326*^9, 3.7771382557136283`*^9}, {
+   3.777138298547415*^9, 3.777138305909398*^9}, 3.777138364876514*^9, 
+   3.777138402049615*^9, 3.7771385562984977`*^9, 3.7771428359485655`*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Transcritical Bifurcation", "Section",
+ CellChangeTimes->{{3.7766008885632277`*^9, 3.7766008904796133`*^9}, {
+  3.777136401274056*^9, 3.777136416298379*^9}, {3.7771407765357695`*^9, 
+  3.7771407784342155`*^9}}],
+
+Cell["\<\
+A transcritical bifurcation occurs when two equilibria \
+\[OpenCurlyDoubleQuote]slide past\[CloseCurlyDoubleQuote] each other and swap \
+stabilities when they collide. The example below concerns the 1D system:\
+\>", "Text",
+ CellChangeTimes->{{3.777136412348218*^9, 3.777136502673601*^9}, {
+  3.777140654593788*^9, 3.77714069874934*^9}, {3.7771407816953983`*^9, 
+  3.7771408255748434`*^9}, {3.7771416017729793`*^9, 3.7771416437784433`*^9}}],
+
+Cell[BoxData[Cell[TextData[Cell[BoxData[
+  FormBox[
+   RowBox[{
+    FractionBox[
+     RowBox[{"\[DifferentialD]", "x"}], 
+     RowBox[{"\[DifferentialD]", "t"}]], "=", 
+    RowBox[{
+     SuperscriptBox["x", "2"], "-", 
+     RowBox[{"r", " ", "x"}]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"]], "DisplayFormula"]], "Text",
+ CellChangeTimes->{{3.77713651537531*^9, 3.7771365309974613`*^9}, 
+   3.7771366535696325`*^9, {3.7771370336200256`*^9, 3.7771370357424736`*^9}, {
+   3.777140833863779*^9, 3.7771408342711344`*^9}}],
+
+Cell[TextData[{
+ "Setting ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    FractionBox[
+     RowBox[{"\[DifferentialD]", "x"}], 
+     RowBox[{"\[DifferentialD]", "t"}]], "=", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and solving, we find that the equilibria are ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["x", "*"], "=", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["x", "*"], "=", "r"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". For ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"r", "\[NotEqual]", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " this is two separate equilibria while for ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"r", "=", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " the two coincide."
+}], "Text",
+ CellChangeTimes->{{3.7771366384229493`*^9, 3.777136834022626*^9}, {
+  3.777136865290258*^9, 3.77713686612399*^9}, {3.77713704004583*^9, 
+  3.77713704004583*^9}, {3.777140854183094*^9, 3.7771408949826183`*^9}}],
+
+Cell[TextData[{
+ "We can conduct stability analysis by evaluating ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     FractionBox["\[PartialD]", 
+      RowBox[{"\[PartialD]", "x"}]], 
+     RowBox[{"(", 
+      RowBox[{
+       SuperscriptBox["x", "2"], "-", 
+       RowBox[{"r", " ", "x"}]}], ")"}]}], "=", 
+    RowBox[{
+     RowBox[{"2", "x"}], "-", "r"}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " at ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"x", "=", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"x", "=", "r"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". We will consider the two cases separately:"
+}], "Text",
+ CellChangeTimes->{{3.7771369512069955`*^9, 3.777136989791237*^9}, {
+  3.777137243411868*^9, 3.7771372995028796`*^9}, {3.7771373330059586`*^9, 
+  3.777137413841439*^9}, {3.7771374519786773`*^9, 3.777137512637171*^9}, {
+  3.777140903749477*^9, 3.7771409616009216`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "For ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"x", "=", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " the Jacobian is ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"-", "r"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", which is obviously negative (and thus stable) for ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"r", ">", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and positive (and thus unstable) for ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"r", "<", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "."
+}], "Item",
+ CellChangeTimes->{{3.777140974403208*^9, 3.7771410170516787`*^9}}],
+
+Cell[TextData[{
+ "For ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"x", "=", "r"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " the Jacobian is ",
+ Cell[BoxData[
+  FormBox["r", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", which is positive (and thus unstable) for ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"r", ">", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and negative (and thus stable) for ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"r", "<", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "."
+}], "Item",
+ CellChangeTimes->{{3.777140974403208*^9, 3.7771410546510034`*^9}}]
+}, Open  ]],
+
+Cell[TextData[{
+ "The two equilibria always have opposite stabilities whether ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"r", "<", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " or ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"r", ">", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.7771410673018804`*^9, 3.77714109176895*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"TableForm", "[", 
+    RowBox[{"{", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Show", "[", 
+        RowBox[{
+         RowBox[{"StreamPlot", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"1", ",", 
+             RowBox[{
+              SuperscriptBox["x", "2"], "-", 
+              RowBox[{"r", " ", "x"}]}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"t", ",", 
+             RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"x", ",", 
+             RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+           RowBox[{
+           "PlotLabel", "\[Rule]", "\"\<stream plot (x versus t)\>\""}]}], 
+          "]"}], ",", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"r", "\[GreaterEqual]", "0"}], ",", 
+           RowBox[{"Graphics", "[", 
+            RowBox[{"{", 
+             RowBox[{"Red", ",", "Thick", ",", 
+              RowBox[{"Line", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"-", "2"}], ",", "0"}], "}"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"2", ",", "0"}], "}"}]}], "}"}], "]"}], ",", 
+              "Dashed", ",", 
+              RowBox[{"Line", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"-", "2"}], ",", "r"}], "}"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"2", ",", "r"}], "}"}]}], "}"}], "]"}]}], "}"}], 
+            "]"}], ",", 
+           RowBox[{"Graphics", "[", 
+            RowBox[{"{", 
+             RowBox[{"Red", ",", "Thick", ",", 
+              RowBox[{"Line", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"-", "2"}], ",", "r"}], "}"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"2", ",", "r"}], "}"}]}], "}"}], "]"}], ",", 
+              "Dashed", ",", 
+              RowBox[{"Line", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"-", "2"}], ",", "0"}], "}"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"2", ",", "0"}], "}"}]}], "}"}], "]"}]}], "}"}], 
+            "]"}]}], "]"}]}], "]"}], ",", 
+       RowBox[{"Show", "[", 
+        RowBox[{
+         RowBox[{"Plot", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Piecewise", "[", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"{", 
+                 RowBox[{"rr", ",", 
+                  RowBox[{"rr", "\[GreaterEqual]", "0"}]}], "}"}], "}"}], ",",
+                "0"}], "]"}], ",", 
+             RowBox[{"Piecewise", "[", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"{", 
+                 RowBox[{"0", ",", 
+                  RowBox[{"rr", "\[GreaterEqual]", "0"}]}], "}"}], "}"}], ",",
+                "rr"}], "]"}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"rr", ",", 
+             RowBox[{"-", "2.001"}], ",", "r"}], "}"}], ",", 
+           RowBox[{"PlotStyle", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Directive", "[", 
+               RowBox[{"Red", ",", "Thick", ",", "Dashed"}], "]"}], ",", 
+              RowBox[{"Directive", "[", 
+               RowBox[{"Red", ",", "Thick"}], "]"}]}], "}"}]}], ",", 
+           RowBox[{"PlotRange", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"-", "2"}], ",", "2"}], "}"}]}], "}"}]}], ",", 
+           RowBox[{"AspectRatio", "\[Rule]", "1"}], ",", 
+           RowBox[{"Frame", "\[Rule]", "True"}], ",", 
+           RowBox[{"Axes", "\[Rule]", "False"}], ",", 
+           RowBox[{
+           "PlotLabel", "\[Rule]", 
+            "\"\<equilibria (\!\(\*SuperscriptBox[\(x\), \(*\)]\) versus r)\>\
+\""}]}], "]"}], ",", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"r", "\[GreaterEqual]", "0"}], ",", 
+           RowBox[{"Graphics", "[", 
+            RowBox[{"{", 
+             RowBox[{"Red", ",", 
+              RowBox[{"PointSize", "[", "Large", "]"}], ",", 
+              RowBox[{"Point", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{"r", ",", "0"}], "}"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"r", ",", "r"}], "}"}]}], "}"}], "]"}], ",", 
+              "White", ",", 
+              RowBox[{"PointSize", "[", "Medium", "]"}], ",", 
+              RowBox[{"Point", "[", 
+               RowBox[{"{", 
+                RowBox[{"r", ",", "r"}], "}"}], "]"}]}], "}"}], "]"}], ",", 
+           RowBox[{"Graphics", "[", 
+            RowBox[{"{", 
+             RowBox[{"Red", ",", 
+              RowBox[{"PointSize", "[", "Large", "]"}], ",", 
+              RowBox[{"Point", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{"r", ",", "0"}], "}"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"r", ",", "r"}], "}"}]}], "}"}], "]"}], ",", 
+              "White", ",", 
+              RowBox[{"PointSize", "[", "Medium", "]"}], ",", 
+              RowBox[{"Point", "[", 
+               RowBox[{"{", 
+                RowBox[{"r", ",", "0"}], "}"}], "]"}]}], "}"}], "]"}]}], 
+          "]"}]}], "]"}]}], "}"}], "}"}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"r", ",", "1"}], "}"}], ",", 
+     RowBox[{"-", "2"}], ",", "2"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.77713657768003*^9, 3.7771365828765388`*^9}, {
+  3.7771370214122696`*^9, 3.7771370243627615`*^9}, {3.7771371027777557`*^9, 
+  3.777137152180356*^9}, {3.777137522168996*^9, 3.7771379841682105`*^9}, {
+  3.7771380242901864`*^9, 3.7771384015864058`*^9}, {3.7771385034820766`*^9, 
+  3.7771385543943424`*^9}, {3.7771411102948675`*^9, 3.777141110664283*^9}, {
+  3.777141140776102*^9, 3.7771412353779545`*^9}, {3.777141270010955*^9, 
+  3.777141270194441*^9}, {3.7771413011098766`*^9, 3.7771413385613546`*^9}, {
+  3.7771413736412973`*^9, 3.7771414370261106`*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`r$$ = 1, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`r$$], 1}, -2, 2}}, Typeset`size$$ = {
+    387., {96.5, 102.5}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`r$1744$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`r$$ = 1}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`r$$, $CellContext`r$1744$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> TableForm[{{
+          Show[
+           
+           StreamPlot[{
+            1, $CellContext`x^2 - $CellContext`r$$ $CellContext`x}, \
+{$CellContext`t, -2, 2}, {$CellContext`x, -2, 2}, PlotLabel -> 
+            "stream plot (x versus t)"], 
+           If[$CellContext`r$$ >= 0, 
+            Graphics[{Red, Thick, 
+              Line[{{-2, 0}, {2, 0}}], Dashed, 
+              Line[{{-2, $CellContext`r$$}, {2, $CellContext`r$$}}]}], 
+            Graphics[{Red, Thick, 
+              Line[{{-2, $CellContext`r$$}, {2, $CellContext`r$$}}], Dashed, 
+              Line[{{-2, 0}, {2, 0}}]}]]], 
+          Show[
+           Plot[{
+             Piecewise[{{$CellContext`rr, $CellContext`rr >= 0}}, 0], 
+             
+             Piecewise[{{
+               0, $CellContext`rr >= 
+                0}}, $CellContext`rr]}, {$CellContext`rr, -2.001, \
+$CellContext`r$$}, PlotStyle -> {
+              Directive[Red, Thick, Dashed], 
+              Directive[Red, Thick]}, PlotRange -> {{-2, 2}, {-2, 2}}, 
+            AspectRatio -> 1, Frame -> True, Axes -> False, PlotLabel -> 
+            "equilibria (\!\(\*SuperscriptBox[\(x\), \(*\)]\) versus r)"], 
+           If[$CellContext`r$$ >= 0, 
+            Graphics[{Red, 
+              PointSize[Large], 
+              
+              Point[{{$CellContext`r$$, 
+                 0}, {$CellContext`r$$, $CellContext`r$$}}], White, 
+              PointSize[Medium], 
+              Point[{$CellContext`r$$, $CellContext`r$$}]}], 
+            Graphics[{Red, 
+              PointSize[Large], 
+              
+              Point[{{$CellContext`r$$, 
+                 0}, {$CellContext`r$$, $CellContext`r$$}}], White, 
+              PointSize[Medium], 
+              Point[{$CellContext`r$$, 0}]}]]]}}], 
+      "Specifications" :> {{{$CellContext`r$$, 1}, -2, 2}}, "Options" :> {}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{438., {144., 150.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.7771379244304895`*^9, 3.777137972818993*^9}, {
+   3.777138035688207*^9, 3.7771380603054132`*^9}, {3.7771381204860187`*^9, 
+   3.777138178429568*^9}, {3.777138214210326*^9, 3.7771382557136283`*^9}, {
+   3.777138298547415*^9, 3.777138305909398*^9}, 3.777138364876514*^9, 
+   3.777138402049615*^9, 3.7771385562984977`*^9, 3.7771411143651175`*^9, {
+   3.777141152356468*^9, 3.7771412366219435`*^9}, {3.7771412827529573`*^9, 
+   3.777141338939087*^9}, 3.7771413788874207`*^9, {3.777141419528529*^9, 
+   3.7771414375930433`*^9}, 3.7771428381608877`*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Pitchfork Bifurcation", "Section",
+ CellChangeTimes->{{3.7766008885632277`*^9, 3.7766008904796133`*^9}, {
+  3.777136401274056*^9, 3.777136416298379*^9}, {3.7771415021019964`*^9, 
+  3.777141503857136*^9}}],
+
+Cell["\<\
+A pitchfork bifurcation occurs when a single equilibrium splits into three \
+(or, if moving in the other direction, when three equilibria merge to result \
+in a single equilibrium). This is similar to a saddle-node bifurcation, \
+except that one equilibrium remains real regardless of the other two. The \
+example below concerns the 1D system:\
+\>", "Text",
+ CellChangeTimes->{{3.777136412348218*^9, 3.777136502673601*^9}, {
+  3.777140654593788*^9, 3.77714069874934*^9}, {3.77714150735085*^9, 
+  3.7771415679562902`*^9}, {3.777141646656042*^9, 3.777141646985199*^9}}],
+
+Cell[BoxData[Cell[TextData[Cell[BoxData[
+  FormBox[
+   RowBox[{
+    FractionBox[
+     RowBox[{"\[DifferentialD]", "x"}], 
+     RowBox[{"\[DifferentialD]", "t"}]], "=", 
+    RowBox[{
+     SuperscriptBox["x", "3"], "-", 
+     RowBox[{"r", " ", "x"}]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"]], "DisplayFormula"]], "Text",
+ CellChangeTimes->{{3.77713651537531*^9, 3.7771365309974613`*^9}, 
+   3.7771366535696325`*^9, {3.7771370336200256`*^9, 3.7771370357424736`*^9}, {
+   3.7771415732464447`*^9, 3.7771415756351213`*^9}}],
+
+Cell[TextData[{
+ "Setting ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    FractionBox[
+     RowBox[{"\[DifferentialD]", "x"}], 
+     RowBox[{"\[DifferentialD]", "t"}]], "=", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and solving, we find that the equilibria are ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["x", "*"], "\[Element]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"-", 
+       SqrtBox["r"]}], ",", "0", ",", 
+      SqrtBox["r"]}], "}"}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["x", "*"], "=", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " is constant and does not change as ",
+ Cell[BoxData[
+  FormBox["r", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " changes, while ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["x", "*"], "=", 
+    RowBox[{"\[PlusMinus]", 
+     SqrtBox["r"]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " depend on the sign of ",
+ Cell[BoxData[
+  FormBox["r", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". Going through the same process as for the saddle-node bifurcation above, \
+we find that ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"r", ">", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " results in both being real, ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"r", "<", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " results in both being imaginary, and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"r", "=", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " results in both merging and coinciding with ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["x", "*"], "=", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.7771366384229493`*^9, 3.777136834022626*^9}, {
+  3.777136865290258*^9, 3.77713686612399*^9}, {3.77713704004583*^9, 
+  3.77713704004583*^9}, {3.7771416556914363`*^9, 3.777141821658723*^9}}],
+
+Cell[TextData[{
+ "We can conduct stability analysis by evaluating ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     FractionBox["\[PartialD]", 
+      RowBox[{"\[PartialD]", "x"}]], 
+     RowBox[{"(", 
+      RowBox[{
+       SuperscriptBox["x", "3"], "-", 
+       RowBox[{"r", " ", "x"}]}], ")"}]}], "=", 
+    RowBox[{
+     RowBox[{"3", 
+      SuperscriptBox["x", "2"]}], "-", "r"}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " at ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"x", "=", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"x", "=", 
+    RowBox[{"\[PlusMinus]", 
+     SqrtBox["r"]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". If ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"x", "=", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " then the Jacobian is ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"-", "r"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", which always has a sign opposite ",
+ Cell[BoxData[
+  FormBox["r", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". If ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"x", "=", 
+    RowBox[{"\[PlusMinus]", 
+     SqrtBox["r"]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " then the Jacobian is ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"2", "r"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", which always has a sign the same as ",
+ Cell[BoxData[
+  FormBox["r", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". The overall conclusion is that for ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"r", "<", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " we have a single unstable equilibrium at ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["x", "*"], "=", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", while for ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"r", ">", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " we have three equilibria: a stable equilibrium at ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["x", "*"], "=", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and two unstable equilibria at ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SuperscriptBox["x", "*"], "=", 
+    RowBox[{"\[PlusMinus]", 
+     SqrtBox["r"]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.7771369512069955`*^9, 3.777136989791237*^9}, {
+  3.777137243411868*^9, 3.7771372995028796`*^9}, {3.7771373330059586`*^9, 
+  3.777137413841439*^9}, {3.7771374519786773`*^9, 3.777137512637171*^9}, {
+  3.7771418289521384`*^9, 3.777142054907627*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"TableForm", "[", 
+    RowBox[{"{", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Show", "[", 
+        RowBox[{
+         RowBox[{"StreamPlot", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"1", ",", 
+             RowBox[{
+              SuperscriptBox["x", "3"], "-", 
+              RowBox[{"r", " ", "x"}]}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"t", ",", 
+             RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"x", ",", 
+             RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+           RowBox[{
+           "PlotLabel", "\[Rule]", "\"\<stream plot (x versus t)\>\""}]}], 
+          "]"}], ",", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"r", "\[GreaterEqual]", "0"}], ",", 
+           RowBox[{"Graphics", "[", 
+            RowBox[{"{", 
+             RowBox[{"Red", ",", "Thick", ",", 
+              RowBox[{"Line", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"-", "2"}], ",", "0"}], "}"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"2", ",", "0"}], "}"}]}], "}"}], "]"}], ",", 
+              "Dashed", ",", 
+              RowBox[{"Line", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"-", "2"}], ",", 
+                   SqrtBox["r"]}], "}"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"2", ",", 
+                   SqrtBox["r"]}], "}"}]}], "}"}], "]"}], ",", 
+              RowBox[{"Line", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"-", "2"}], ",", 
+                   RowBox[{"-", 
+                    SqrtBox["r"]}]}], "}"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"2", ",", 
+                   RowBox[{"-", 
+                    SqrtBox["r"]}]}], "}"}]}], "}"}], "]"}]}], "}"}], "]"}], 
+           ",", 
+           RowBox[{"Graphics", "[", 
+            RowBox[{"{", 
+             RowBox[{"Red", ",", "Thick", ",", "Dashed", ",", 
+              RowBox[{"Line", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{
+                   RowBox[{"-", "2"}], ",", "0"}], "}"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"2", ",", "0"}], "}"}]}], "}"}], "]"}]}], "}"}], 
+            "]"}]}], "]"}]}], "]"}], ",", 
+       RowBox[{"Show", "[", 
+        RowBox[{
+         RowBox[{"Plot", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Piecewise", "[", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"-", 
+                   SqrtBox["rr"]}], ",", 
+                  RowBox[{"rr", "\[GreaterEqual]", "0"}]}], "}"}], "}"}], ",",
+                "Nothing"}], "]"}], ",", 
+             RowBox[{"Piecewise", "[", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"{", 
+                 RowBox[{
+                  SqrtBox["rr"], ",", 
+                  RowBox[{"rr", "\[GreaterEqual]", "0"}]}], "}"}], "}"}], ",",
+                "Nothing"}], "]"}], ",", 
+             RowBox[{"Piecewise", "[", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"{", 
+                 RowBox[{"0", ",", 
+                  RowBox[{"rr", "\[GreaterEqual]", "0"}]}], "}"}], "}"}], ",",
+                "Nothing"}], "]"}], ",", 
+             RowBox[{"Piecewise", "[", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"{", 
+                 RowBox[{"0", ",", 
+                  RowBox[{"rr", "<", "0"}]}], "}"}], "}"}], ",", "Nothing"}], 
+              "]"}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"rr", ",", 
+             RowBox[{"-", "2.001"}], ",", "r"}], "}"}], ",", 
+           RowBox[{"PlotStyle", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"Directive", "[", 
+               RowBox[{"Red", ",", "Thick", ",", "Dashed"}], "]"}], ",", 
+              RowBox[{"Directive", "[", 
+               RowBox[{"Red", ",", "Thick", ",", "Dashed"}], "]"}], ",", 
+              RowBox[{"Directive", "[", 
+               RowBox[{"Red", ",", "Thick"}], "]"}], ",", 
+              RowBox[{"Directive", "[", 
+               RowBox[{"Red", ",", "Thick", ",", "Dashed"}], "]"}]}], "}"}]}],
+            ",", 
+           RowBox[{"PlotRange", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"-", "2"}], ",", "2"}], "}"}]}], "}"}]}], ",", 
+           RowBox[{"AspectRatio", "\[Rule]", "1"}], ",", 
+           RowBox[{"Frame", "\[Rule]", "True"}], ",", 
+           RowBox[{"Axes", "\[Rule]", "False"}], ",", 
+           RowBox[{
+           "PlotLabel", "\[Rule]", 
+            "\"\<equilibria (\!\(\*SuperscriptBox[\(x\), \(*\)]\) versus r)\>\
+\""}]}], "]"}], ",", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"r", "\[GreaterEqual]", "0"}], ",", 
+           RowBox[{"Graphics", "[", 
+            RowBox[{"{", 
+             RowBox[{"Red", ",", 
+              RowBox[{"PointSize", "[", "Large", "]"}], ",", 
+              RowBox[{"Point", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{"r", ",", 
+                   SqrtBox["r"]}], "}"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"r", ",", 
+                   RowBox[{"-", 
+                    SqrtBox["r"]}]}], "}"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"r", ",", "0"}], "}"}]}], "}"}], "]"}], ",", 
+              "White", ",", 
+              RowBox[{"PointSize", "[", "Medium", "]"}], ",", 
+              RowBox[{"Point", "[", 
+               RowBox[{"{", 
+                RowBox[{
+                 RowBox[{"{", 
+                  RowBox[{"r", ",", 
+                   SqrtBox["r"]}], "}"}], ",", 
+                 RowBox[{"{", 
+                  RowBox[{"r", ",", 
+                   RowBox[{"-", 
+                    SqrtBox["r"]}]}], "}"}]}], "}"}], "]"}]}], "}"}], "]"}], 
+           ",", 
+           RowBox[{"Graphics", "[", 
+            RowBox[{"{", 
+             RowBox[{"Red", ",", 
+              RowBox[{"PointSize", "[", "Large", "]"}], ",", 
+              RowBox[{"Point", "[", 
+               RowBox[{"{", 
+                RowBox[{"r", ",", "0"}], "}"}], "]"}], ",", "White", ",", 
+              RowBox[{"PointSize", "[", "Medium", "]"}], ",", 
+              RowBox[{"Point", "[", 
+               RowBox[{"{", 
+                RowBox[{"r", ",", "0"}], "}"}], "]"}]}], "}"}], "]"}]}], 
+          "]"}]}], "]"}]}], "}"}], "}"}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"r", ",", "1"}], "}"}], ",", 
+     RowBox[{"-", "2"}], ",", "2"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.77713657768003*^9, 3.7771365828765388`*^9}, {
+  3.7771370214122696`*^9, 3.7771370243627615`*^9}, {3.7771371027777557`*^9, 
+  3.777137152180356*^9}, {3.777137522168996*^9, 3.7771379841682105`*^9}, {
+  3.7771380242901864`*^9, 3.7771384015864058`*^9}, {3.7771385034820766`*^9, 
+  3.7771385543943424`*^9}, {3.7771420666214676`*^9, 3.777142122868834*^9}, {
+  3.7771421668529077`*^9, 3.777142311824276*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`r$$ = 1, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`r$$], 1}, -2, 2}}, Typeset`size$$ = {
+    387., {96.5, 102.5}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`r$2240$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`r$$ = 1}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`r$$, $CellContext`r$2240$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> TableForm[{{
+          Show[
+           
+           StreamPlot[{
+            1, $CellContext`x^3 - $CellContext`r$$ $CellContext`x}, \
+{$CellContext`t, -2, 2}, {$CellContext`x, -2, 2}, PlotLabel -> 
+            "stream plot (x versus t)"], 
+           If[$CellContext`r$$ >= 0, 
+            Graphics[{Red, Thick, 
+              Line[{{-2, 0}, {2, 0}}], Dashed, 
+              Line[{{-2, 
+                 Sqrt[$CellContext`r$$]}, {2, 
+                 Sqrt[$CellContext`r$$]}}], 
+              
+              Line[{{-2, -Sqrt[$CellContext`r$$]}, {
+                2, -Sqrt[$CellContext`r$$]}}]}], 
+            Graphics[{Red, Thick, Dashed, 
+              Line[{{-2, 0}, {2, 0}}]}]]], 
+          Show[
+           Plot[{
+             
+             Piecewise[{{-Sqrt[$CellContext`rr], $CellContext`rr >= 0}}, 
+              Nothing], 
+             Piecewise[{{
+                Sqrt[$CellContext`rr], $CellContext`rr >= 0}}, Nothing], 
+             Piecewise[{{0, $CellContext`rr >= 0}}, Nothing], 
+             
+             Piecewise[{{0, $CellContext`rr < 0}}, 
+              Nothing]}, {$CellContext`rr, -2.001, $CellContext`r$$}, 
+            PlotStyle -> {
+              Directive[Red, Thick, Dashed], 
+              Directive[Red, Thick, Dashed], 
+              Directive[Red, Thick], 
+              Directive[Red, Thick, Dashed]}, PlotRange -> {{-2, 2}, {-2, 2}},
+             AspectRatio -> 1, Frame -> True, Axes -> False, PlotLabel -> 
+            "equilibria (\!\(\*SuperscriptBox[\(x\), \(*\)]\) versus r)"], 
+           If[$CellContext`r$$ >= 0, 
+            Graphics[{Red, 
+              PointSize[Large], 
+              Point[{{$CellContext`r$$, 
+                 Sqrt[$CellContext`r$$]}, {$CellContext`r$$, -
+                 Sqrt[$CellContext`r$$]}, {$CellContext`r$$, 0}}], White, 
+              PointSize[Medium], 
+              Point[{{$CellContext`r$$, 
+                 Sqrt[$CellContext`r$$]}, {$CellContext`r$$, -
+                 Sqrt[$CellContext`r$$]}}]}], 
+            Graphics[{Red, 
+              PointSize[Large], 
+              Point[{$CellContext`r$$, 0}], White, 
+              PointSize[Medium], 
+              Point[{$CellContext`r$$, 0}]}]]]}}], 
+      "Specifications" :> {{{$CellContext`r$$, 1}, -2, 2}}, "Options" :> {}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{438., {144., 150.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.7771379244304895`*^9, 3.777137972818993*^9}, {
+   3.777138035688207*^9, 3.7771380603054132`*^9}, {3.7771381204860187`*^9, 
+   3.777138178429568*^9}, {3.777138214210326*^9, 3.7771382557136283`*^9}, {
+   3.777138298547415*^9, 3.777138305909398*^9}, 3.777138364876514*^9, 
+   3.777138402049615*^9, 3.7771385562984977`*^9, 3.777142069213477*^9, {
+   3.777142100334644*^9, 3.777142123718077*^9}, {3.7771422250715675`*^9, 
+   3.7771422683455553`*^9}, 3.7771423125655565`*^9, 3.7771428387314763`*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Hopf Bifurcation", "Section",
+ CellChangeTimes->{{3.7766008885632277`*^9, 3.7766008904796133`*^9}, {
+  3.777136401274056*^9, 3.777136416298379*^9}, {3.7771423512766824`*^9, 
+  3.7771423523483405`*^9}}],
+
+Cell["\<\
+A Hopf bifurcation occurs when an equilibrium changes stability in a way that \
+leads to a periodic orbit. This can only occur if we increase our system to \
+at least two dimensions. The example below concerns the 2D system:\
+\>", "Text",
+ CellChangeTimes->{{3.777136412348218*^9, 3.777136502673601*^9}, {
+  3.777140654593788*^9, 3.77714069874934*^9}, {3.777142354913436*^9, 
+  3.7771423557214785`*^9}, {3.7771424049490695`*^9, 3.7771425240888643`*^9}}],
+
+Cell[BoxData[Cell[TextData[Cell[BoxData[{
+  FormBox[
+   RowBox[{
+    FractionBox[
+     RowBox[{"\[DifferentialD]", "x"}], 
+     RowBox[{"\[DifferentialD]", "t"}]], "=", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"r", "(", 
+       RowBox[{"1", "-", 
+        SuperscriptBox["y", "2"]}], ")"}], "x"}], "-", "y"}]}], 
+   TraditionalForm], "\[IndentingNewLine]", 
+  FormBox[
+   RowBox[{
+    FractionBox[
+     RowBox[{"\[DifferentialD]", "y"}], 
+     RowBox[{"\[DifferentialD]", "t"}]], "=", "x"}], TraditionalForm]}],
+  FormatType->"TraditionalForm"]], "DisplayFormula"]], "Text",
+ CellChangeTimes->{{3.77713651537531*^9, 3.7771365309974613`*^9}, 
+   3.7771366535696325`*^9, {3.7771370336200256`*^9, 3.7771370357424736`*^9}, {
+   3.7771425287026825`*^9, 3.777142543615819*^9}}],
+
+Cell[TextData[{
+ "Finding the equilibria now requires us to solve the simultaneous system ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{
+     FractionBox[
+      RowBox[{"\[DifferentialD]", "x"}], 
+      RowBox[{"\[DifferentialD]", "t"}]], "=", "0"}], ",", 
+    RowBox[{
+     FractionBox[
+      RowBox[{"\[DifferentialD]", "y"}], 
+      RowBox[{"\[DifferentialD]", "t"}]], "=", "0"}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", which has exactly one solution: ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      SuperscriptBox["x", "*"], ",", 
+      SuperscriptBox["y", "*"]}], ")"}], "=", 
+    RowBox[{"(", 
+     RowBox[{"0", ",", "0"}], ")"}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". This is independent of the value of ",
+ Cell[BoxData[
+  FormBox["r", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". We next conduct stability analysis by examining the Jacobian"
+}], "Text",
+ CellChangeTimes->{{3.7771366384229493`*^9, 3.777136834022626*^9}, {
+  3.777136865290258*^9, 3.77713686612399*^9}, {3.77713704004583*^9, 
+  3.77713704004583*^9}, {3.7771425567700644`*^9, 3.7771426590387325`*^9}, {
+  3.777142720782019*^9, 3.7771427214294863`*^9}}],
+
+Cell[BoxData[Cell[TextData[{
+  Cell[BoxData[
+   FormBox[
+    RowBox[{
+     SuperscriptBox["J", "*"], "=", 
+     SubscriptBox[
+      RowBox[{"(", GridBox[{
+         {
+          RowBox[{
+           FractionBox["\[DifferentialD]", 
+            RowBox[{"\[DifferentialD]", "x"}]], 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"r", "(", 
+               RowBox[{"1", "-", 
+                SuperscriptBox["y", "2"]}], ")"}], "x"}], "-", "y"}], ")"}]}], 
+          RowBox[{
+           FractionBox["\[DifferentialD]", 
+            RowBox[{"\[DifferentialD]", "y"}]], 
+           RowBox[{"(", 
+            RowBox[{
+             RowBox[{"r", 
+              RowBox[{"(", 
+               RowBox[{"1", "-", 
+                SuperscriptBox["y", "2"]}], ")"}], "x"}], "-", "y"}], ")"}]}]},
+         {
+          RowBox[{
+           FractionBox["\[DifferentialD]", 
+            RowBox[{"\[DifferentialD]", "x"}]], 
+           RowBox[{"(", "x", ")"}]}], 
+          RowBox[{
+           FractionBox["\[DifferentialD]", 
+            RowBox[{"\[DifferentialD]", "y"}]], 
+           RowBox[{"(", "x", ")"}]}]}
+        }], ")"}], 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"x", ",", "y"}], ")"}], "=", 
+       RowBox[{"(", 
+        RowBox[{"0", ",", "0"}], ")"}]}]]}], TraditionalForm]]],
+  "=",
+  Cell[BoxData[
+   FormBox[
+    RowBox[{
+     SubscriptBox[
+      RowBox[{"(", GridBox[{
+         {
+          RowBox[{"r", "(", 
+           RowBox[{"1", "-", 
+            SuperscriptBox["y", "2"]}], ")"}], 
+          RowBox[{
+           RowBox[{
+            RowBox[{"-", "2"}], "r", " ", "x", " ", "y"}], "-", "1"}]},
+         {"1", "0"}
+        }], ")"}], 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"x", ",", "y"}], ")"}], "=", 
+       RowBox[{"(", 
+        RowBox[{"0", ",", "0"}], ")"}]}]], "=", 
+     RowBox[{"(", GridBox[{
+        {"r", 
+         RowBox[{"-", "1"}]},
+        {"1", "0"}
+       }], ")"}]}], TraditionalForm]]]
+ }], "DisplayFormula"]], "DisplayFormula",
+ CellChangeTimes->{{3.7771426694122353`*^9, 3.777142776009329*^9}, {
+  3.7771428654505424`*^9, 3.7771429550053325`*^9}}],
+
+Cell[TextData[{
+ "which has eigenvalues of ",
+ Cell[BoxData[
+  FormBox[
+   FractionBox[
+    RowBox[{"r", " ", "\[PlusMinus]", 
+     SqrtBox[
+      RowBox[{
+       SuperscriptBox["r", "2"], " ", "-", " ", "4"}]]}], "2"], 
+   TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". These always have a negative real part for ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"r", "<", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and a positive real part for ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"r", ">", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". For ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"r", "\[LessEqual]", 
+    RowBox[{"-", "2"}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"r", "\[GreaterEqual]", "2"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " they are purely real, while for ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    RowBox[{"-", "2"}], "<", "r", "<", "2"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " they include an imaginary part. At ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"r", "=", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " the eigenvalues are purely imaginary and we have periodic orbits."
+}], "Text",
+ CellChangeTimes->{{3.7771429637246385`*^9, 3.777142966166086*^9}, {
+  3.7771429962203674`*^9, 3.7771430481636953`*^9}, {3.777143415022867*^9, 
+  3.7771435095056553`*^9}}],
+
+Cell[TextData[{
+ "The equilibrium displays used above do not apply to this 2D system, and so \
+instead we display only the stream plot of ",
+ Cell[BoxData[
+  FormBox["y", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " versus ",
+ Cell[BoxData[
+  FormBox["x", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". Notice that as ",
+ Cell[BoxData[
+  FormBox["r", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " goes from negative to zero to positive, the system goes from spiraling \
+inward (stable) to circular orbits (periodic) to spiraling outward (unstable)."
+}], "Text",
+ CellChangeTimes->{{3.7771435211260934`*^9, 3.7771436703194323`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Show", "[", 
+    RowBox[{
+     RowBox[{"StreamPlot", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"r", 
+           RowBox[{"(", 
+            RowBox[{"1", "-", 
+             SuperscriptBox["y", "2"]}], ")"}], "x"}], "-", "y"}], ",", "x"}],
+         "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"x", ",", 
+         RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"y", ",", 
+         RowBox[{"-", "2"}], ",", "2"}], "}"}], ",", 
+       RowBox[{"PlotLabel", "\[Rule]", "\"\<stream plot (y versus x)\>\""}]}],
+       "]"}], ",", 
+     RowBox[{"Graphics", "[", 
+      RowBox[{"{", 
+       RowBox[{"Red", ",", 
+        RowBox[{"PointSize", "[", "Large", "]"}], ",", 
+        RowBox[{"Point", "[", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "0"}], "}"}], "]"}]}], "}"}], "]"}]}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"r", ",", "1"}], "}"}], ",", 
+     RowBox[{"-", "3"}], ",", "3"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.77713657768003*^9, 3.7771365828765388`*^9}, {
+  3.7771370214122696`*^9, 3.7771370243627615`*^9}, {3.7771371027777557`*^9, 
+  3.777137152180356*^9}, {3.777137522168996*^9, 3.7771379841682105`*^9}, {
+  3.7771380242901864`*^9, 3.7771384015864058`*^9}, {3.7771385034820766`*^9, 
+  3.7771385543943424`*^9}, {3.777143113760271*^9, 3.777143167703524*^9}, {
+  3.77714324489684*^9, 3.7771432725478344`*^9}, {3.77714335304587*^9, 
+  3.7771433539295716`*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`r$$ = 1.63, Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`r$$], 1}, -3, 3}}, Typeset`size$$ = {
+    360., {185., 190.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`r$18043$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, "Variables" :> {$CellContext`r$$ = 1}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`r$$, $CellContext`r$18043$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> Show[
+        StreamPlot[{$CellContext`r$$ (
+            1 - $CellContext`y^2) $CellContext`x - $CellContext`y, \
+$CellContext`x}, {$CellContext`x, -2, 2}, {$CellContext`y, -2, 2}, PlotLabel -> 
+         "stream plot (y versus x)"], 
+        Graphics[{Red, 
+          PointSize[Large], 
+          Point[{0, 0}]}]], 
+      "Specifications" :> {{{$CellContext`r$$, 1}, -3, 3}}, "Options" :> {}, 
+      "DefaultOptions" :> {}],
+     ImageSizeCache->{411., {245., 251.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.7771379244304895`*^9, 3.777137972818993*^9}, {
+   3.777138035688207*^9, 3.7771380603054132`*^9}, {3.7771381204860187`*^9, 
+   3.777138178429568*^9}, {3.777138214210326*^9, 3.7771382557136283`*^9}, {
+   3.777138298547415*^9, 3.777138305909398*^9}, 3.777138364876514*^9, 
+   3.777138402049615*^9, 3.7771385562984977`*^9, 3.7771428399820857`*^9, 
+   3.7771431348484387`*^9, 3.77714316857364*^9, {3.777143263336276*^9, 
+   3.7771432733456025`*^9}, 3.777143355066966*^9}]
+}, {2}]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{767, 833},
+WindowMargins->{{57, Automatic}, {Automatic, 51}},
+FrontEndVersion->"10.4 for Microsoft Windows (64-bit) (April 11, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 158, 2, 90, "Title"],
+Cell[741, 26, 158, 2, 30, "Text"],
+Cell[CellGroupData[{
+Cell[924, 32, 99, 1, 63, "Section"],
+Cell[1026, 35, 915, 25, 87, "Text"],
+Cell[1944, 62, 1866, 51, 158, "Text"],
+Cell[3813, 115, 1116, 32, 82, "Text"],
+Cell[4932, 149, 1048, 31, 82, "Text"],
+Cell[5983, 182, 894, 23, 89, "Text"],
+Cell[6880, 207, 1085, 35, 96, "Text"],
+Cell[7968, 244, 966, 18, 144, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8971, 267, 161, 2, 63, "Section"],
+Cell[9135, 271, 507, 8, 87, "Text"],
+Cell[9645, 281, 453, 10, 46, "Text"],
+Cell[10101, 293, 788, 25, 63, "Text"],
+Cell[CellGroupData[{
+Cell[10914, 322, 417, 14, 34, "Item"],
+Cell[11334, 338, 476, 15, 34, "Item"],
+Cell[11813, 355, 453, 15, 29, "Item"]
+}, Open  ]],
+Cell[12281, 373, 1650, 59, 94, "Text"],
+Cell[CellGroupData[{
+Cell[13956, 436, 5322, 140, 413, "Input"],
+Cell[19281, 578, 3451, 74, 311, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[22781, 658, 216, 3, 63, "Section"],
+Cell[23000, 663, 450, 7, 49, "Text"],
+Cell[23453, 672, 531, 12, 46, "Text"],
+Cell[23987, 686, 1085, 35, 63, "Text"],
+Cell[25075, 723, 979, 30, 63, "Text"],
+Cell[CellGroupData[{
+Cell[26079, 757, 654, 23, 45, "Item"],
+Cell[26736, 782, 625, 22, 45, "Item"]
+}, Open  ]],
+Cell[27376, 807, 387, 13, 30, "Text"],
+Cell[CellGroupData[{
+Cell[27788, 824, 6514, 164, 371, "Input"],
+Cell[34305, 990, 3800, 79, 311, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[38154, 1075, 210, 3, 63, "Section"],
+Cell[38367, 1080, 577, 9, 87, "Text"],
+Cell[38947, 1091, 533, 12, 46, "Text"],
+Cell[39483, 1105, 2018, 68, 107, "Text"],
+Cell[41504, 1175, 2655, 93, 132, "Text"],
+Cell[CellGroupData[{
+Cell[44184, 1272, 7694, 197, 539, "Input"],
+Cell[51881, 1471, 4191, 88, 311, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[56121, 1565, 207, 3, 63, "Section"],
+Cell[56331, 1570, 463, 7, 68, "Text"],
+Cell[56797, 1579, 771, 20, 81, "Text"],
+Cell[57571, 1601, 1217, 34, 84, "Text"],
+Cell[58791, 1637, 2131, 68, 78, "DisplayFormula"],
+Cell[60925, 1707, 1432, 47, 93, "Text"],
+Cell[62360, 1756, 662, 17, 68, "Text"],
+Cell[CellGroupData[{
+Cell[63047, 1777, 1575, 41, 103, "Input"],
+Cell[64625, 1820, 2303, 45, 513, "Output"]
+}, {2}]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
