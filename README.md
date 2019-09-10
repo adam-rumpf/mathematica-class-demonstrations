@@ -235,7 +235,7 @@ Most people do not think very much about election systems, and if you asked them
 
 ### Winner-Take-All Distortion
 
-<img src="images/winner-take-all-distortion-1.png" alt="Winner-Take-All Distortion Image 1" height="400"/> <img src="images/winner-take-all-distortion-2.png" alt="Winner-Take-All Distortion Image 2" height="400"/>
+<img src="images/winner-take-all-distortion-1.png" alt="Winner-Take-All Distortion Image 1" height="450"/> <img src="images/winner-take-all-distortion-2.png" alt="Winner-Take-All Distortion Image 2" height="450"/>
 
 Created 11/26/2016
 
