@@ -1,0 +1,1557 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.4' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     62689,       1549]
+NotebookOptionsPosition[     61798,       1512]
+NotebookOutlinePosition[     62141,       1527]
+CellTagsIndexPosition[     62098,       1524]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Triangle Centers", "Title",
+ CellChangeTimes->{{3.776600831050974*^9, 3.7766008318453026`*^9}, {
+  3.7770746468439217`*^9, 3.7770746497569923`*^9}}],
+
+Cell["Adam Rumpf, 2/2/2016", "Text",
+ CellChangeTimes->{{3.7766008347881403`*^9, 3.776600838290375*^9}, {
+  3.77707465989176*^9, 3.77707466133928*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section",
+ CellChangeTimes->{{3.7766008459498987`*^9, 3.776600848547045*^9}}],
+
+Cell["\<\
+This demonstration defines a Manipulate environment for displaying several \
+different classical triangle centers as well as some auxiliary lines. The \
+vertices of the triangle can be clicked and dragged to change the shape of \
+the triangle, and the tick boxes can be used to choose what to show or hide. \
+The following triangle centers are included:\
+\>", "Text",
+ CellChangeTimes->{{3.776600856235587*^9, 3.776600860481224*^9}, {
+  3.7770754401396065`*^9, 3.777075540533799*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Orthocenter: Intersection of the three altitudes.", "Item",
+ CellChangeTimes->{{3.7770755528036995`*^9, 3.7770755642800713`*^9}}],
+
+Cell["\<\
+Circumcenter: Center of the circle circumscribed about the triangle.\
+\>", "Item",
+ CellChangeTimes->{{3.7770755528036995`*^9, 3.777075582224024*^9}}],
+
+Cell["\<\
+Centroid: Intersection of the three lines connecting each vertex to its \
+opposite side\[CloseCurlyQuote]s midpoint.\
+\>", "Item",
+ CellChangeTimes->{{3.7770755528036995`*^9, 3.777075601317453*^9}}],
+
+Cell["\<\
+Incenter: Center of the circle inscribed inside the triangle.\
+\>", "Item",
+ CellChangeTimes->{{3.7770755528036995`*^9, 3.77707561386545*^9}}]
+}, Open  ]],
+
+Cell["\<\
+The construction lines and inscribed/circumscribed circles can be toggled on \
+or off, as can the Euler line, along which the orthocenter, circumcenter, and \
+centroid (but not necessarily the incenter) always lie. Note that all four \
+centers coincide for an equilateral triangle.\
+\>", "Text",
+ CellChangeTimes->{{3.7770756244109974`*^9, 3.7770756947720594`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Code", "Section",
+ CellChangeTimes->{{3.776600864408964*^9, 3.7766008650447807`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Demonstration", "Subsection",
+ CellChangeTimes->{{3.7766008885632277`*^9, 3.7766008904796133`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "mab", ",", "mbc", ",", "mca", ",", "orthmalta", ",", "orthmaltb", ",", 
+       "orthmaltc", ",", "eqab", ",", "eqbc", ",", "eqca", ",", "ortheqalta", 
+       ",", "ortheqaltb", ",", "ortheqaltc", ",", 
+       RowBox[{"orthfoota", "=", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0"}], "}"}]}], ",", 
+       RowBox[{"orthfootb", "=", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0"}], "}"}]}], ",", 
+       RowBox[{"orthfootc", "=", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0"}], "}"}]}], ",", 
+       RowBox[{"orthocenter", "=", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0"}], "}"}]}], ",", "midab", ",", "midbc", ",", 
+       "midca", ",", "circnormasq", ",", "circnormbsq", ",", "circnormcsq", 
+       ",", "circumcenter", ",", "circsx", ",", "circsy", ",", "circad", ",", 
+       "circbd", ",", "circr", ",", "centroid", ",", "inmbia", ",", "inmbib", 
+       ",", "inmbic", ",", "ineqbia", ",", "ineqbib", ",", "ineqbic", ",", 
+       RowBox[{"inintab", "=", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0"}], "}"}]}], ",", 
+       RowBox[{"inintbc", "=", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0"}], "}"}]}], ",", 
+       RowBox[{"inintca", "=", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0"}], "}"}]}], ",", 
+       RowBox[{"incenter", "=", 
+        RowBox[{"{", 
+         RowBox[{"0", ",", "0"}], "}"}]}], ",", "inr", ",", "indsqab", ",", 
+       "indsqbc", ",", "indsqca"}], "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"(*", " ", "Orthocenter", " ", "*)"}], "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"mab", "=", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"a", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], "\[NotEqual]", 
+          RowBox[{"b", "[", 
+           RowBox[{"[", "1", "]"}], "]"}]}], ",", 
+         FractionBox[
+          RowBox[{
+           RowBox[{"b", "[", 
+            RowBox[{"[", "2", "]"}], "]"}], "-", 
+           RowBox[{"a", "[", 
+            RowBox[{"[", "2", "]"}], "]"}]}], 
+          RowBox[{
+           RowBox[{"b", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], "-", 
+           RowBox[{"a", "[", 
+            RowBox[{"[", "1", "]"}], "]"}]}]], ",", "Infinity"}], "]"}]}], 
+      ";", "\[IndentingNewLine]", 
+      RowBox[{"mbc", "=", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"b", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], "\[NotEqual]", 
+          RowBox[{"c", "[", 
+           RowBox[{"[", "1", "]"}], "]"}]}], ",", 
+         FractionBox[
+          RowBox[{
+           RowBox[{"c", "[", 
+            RowBox[{"[", "2", "]"}], "]"}], "-", 
+           RowBox[{"b", "[", 
+            RowBox[{"[", "2", "]"}], "]"}]}], 
+          RowBox[{
+           RowBox[{"c", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], "-", 
+           RowBox[{"b", "[", 
+            RowBox[{"[", "1", "]"}], "]"}]}]], ",", "Infinity"}], "]"}]}], 
+      ";", "\[IndentingNewLine]", 
+      RowBox[{"mca", "=", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"a", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], "\[NotEqual]", 
+          RowBox[{"c", "[", 
+           RowBox[{"[", "1", "]"}], "]"}]}], ",", 
+         FractionBox[
+          RowBox[{
+           RowBox[{"a", "[", 
+            RowBox[{"[", "2", "]"}], "]"}], "-", 
+           RowBox[{"c", "[", 
+            RowBox[{"[", "2", "]"}], "]"}]}], 
+          RowBox[{
+           RowBox[{"a", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], "-", 
+           RowBox[{"c", "[", 
+            RowBox[{"[", "1", "]"}], "]"}]}]], ",", "Infinity"}], "]"}]}], 
+      ";", "\[IndentingNewLine]", 
+      RowBox[{"orthmalta", "=", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"mbc", "\[NotEqual]", "0"}], ",", 
+         RowBox[{"-", 
+          FractionBox["1", "mbc"]}], ",", "Infinity"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"orthmaltb", "=", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"mca", "\[NotEqual]", "0"}], ",", 
+         RowBox[{"-", 
+          FractionBox["1", "mca"]}], ",", "Infinity"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"orthmaltc", "=", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"mab", "\[NotEqual]", "0"}], ",", 
+         RowBox[{"-", 
+          FractionBox["1", "mab"]}], ",", "Infinity"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"eqab", "=", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"mab", 
+          RowBox[{"(", 
+           RowBox[{"#", "-", 
+            RowBox[{"a", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}], ")"}]}], "+", 
+         RowBox[{"a", "[", 
+          RowBox[{"[", "2", "]"}], "]"}]}], "&"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"eqbc", "=", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"mbc", 
+          RowBox[{"(", 
+           RowBox[{"#", "-", 
+            RowBox[{"b", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}], ")"}]}], "+", 
+         RowBox[{"b", "[", 
+          RowBox[{"[", "2", "]"}], "]"}]}], "&"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"eqca", "=", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"mca", 
+          RowBox[{"(", 
+           RowBox[{"#", "-", 
+            RowBox[{"c", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}], ")"}]}], "+", 
+         RowBox[{"c", "[", 
+          RowBox[{"[", "2", "]"}], "]"}]}], "&"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"ortheqalta", "=", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"orthmalta", 
+          RowBox[{"(", 
+           RowBox[{"#", "-", 
+            RowBox[{"a", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}], ")"}]}], "+", 
+         RowBox[{"a", "[", 
+          RowBox[{"[", "2", "]"}], "]"}]}], "&"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"ortheqaltb", "=", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"orthmaltb", 
+          RowBox[{"(", 
+           RowBox[{"#", "-", 
+            RowBox[{"b", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}], ")"}]}], "+", 
+         RowBox[{"b", "[", 
+          RowBox[{"[", "2", "]"}], "]"}]}], "&"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"ortheqaltc", "=", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"orthmaltc", 
+          RowBox[{"(", 
+           RowBox[{"#", "-", 
+            RowBox[{"c", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}], ")"}]}], "+", 
+         RowBox[{"c", "[", 
+          RowBox[{"[", "2", "]"}], "]"}]}], "&"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"orthfoota", "[", 
+        RowBox[{"[", "1", "]"}], "]"}], "=", 
+       RowBox[{"x", "/.", 
+        RowBox[{
+         RowBox[{"Solve", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"ortheqalta", "[", "x", "]"}], "\[Equal]", 
+            RowBox[{"eqbc", "[", "x", "]"}]}], ",", "x"}], "]"}], "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"orthfoota", "[", 
+        RowBox[{"[", "2", "]"}], "]"}], "=", 
+       RowBox[{"ortheqalta", "[", 
+        RowBox[{"orthfoota", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"orthfootb", "[", 
+        RowBox[{"[", "1", "]"}], "]"}], "=", 
+       RowBox[{"x", "/.", 
+        RowBox[{
+         RowBox[{"Solve", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"ortheqaltb", "[", "x", "]"}], "\[Equal]", 
+            RowBox[{"eqca", "[", "x", "]"}]}], ",", "x"}], "]"}], "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"orthfootb", "[", 
+        RowBox[{"[", "2", "]"}], "]"}], "=", 
+       RowBox[{"ortheqaltb", "[", 
+        RowBox[{"orthfootb", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"orthfootc", "[", 
+        RowBox[{"[", "1", "]"}], "]"}], "=", 
+       RowBox[{"x", "/.", 
+        RowBox[{
+         RowBox[{"Solve", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"ortheqaltc", "[", "x", "]"}], "\[Equal]", 
+            RowBox[{"eqab", "[", "x", "]"}]}], ",", "x"}], "]"}], "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"orthfootc", "[", 
+        RowBox[{"[", "2", "]"}], "]"}], "=", 
+       RowBox[{"ortheqaltc", "[", 
+        RowBox[{"orthfootc", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"orthocenter", "[", 
+        RowBox[{"[", "1", "]"}], "]"}], "=", 
+       RowBox[{"x", "/.", 
+        RowBox[{
+         RowBox[{"Solve", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"ortheqalta", "[", "x", "]"}], "\[Equal]", 
+            RowBox[{"ortheqaltb", "[", "x", "]"}]}], ",", "x"}], "]"}], "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"orthocenter", "[", 
+        RowBox[{"[", "2", "]"}], "]"}], "=", 
+       RowBox[{"ortheqalta", "[", 
+        RowBox[{"orthocenter", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", "Circumcenter", " ", "*)"}], "\[IndentingNewLine]", 
+      RowBox[{"midab", "=", 
+       RowBox[{"Mean", "[", 
+        RowBox[{"{", 
+         RowBox[{"a", ",", "b"}], "}"}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"midbc", "=", 
+       RowBox[{"Mean", "[", 
+        RowBox[{"{", 
+         RowBox[{"b", ",", "c"}], "}"}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"midca", "=", 
+       RowBox[{"Mean", "[", 
+        RowBox[{"{", 
+         RowBox[{"c", ",", "a"}], "}"}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"circnormasq", "=", 
+       RowBox[{
+        SuperscriptBox[
+         RowBox[{"a", "[", 
+          RowBox[{"[", "1", "]"}], "]"}], "2"], "+", 
+        SuperscriptBox[
+         RowBox[{"a", "[", 
+          RowBox[{"[", "2", "]"}], "]"}], "2"]}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"circnormbsq", "=", 
+       RowBox[{
+        SuperscriptBox[
+         RowBox[{"b", "[", 
+          RowBox[{"[", "1", "]"}], "]"}], "2"], "+", 
+        SuperscriptBox[
+         RowBox[{"b", "[", 
+          RowBox[{"[", "2", "]"}], "]"}], "2"]}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"circnormcsq", "=", 
+       RowBox[{
+        SuperscriptBox[
+         RowBox[{"c", "[", 
+          RowBox[{"[", "1", "]"}], "]"}], "2"], "+", 
+        SuperscriptBox[
+         RowBox[{"c", "[", 
+          RowBox[{"[", "2", "]"}], "]"}], "2"]}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"circsx", "=", 
+       RowBox[{
+        FractionBox["1", "2"], 
+        RowBox[{"Det", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"circnormasq", ",", 
+             RowBox[{"a", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], ",", "1"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"circnormbsq", ",", 
+             RowBox[{"b", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], ",", "1"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"circnormcsq", ",", 
+             RowBox[{"c", "[", 
+              RowBox[{"[", "2", "]"}], "]"}], ",", "1"}], "}"}]}], "}"}], 
+         "]"}]}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"circsy", "=", 
+       RowBox[{
+        FractionBox["1", "2"], 
+        RowBox[{"Det", "[", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"a", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], ",", "circnormasq", ",", "1"}], 
+            "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"b", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], ",", "circnormbsq", ",", "1"}], 
+            "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"c", "[", 
+              RowBox[{"[", "1", "]"}], "]"}], ",", "circnormcsq", ",", "1"}], 
+            "}"}]}], "}"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"circad", "=", 
+       RowBox[{"Det", "[", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"a", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", 
+            RowBox[{"a", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], ",", "1"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"b", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", 
+            RowBox[{"b", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], ",", "1"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"c", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", 
+            RowBox[{"c", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], ",", "1"}], "}"}]}], "}"}], 
+        "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"circbd", "=", 
+       RowBox[{"Det", "[", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"a", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", 
+            RowBox[{"a", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], ",", "circnormasq"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"b", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", 
+            RowBox[{"b", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], ",", "circnormbsq"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"c", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ",", 
+            RowBox[{"c", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], ",", "circnormcsq"}], "}"}]}], 
+         "}"}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"circumcenter", "=", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"circsx", ",", "circsy"}], "}"}], "/", "circad"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"circr", "=", 
+       SqrtBox[
+        RowBox[{
+         FractionBox["circbd", "circad"], "+", 
+         FractionBox[
+          RowBox[{
+           SuperscriptBox["circsx", "2"], "+", 
+           SuperscriptBox["circsy", "2"]}], 
+          SuperscriptBox["circad", "2"]]}]]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", "Centroid", " ", "*)"}], "\[IndentingNewLine]", 
+      RowBox[{"centroid", "=", 
+       RowBox[{"Mean", "[", 
+        RowBox[{"{", 
+         RowBox[{"a", ",", "b", ",", "c"}], "}"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", "Incenter", " ", "*)"}], "\[IndentingNewLine]", 
+      RowBox[{"inmbia", "=", 
+       RowBox[{"Tan", "[", 
+        FractionBox[
+         RowBox[{
+          RowBox[{"ArcTan", "[", "mab", "]"}], "+", 
+          RowBox[{"ArcTan", "[", "mca", "]"}]}], "2"], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"inmbib", "=", 
+       RowBox[{"Tan", "[", 
+        FractionBox[
+         RowBox[{
+          RowBox[{"ArcTan", "[", "mab", "]"}], "+", 
+          RowBox[{"ArcTan", "[", "mbc", "]"}]}], "2"], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"inmbic", "=", 
+       RowBox[{"Tan", "[", 
+        FractionBox[
+         RowBox[{
+          RowBox[{"ArcTan", "[", "mbc", "]"}], "+", 
+          RowBox[{"ArcTan", "[", "mca", "]"}]}], "2"], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"ineqbia", "=", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"inmbia", 
+          RowBox[{"(", 
+           RowBox[{"#", "-", 
+            RowBox[{"a", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}], ")"}]}], "+", 
+         RowBox[{"a", "[", 
+          RowBox[{"[", "2", "]"}], "]"}]}], "&"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"ineqbib", "=", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"inmbib", 
+          RowBox[{"(", 
+           RowBox[{"#", "-", 
+            RowBox[{"b", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}], ")"}]}], "+", 
+         RowBox[{"b", "[", 
+          RowBox[{"[", "2", "]"}], "]"}]}], "&"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"ineqbic", "=", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"inmbic", 
+          RowBox[{"(", 
+           RowBox[{"#", "-", 
+            RowBox[{"c", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}], ")"}]}], "+", 
+         RowBox[{"c", "[", 
+          RowBox[{"[", "2", "]"}], "]"}]}], "&"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"inintbc", "[", 
+        RowBox[{"[", "1", "]"}], "]"}], "=", 
+       RowBox[{"x", "/.", 
+        RowBox[{
+         RowBox[{"Solve", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"eqbc", "[", "x", "]"}], "\[Equal]", 
+            RowBox[{"ineqbia", "[", "x", "]"}]}], ",", "x"}], "]"}], "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"inintbc", "[", 
+        RowBox[{"[", "2", "]"}], "]"}], "=", 
+       RowBox[{"eqbc", "[", 
+        RowBox[{"inintbc", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"inintbc", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], "<", 
+            RowBox[{"b", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}], "&&", 
+           RowBox[{
+            RowBox[{"inintbc", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], "<", 
+            RowBox[{"c", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}]}], ")"}], "||", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"inintbc", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ">", 
+            RowBox[{"b", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}], "&&", 
+           RowBox[{
+            RowBox[{"inintbc", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ">", 
+            RowBox[{"c", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}]}], ")"}], "||", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"inintbc", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], "<", 
+            RowBox[{"b", "[", 
+             RowBox[{"[", "2", "]"}], "]"}]}], "&&", 
+           RowBox[{
+            RowBox[{"inintbc", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], "<", 
+            RowBox[{"c", "[", 
+             RowBox[{"[", "2", "]"}], "]"}]}]}], ")"}], "||", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"inintbc", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], ">", 
+            RowBox[{"b", "[", 
+             RowBox[{"[", "2", "]"}], "]"}]}], "&&", 
+           RowBox[{
+            RowBox[{"inintbc", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], ">", 
+            RowBox[{"c", "[", 
+             RowBox[{"[", "2", "]"}], "]"}]}]}], ")"}]}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"inmbia", "=", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{"inmbia", "\[NotEqual]", "0"}], ",", 
+            RowBox[{"-", 
+             FractionBox["1", "inmbia"]}], ",", "Infinity"}], "]"}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"inintbc", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], "=", 
+          RowBox[{"x", "/.", 
+           RowBox[{
+            RowBox[{"Solve", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"eqbc", "[", "x", "]"}], "\[Equal]", 
+               RowBox[{"ineqbia", "[", "x", "]"}]}], ",", "x"}], "]"}], "[", 
+            RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"inintbc", "[", 
+           RowBox[{"[", "2", "]"}], "]"}], "=", 
+          RowBox[{"eqbc", "[", 
+           RowBox[{"inintbc", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], "]"}]}], ";"}]}], 
+       "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"inintca", "[", 
+        RowBox[{"[", "1", "]"}], "]"}], "=", 
+       RowBox[{"x", "/.", 
+        RowBox[{
+         RowBox[{"Solve", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"eqca", "[", "x", "]"}], "\[Equal]", 
+            RowBox[{"ineqbib", "[", "x", "]"}]}], ",", "x"}], "]"}], "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"inintca", "[", 
+        RowBox[{"[", "2", "]"}], "]"}], "=", 
+       RowBox[{"eqca", "[", 
+        RowBox[{"inintca", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"inintca", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], "<", 
+            RowBox[{"a", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}], "&&", 
+           RowBox[{
+            RowBox[{"inintca", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], "<", 
+            RowBox[{"c", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}]}], ")"}], "||", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"inintca", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ">", 
+            RowBox[{"a", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}], "&&", 
+           RowBox[{
+            RowBox[{"inintca", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ">", 
+            RowBox[{"c", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}]}], ")"}], "||", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"inintca", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], "<", 
+            RowBox[{"a", "[", 
+             RowBox[{"[", "2", "]"}], "]"}]}], "&&", 
+           RowBox[{
+            RowBox[{"inintca", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], "<", 
+            RowBox[{"c", "[", 
+             RowBox[{"[", "2", "]"}], "]"}]}]}], ")"}], "||", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"inintca", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], ">", 
+            RowBox[{"a", "[", 
+             RowBox[{"[", "2", "]"}], "]"}]}], "&&", 
+           RowBox[{
+            RowBox[{"inintca", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], ">", 
+            RowBox[{"c", "[", 
+             RowBox[{"[", "2", "]"}], "]"}]}]}], ")"}]}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"inmbib", "=", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{"inmbib", "\[NotEqual]", "0"}], ",", 
+            RowBox[{"-", 
+             FractionBox["1", "inmbib"]}], ",", "Infinity"}], "]"}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"inintca", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], "=", 
+          RowBox[{"x", "/.", 
+           RowBox[{
+            RowBox[{"Solve", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"eqca", "[", "x", "]"}], "\[Equal]", 
+               RowBox[{"ineqbib", "[", "x", "]"}]}], ",", "x"}], "]"}], "[", 
+            RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"inintca", "[", 
+           RowBox[{"[", "2", "]"}], "]"}], "=", 
+          RowBox[{"eqca", "[", 
+           RowBox[{"inintca", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], "]"}]}], ";"}]}], 
+       "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"inintab", "[", 
+        RowBox[{"[", "1", "]"}], "]"}], "=", 
+       RowBox[{"x", "/.", 
+        RowBox[{
+         RowBox[{"Solve", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"eqab", "[", "x", "]"}], "\[Equal]", 
+            RowBox[{"ineqbic", "[", "x", "]"}]}], ",", "x"}], "]"}], "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"inintab", "[", 
+        RowBox[{"[", "2", "]"}], "]"}], "=", 
+       RowBox[{"eqab", "[", 
+        RowBox[{"inintab", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"inintab", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], "<", 
+            RowBox[{"a", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}], "&&", 
+           RowBox[{
+            RowBox[{"inintab", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], "<", 
+            RowBox[{"b", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}]}], ")"}], "||", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"inintab", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ">", 
+            RowBox[{"a", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}], "&&", 
+           RowBox[{
+            RowBox[{"inintab", "[", 
+             RowBox[{"[", "1", "]"}], "]"}], ">", 
+            RowBox[{"b", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}]}], ")"}], "||", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"inintab", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], "<", 
+            RowBox[{"a", "[", 
+             RowBox[{"[", "2", "]"}], "]"}]}], "&&", 
+           RowBox[{
+            RowBox[{"inintab", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], "<", 
+            RowBox[{"b", "[", 
+             RowBox[{"[", "2", "]"}], "]"}]}]}], ")"}], "||", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"inintab", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], ">", 
+            RowBox[{"a", "[", 
+             RowBox[{"[", "2", "]"}], "]"}]}], "&&", 
+           RowBox[{
+            RowBox[{"inintab", "[", 
+             RowBox[{"[", "2", "]"}], "]"}], ">", 
+            RowBox[{"b", "[", 
+             RowBox[{"[", "2", "]"}], "]"}]}]}], ")"}]}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{
+         RowBox[{"inmbic", "=", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{"inmbic", "\[NotEqual]", "0"}], ",", 
+            RowBox[{"-", 
+             FractionBox["1", "inmbic"]}], ",", "Infinity"}], "]"}]}], ";", 
+         "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"inintab", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], "=", 
+          RowBox[{"x", "/.", 
+           RowBox[{
+            RowBox[{"Solve", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"eqab", "[", "x", "]"}], "\[Equal]", 
+               RowBox[{"ineqbic", "[", "x", "]"}]}], ",", "x"}], "]"}], "[", 
+            RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"inintab", "[", 
+           RowBox[{"[", "2", "]"}], "]"}], "=", 
+          RowBox[{"eqab", "[", 
+           RowBox[{"inintab", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], "]"}]}], ";"}]}], 
+       "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"incenter", "[", 
+        RowBox[{"[", "1", "]"}], "]"}], "=", 
+       RowBox[{"x", "/.", 
+        RowBox[{
+         RowBox[{"Solve", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"ineqbia", "[", "x", "]"}], "\[Equal]", 
+            RowBox[{"ineqbib", "[", "x", "]"}]}], ",", "x"}], "]"}], "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"incenter", "[", 
+        RowBox[{"[", "2", "]"}], "]"}], "=", 
+       RowBox[{"ineqbia", "[", 
+        RowBox[{"incenter", "[", 
+         RowBox[{"[", "1", "]"}], "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"indsqab", "=", 
+       RowBox[{
+        SuperscriptBox[
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"inintab", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], "-", 
+           RowBox[{"incenter", "[", 
+            RowBox[{"[", "1", "]"}], "]"}]}], ")"}], "2"], "+", 
+        SuperscriptBox[
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"inintab", "[", 
+            RowBox[{"[", "2", "]"}], "]"}], "-", 
+           RowBox[{"incenter", "[", 
+            RowBox[{"[", "2", "]"}], "]"}]}], ")"}], "2"]}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"indsqbc", "=", 
+       RowBox[{
+        SuperscriptBox[
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"inintbc", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], "-", 
+           RowBox[{"incenter", "[", 
+            RowBox[{"[", "1", "]"}], "]"}]}], ")"}], "2"], "+", 
+        SuperscriptBox[
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"inintbc", "[", 
+            RowBox[{"[", "2", "]"}], "]"}], "-", 
+           RowBox[{"incenter", "[", 
+            RowBox[{"[", "2", "]"}], "]"}]}], ")"}], "2"]}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"indsqca", "=", 
+       RowBox[{
+        SuperscriptBox[
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"inintca", "[", 
+            RowBox[{"[", "1", "]"}], "]"}], "-", 
+           RowBox[{"incenter", "[", 
+            RowBox[{"[", "1", "]"}], "]"}]}], ")"}], "2"], "+", 
+        SuperscriptBox[
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"inintca", "[", 
+            RowBox[{"[", "2", "]"}], "]"}], "-", 
+           RowBox[{"incenter", "[", 
+            RowBox[{"[", "2", "]"}], "]"}]}], ")"}], "2"]}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"inr", "=", 
+       SqrtBox[
+        RowBox[{"Min", "[", 
+         RowBox[{"indsqab", ",", "indsqbc", ",", "indsqca"}], "]"}]]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", "Graphics", " ", "*)"}], "\[IndentingNewLine]", 
+      RowBox[{"Graphics", "[", 
+       RowBox[{
+        RowBox[{"Join", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"Black", ",", 
+            RowBox[{"Line", "[", 
+             RowBox[{"{", 
+              RowBox[{"a", ",", "b", ",", "c", ",", "a"}], "}"}], "]"}]}], 
+           "}"}], ",", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"eulershow", "\[Equal]", "True"}], "&&", 
+             RowBox[{"orthocenter", "\[NotEqual]", "circumcenter"}]}], ",", 
+            RowBox[{"{", 
+             RowBox[{"InfiniteLine", "[", 
+              RowBox[{"{", 
+               RowBox[{"orthocenter", ",", "circumcenter"}], "}"}], "]"}], 
+             "}"}], ",", 
+            RowBox[{"{", "}"}]}], "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"PointSize", "[", "Large", "]"}], ",", "Blue", ",", 
+            RowBox[{"Point", "[", "orthocenter", "]"}]}], "}"}], ",", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{"orthshow", "\[Equal]", "True"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"InfiniteLine", "[", 
+               RowBox[{"{", 
+                RowBox[{"a", ",", "orthfoota"}], "}"}], "]"}], ",", 
+              RowBox[{"Point", "[", "orthfoota", "]"}], ",", 
+              RowBox[{"InfiniteLine", "[", 
+               RowBox[{"{", 
+                RowBox[{"b", ",", "orthfootb"}], "}"}], "]"}], ",", 
+              RowBox[{"Point", "[", "orthfootb", "]"}], ",", 
+              RowBox[{"InfiniteLine", "[", 
+               RowBox[{"{", 
+                RowBox[{"c", ",", "orthfootc"}], "}"}], "]"}], ",", 
+              RowBox[{"Point", "[", "orthfootc", "]"}]}], "}"}], ",", 
+            RowBox[{"{", "}"}]}], "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"Green", ",", 
+            RowBox[{"Point", "[", "circumcenter", "]"}]}], "}"}], ",", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{"circshow", "\[Equal]", "True"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"InfiniteLine", "[", 
+               RowBox[{"{", 
+                RowBox[{"midbc", ",", "circumcenter"}], "}"}], "]"}], ",", 
+              RowBox[{"Point", "[", "midbc", "]"}], ",", 
+              RowBox[{"InfiniteLine", "[", 
+               RowBox[{"{", 
+                RowBox[{"midca", ",", "circumcenter"}], "}"}], "]"}], ",", 
+              RowBox[{"Point", "[", "midca", "]"}], ",", 
+              RowBox[{"InfiniteLine", "[", 
+               RowBox[{"{", 
+                RowBox[{"midab", ",", "circumcenter"}], "}"}], "]"}], ",", 
+              RowBox[{"Point", "[", "midab", "]"}]}], "}"}], ",", 
+            RowBox[{"{", "}"}]}], "]"}], ",", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{"circcircleshow", "\[Equal]", "True"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"Circle", "[", 
+              RowBox[{"circumcenter", ",", "circr"}], "]"}], "}"}], ",", 
+            RowBox[{"{", "}"}]}], "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"Red", ",", 
+            RowBox[{"Point", "[", "centroid", "]"}]}], "}"}], ",", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{"centshow", "\[Equal]", "True"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"InfiniteLine", "[", 
+               RowBox[{"{", 
+                RowBox[{"a", ",", "midbc"}], "}"}], "]"}], ",", 
+              RowBox[{"Point", "[", "midbc", "]"}], ",", 
+              RowBox[{"InfiniteLine", "[", 
+               RowBox[{"{", 
+                RowBox[{"b", ",", "midca"}], "}"}], "]"}], ",", 
+              RowBox[{"Point", "[", "midca", "]"}], ",", 
+              RowBox[{"InfiniteLine", "[", 
+               RowBox[{"{", 
+                RowBox[{"c", ",", "midab"}], "}"}], "]"}], ",", 
+              RowBox[{"Point", "[", "midab", "]"}]}], "}"}], ",", 
+            RowBox[{"{", "}"}]}], "]"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"Orange", ",", 
+            RowBox[{"Point", "[", "incenter", "]"}]}], "}"}], ",", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{"inshow", "\[Equal]", "True"}], ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"InfiniteLine", "[", 
+               RowBox[{"{", 
+                RowBox[{"a", ",", "inintbc"}], "}"}], "]"}], ",", 
+              RowBox[{"Point", "[", "inintbc", "]"}], ",", 
+              RowBox[{"InfiniteLine", "[", 
+               RowBox[{"{", 
+                RowBox[{"b", ",", "inintca"}], "}"}], "]"}], ",", 
+              RowBox[{"Point", "[", "inintca", "]"}], ",", 
+              RowBox[{"InfiniteLine", "[", 
+               RowBox[{"{", 
+                RowBox[{"c", ",", "inintab"}], "}"}], "]"}], ",", 
+              RowBox[{"Point", "[", "inintab", "]"}]}], "}"}], ",", 
+            RowBox[{"{", "}"}]}], "]"}], ",", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{"insccircleshow", "\[Equal]", "True"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"Circle", "[", 
+              RowBox[{"incenter", ",", "inr"}], "]"}], "}"}], ",", 
+            RowBox[{"{", "}"}]}], "]"}]}], "]"}], ",", 
+        RowBox[{"PlotRange", "\[Rule]", "1"}]}], "]"}]}]}], 
+    "\[IndentingNewLine]", "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"a", ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"-", "0.2"}], ",", "0.7"}], "}"}]}], "}"}], ",", "Locator"}],
+     "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"b", ",", 
+       RowBox[{"{", 
+        RowBox[{"0.7", ",", 
+         RowBox[{"-", "0.1"}]}], "}"}]}], "}"}], ",", "Locator"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"c", ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"-", "0.5"}], ",", 
+         RowBox[{"-", "0.3"}]}], "}"}]}], "}"}], ",", "Locator"}], "}"}], ",",
+    "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"eulershow", ",", "True", ",", "\"\<Show Euler Line\>\""}], 
+      "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"True", "\[Rule]", "\"\<On\>\""}], ",", 
+       RowBox[{"False", "\[Rule]", "\"\<Off\>\""}]}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "orthshow", ",", "False", ",", 
+       "\"\<Show Orthocenter Construction Lines\>\""}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"True", "\[Rule]", "\"\<On\>\""}], ",", 
+       RowBox[{"False", "\[Rule]", "\"\<Off\>\""}]}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "circshow", ",", "False", ",", 
+       "\"\<Show Circumcenter Construction Lines\>\""}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"True", "\[Rule]", "\"\<On\>\""}], ",", 
+       RowBox[{"False", "\[Rule]", "\"\<Off\>\""}]}], "}"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "centshow", ",", "False", ",", 
+       "\"\<Show Centroid Construction Lines\>\""}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"True", "\[Rule]", "\"\<On\>\""}], ",", 
+       RowBox[{"False", "\[Rule]", "\"\<Off\>\""}]}], "}"}]}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "inshow", ",", "False", ",", 
+       "\"\<Show Incenter Construction Lines\>\""}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"True", "\[Rule]", "\"\<On\>\""}], ",", 
+       RowBox[{"False", "\[Rule]", "\"\<Off\>\""}]}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "circcircleshow", ",", "False", ",", 
+       "\"\<Show Circumscribed Circle\>\""}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"True", "\[Rule]", "\"\<On\>\""}], ",", 
+       RowBox[{"False", "\[Rule]", "\"\<Off\>\""}]}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "insccircleshow", ",", "False", ",", "\"\<Show Inscribed Circle\>\""}], 
+      "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"True", "\[Rule]", "\"\<On\>\""}], ",", 
+       RowBox[{"False", "\[Rule]", "\"\<Off\>\""}]}], "}"}]}], "}"}], ",", 
+   RowBox[{"ControlType", "\[Rule]", "Checkbox"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.7766008920271177`*^9, 3.7766008970415297`*^9}, 
+   3.7770757167344704`*^9}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`a$$ = {-0.2, 0.7}, $CellContext`b$$ = {
+    0.7, -0.1}, $CellContext`c$$ = {-0.5, -0.3}, $CellContext`centshow$$ = 
+    False, $CellContext`circcircleshow$$ = False, $CellContext`circshow$$ = 
+    False, $CellContext`eulershow$$ = True, $CellContext`insccircleshow$$ = 
+    False, $CellContext`inshow$$ = False, $CellContext`orthshow$$ = False, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`a$$], {-0.2, 0.7}}, Automatic}, {{
+       Hold[$CellContext`b$$], {0.7, -0.1}}, Automatic}, {{
+       Hold[$CellContext`c$$], {-0.5, -0.3}}, Automatic}, {{
+       Hold[$CellContext`eulershow$$], True, "Show Euler Line"}, {
+      True -> "On", False -> "Off"}}, {{
+       Hold[$CellContext`orthshow$$], False, 
+       "Show Orthocenter Construction Lines"}, {
+      True -> "On", False -> "Off"}}, {{
+       Hold[$CellContext`circshow$$], False, 
+       "Show Circumcenter Construction Lines"}, {
+      True -> "On", False -> "Off"}}, {{
+       Hold[$CellContext`centshow$$], False, 
+       "Show Centroid Construction Lines"}, {True -> "On", False -> "Off"}}, {{
+       Hold[$CellContext`inshow$$], False, 
+       "Show Incenter Construction Lines"}, {True -> "On", False -> "Off"}}, {{
+       Hold[$CellContext`circcircleshow$$], False, 
+       "Show Circumscribed Circle"}, {True -> "On", False -> "Off"}}, {{
+       Hold[$CellContext`insccircleshow$$], False, "Show Inscribed Circle"}, {
+      True -> "On", False -> "Off"}}}, Typeset`size$$ = {360., {177., 183.}}, 
+    Typeset`update$$ = 0, Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    True, $CellContext`eulershow$17774$$ = 
+    False, $CellContext`orthshow$17775$$ = 
+    False, $CellContext`circshow$17776$$ = 
+    False, $CellContext`centshow$17777$$ = 
+    False, $CellContext`inshow$17778$$ = 
+    False, $CellContext`circcircleshow$17779$$ = 
+    False, $CellContext`insccircleshow$17780$$ = False}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`a$$ = {-0.2, 0.7}, $CellContext`b$$ = {
+         0.7, -0.1}, $CellContext`c$$ = {-0.5, -0.3}, $CellContext`centshow$$ = 
+        False, $CellContext`circcircleshow$$ = False, $CellContext`circshow$$ = 
+        False, $CellContext`eulershow$$ = True, $CellContext`insccircleshow$$ = 
+        False, $CellContext`inshow$$ = False, $CellContext`orthshow$$ = 
+        False}, "ControllerVariables" :> {
+        Hold[$CellContext`eulershow$$, $CellContext`eulershow$17774$$, False], 
+        Hold[$CellContext`orthshow$$, $CellContext`orthshow$17775$$, False], 
+        Hold[$CellContext`circshow$$, $CellContext`circshow$17776$$, False], 
+        Hold[$CellContext`centshow$$, $CellContext`centshow$17777$$, False], 
+        Hold[$CellContext`inshow$$, $CellContext`inshow$17778$$, False], 
+        Hold[$CellContext`circcircleshow$$, \
+$CellContext`circcircleshow$17779$$, False], 
+        Hold[$CellContext`insccircleshow$$, \
+$CellContext`insccircleshow$17780$$, False]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`mab$, $CellContext`mbc$, $CellContext`mca$, \
+$CellContext`orthmalta$, $CellContext`orthmaltb$, $CellContext`orthmaltc$, \
+$CellContext`eqab$, $CellContext`eqbc$, $CellContext`eqca$, \
+$CellContext`ortheqalta$, $CellContext`ortheqaltb$, $CellContext`ortheqaltc$, \
+$CellContext`orthfoota$ = {0, 0}, $CellContext`orthfootb$ = {0, 
+          0}, $CellContext`orthfootc$ = {0, 0}, $CellContext`orthocenter$ = {
+          0, 0}, $CellContext`midab$, $CellContext`midbc$, \
+$CellContext`midca$, $CellContext`circnormasq$, $CellContext`circnormbsq$, \
+$CellContext`circnormcsq$, $CellContext`circumcenter$, $CellContext`circsx$, \
+$CellContext`circsy$, $CellContext`circad$, $CellContext`circbd$, \
+$CellContext`circr$, $CellContext`centroid$, $CellContext`inmbia$, \
+$CellContext`inmbib$, $CellContext`inmbic$, $CellContext`ineqbia$, \
+$CellContext`ineqbib$, $CellContext`ineqbic$, $CellContext`inintab$ = {0, 
+          0}, $CellContext`inintbc$ = {0, 0}, $CellContext`inintca$ = {0, 
+          0}, $CellContext`incenter$ = {0, 
+          0}, $CellContext`inr$, $CellContext`indsqab$, \
+$CellContext`indsqbc$, $CellContext`indsqca$}, $CellContext`mab$ = 
+         If[Part[$CellContext`a$$, 1] != 
+           Part[$CellContext`b$$, 1], (Part[$CellContext`b$$, 2] - 
+            Part[$CellContext`a$$, 2])/(Part[$CellContext`b$$, 1] - 
+           Part[$CellContext`a$$, 1]), Infinity]; $CellContext`mbc$ = 
+         If[Part[$CellContext`b$$, 1] != 
+           Part[$CellContext`c$$, 1], (Part[$CellContext`c$$, 2] - 
+            Part[$CellContext`b$$, 2])/(Part[$CellContext`c$$, 1] - 
+           Part[$CellContext`b$$, 1]), Infinity]; $CellContext`mca$ = 
+         If[Part[$CellContext`a$$, 1] != 
+           Part[$CellContext`c$$, 1], (Part[$CellContext`a$$, 2] - 
+            Part[$CellContext`c$$, 2])/(Part[$CellContext`a$$, 1] - 
+           Part[$CellContext`c$$, 1]), Infinity]; $CellContext`orthmalta$ = 
+         If[$CellContext`mbc$ != 0, -(1/$CellContext`mbc$), 
+           Infinity]; $CellContext`orthmaltb$ = 
+         If[$CellContext`mca$ != 0, -(1/$CellContext`mca$), 
+           Infinity]; $CellContext`orthmaltc$ = 
+         If[$CellContext`mab$ != 0, -(1/$CellContext`mab$), 
+           Infinity]; $CellContext`eqab$ = $CellContext`mab$ (# - 
+            Part[$CellContext`a$$, 1]) + 
+          Part[$CellContext`a$$, 
+            2]& ; $CellContext`eqbc$ = $CellContext`mbc$ (# - 
+            Part[$CellContext`b$$, 1]) + 
+          Part[$CellContext`b$$, 
+            2]& ; $CellContext`eqca$ = $CellContext`mca$ (# - 
+            Part[$CellContext`c$$, 1]) + 
+          Part[$CellContext`c$$, 
+            2]& ; $CellContext`ortheqalta$ = $CellContext`orthmalta$ (# - 
+            Part[$CellContext`a$$, 1]) + 
+          Part[$CellContext`a$$, 
+            2]& ; $CellContext`ortheqaltb$ = $CellContext`orthmaltb$ (# - 
+            Part[$CellContext`b$$, 1]) + 
+          Part[$CellContext`b$$, 
+            2]& ; $CellContext`ortheqaltc$ = $CellContext`orthmaltc$ (# - 
+            Part[$CellContext`c$$, 1]) + Part[$CellContext`c$$, 2]& ; 
+        Part[$CellContext`orthfoota$, 1] = ReplaceAll[$CellContext`x, 
+           Part[
+            
+            Solve[$CellContext`ortheqalta$[$CellContext`x] == \
+$CellContext`eqbc$[$CellContext`x], $CellContext`x], 1]]; 
+        Part[$CellContext`orthfoota$, 2] = $CellContext`ortheqalta$[
+           Part[$CellContext`orthfoota$, 1]]; 
+        Part[$CellContext`orthfootb$, 1] = ReplaceAll[$CellContext`x, 
+           Part[
+            
+            Solve[$CellContext`ortheqaltb$[$CellContext`x] == \
+$CellContext`eqca$[$CellContext`x], $CellContext`x], 1]]; 
+        Part[$CellContext`orthfootb$, 2] = $CellContext`ortheqaltb$[
+           Part[$CellContext`orthfootb$, 1]]; 
+        Part[$CellContext`orthfootc$, 1] = ReplaceAll[$CellContext`x, 
+           Part[
+            
+            Solve[$CellContext`ortheqaltc$[$CellContext`x] == \
+$CellContext`eqab$[$CellContext`x], $CellContext`x], 1]]; 
+        Part[$CellContext`orthfootc$, 2] = $CellContext`ortheqaltc$[
+           Part[$CellContext`orthfootc$, 1]]; 
+        Part[$CellContext`orthocenter$, 1] = ReplaceAll[$CellContext`x, 
+           Part[
+            
+            Solve[$CellContext`ortheqalta$[$CellContext`x] == \
+$CellContext`ortheqaltb$[$CellContext`x], $CellContext`x], 1]]; 
+        Part[$CellContext`orthocenter$, 2] = $CellContext`ortheqalta$[
+           Part[$CellContext`orthocenter$, 1]]; $CellContext`midab$ = 
+         Mean[{$CellContext`a$$, $CellContext`b$$}]; $CellContext`midbc$ = 
+         Mean[{$CellContext`b$$, $CellContext`c$$}]; $CellContext`midca$ = 
+         Mean[{$CellContext`c$$, $CellContext`a$$}]; \
+$CellContext`circnormasq$ = 
+         Part[$CellContext`a$$, 1]^2 + 
+          Part[$CellContext`a$$, 2]^2; $CellContext`circnormbsq$ = 
+         Part[$CellContext`b$$, 1]^2 + 
+          Part[$CellContext`b$$, 2]^2; $CellContext`circnormcsq$ = 
+         Part[$CellContext`c$$, 1]^2 + 
+          Part[$CellContext`c$$, 2]^2; $CellContext`circsx$ = (1/2) 
+          Det[{{$CellContext`circnormasq$, 
+              Part[$CellContext`a$$, 2], 1}, {$CellContext`circnormbsq$, 
+              Part[$CellContext`b$$, 2], 1}, {$CellContext`circnormcsq$, 
+              Part[$CellContext`c$$, 2], 1}}]; $CellContext`circsy$ = (1/2) 
+          Det[{{
+              Part[$CellContext`a$$, 1], $CellContext`circnormasq$, 1}, {
+              Part[$CellContext`b$$, 1], $CellContext`circnormbsq$, 1}, {
+              Part[$CellContext`c$$, 1], $CellContext`circnormcsq$, 
+              1}}]; $CellContext`circad$ = Det[{{
+             Part[$CellContext`a$$, 1], 
+             Part[$CellContext`a$$, 2], 1}, {
+             Part[$CellContext`b$$, 1], 
+             Part[$CellContext`b$$, 2], 1}, {
+             Part[$CellContext`c$$, 1], 
+             Part[$CellContext`c$$, 2], 1}}]; $CellContext`circbd$ = Det[{{
+             Part[$CellContext`a$$, 1], 
+             Part[$CellContext`a$$, 2], $CellContext`circnormasq$}, {
+             Part[$CellContext`b$$, 1], 
+             Part[$CellContext`b$$, 2], $CellContext`circnormbsq$}, {
+             Part[$CellContext`c$$, 1], 
+             
+             Part[$CellContext`c$$, 
+              2], $CellContext`circnormcsq$}}]; $CellContext`circumcenter$ = \
+{$CellContext`circsx$, $CellContext`circsy$}/$CellContext`circad$; \
+$CellContext`circr$ = 
+         Sqrt[$CellContext`circbd$/$CellContext`circad$ + \
+($CellContext`circsx$^2 + $CellContext`circsy$^2)/$CellContext`circad$^2]; \
+$CellContext`centroid$ = 
+         Mean[{$CellContext`a$$, $CellContext`b$$, $CellContext`c$$}]; \
+$CellContext`inmbia$ = 
+         Tan[(ArcTan[$CellContext`mab$] + ArcTan[$CellContext`mca$])/
+           2]; $CellContext`inmbib$ = 
+         Tan[(ArcTan[$CellContext`mab$] + ArcTan[$CellContext`mbc$])/
+           2]; $CellContext`inmbic$ = 
+         Tan[(ArcTan[$CellContext`mbc$] + ArcTan[$CellContext`mca$])/
+           2]; $CellContext`ineqbia$ = $CellContext`inmbia$ (# - 
+            Part[$CellContext`a$$, 1]) + 
+          Part[$CellContext`a$$, 
+            2]& ; $CellContext`ineqbib$ = $CellContext`inmbib$ (# - 
+            Part[$CellContext`b$$, 1]) + 
+          Part[$CellContext`b$$, 
+            2]& ; $CellContext`ineqbic$ = $CellContext`inmbic$ (# - 
+            Part[$CellContext`c$$, 1]) + Part[$CellContext`c$$, 2]& ; 
+        Part[$CellContext`inintbc$, 1] = ReplaceAll[$CellContext`x, 
+           Part[
+            
+            Solve[$CellContext`eqbc$[$CellContext`x] == \
+$CellContext`ineqbia$[$CellContext`x], $CellContext`x], 1]]; 
+        Part[$CellContext`inintbc$, 2] = $CellContext`eqbc$[
+           Part[$CellContext`inintbc$, 1]]; If[
+          Or[
+           And[
+           Part[$CellContext`inintbc$, 1] < Part[$CellContext`b$$, 1], 
+            Part[$CellContext`inintbc$, 1] < Part[$CellContext`c$$, 1]], 
+           And[
+           Part[$CellContext`inintbc$, 1] > Part[$CellContext`b$$, 1], 
+            Part[$CellContext`inintbc$, 1] > Part[$CellContext`c$$, 1]], 
+           And[
+           Part[$CellContext`inintbc$, 2] < Part[$CellContext`b$$, 2], 
+            Part[$CellContext`inintbc$, 2] < Part[$CellContext`c$$, 2]], 
+           And[
+           Part[$CellContext`inintbc$, 2] > Part[$CellContext`b$$, 2], 
+            Part[$CellContext`inintbc$, 2] > 
+            Part[$CellContext`c$$, 2]]], $CellContext`inmbia$ = 
+           If[$CellContext`inmbia$ != 0, -(1/$CellContext`inmbia$), Infinity]; 
+          Part[$CellContext`inintbc$, 1] = ReplaceAll[$CellContext`x, 
+             Part[
+              
+              Solve[$CellContext`eqbc$[$CellContext`x] == \
+$CellContext`ineqbia$[$CellContext`x], $CellContext`x], 1]]; 
+          Part[$CellContext`inintbc$, 2] = $CellContext`eqbc$[
+             Part[$CellContext`inintbc$, 1]]; Null]; 
+        Part[$CellContext`inintca$, 1] = ReplaceAll[$CellContext`x, 
+           Part[
+            
+            Solve[$CellContext`eqca$[$CellContext`x] == \
+$CellContext`ineqbib$[$CellContext`x], $CellContext`x], 1]]; 
+        Part[$CellContext`inintca$, 2] = $CellContext`eqca$[
+           Part[$CellContext`inintca$, 1]]; If[
+          Or[
+           And[
+           Part[$CellContext`inintca$, 1] < Part[$CellContext`a$$, 1], 
+            Part[$CellContext`inintca$, 1] < Part[$CellContext`c$$, 1]], 
+           And[
+           Part[$CellContext`inintca$, 1] > Part[$CellContext`a$$, 1], 
+            Part[$CellContext`inintca$, 1] > Part[$CellContext`c$$, 1]], 
+           And[
+           Part[$CellContext`inintca$, 2] < Part[$CellContext`a$$, 2], 
+            Part[$CellContext`inintca$, 2] < Part[$CellContext`c$$, 2]], 
+           And[
+           Part[$CellContext`inintca$, 2] > Part[$CellContext`a$$, 2], 
+            Part[$CellContext`inintca$, 2] > 
+            Part[$CellContext`c$$, 2]]], $CellContext`inmbib$ = 
+           If[$CellContext`inmbib$ != 0, -(1/$CellContext`inmbib$), Infinity]; 
+          Part[$CellContext`inintca$, 1] = ReplaceAll[$CellContext`x, 
+             Part[
+              
+              Solve[$CellContext`eqca$[$CellContext`x] == \
+$CellContext`ineqbib$[$CellContext`x], $CellContext`x], 1]]; 
+          Part[$CellContext`inintca$, 2] = $CellContext`eqca$[
+             Part[$CellContext`inintca$, 1]]; Null]; 
+        Part[$CellContext`inintab$, 1] = ReplaceAll[$CellContext`x, 
+           Part[
+            
+            Solve[$CellContext`eqab$[$CellContext`x] == \
+$CellContext`ineqbic$[$CellContext`x], $CellContext`x], 1]]; 
+        Part[$CellContext`inintab$, 2] = $CellContext`eqab$[
+           Part[$CellContext`inintab$, 1]]; If[
+          Or[
+           And[
+           Part[$CellContext`inintab$, 1] < Part[$CellContext`a$$, 1], 
+            Part[$CellContext`inintab$, 1] < Part[$CellContext`b$$, 1]], 
+           And[
+           Part[$CellContext`inintab$, 1] > Part[$CellContext`a$$, 1], 
+            Part[$CellContext`inintab$, 1] > Part[$CellContext`b$$, 1]], 
+           And[
+           Part[$CellContext`inintab$, 2] < Part[$CellContext`a$$, 2], 
+            Part[$CellContext`inintab$, 2] < Part[$CellContext`b$$, 2]], 
+           And[
+           Part[$CellContext`inintab$, 2] > Part[$CellContext`a$$, 2], 
+            Part[$CellContext`inintab$, 2] > 
+            Part[$CellContext`b$$, 2]]], $CellContext`inmbic$ = 
+           If[$CellContext`inmbic$ != 0, -(1/$CellContext`inmbic$), Infinity]; 
+          Part[$CellContext`inintab$, 1] = ReplaceAll[$CellContext`x, 
+             Part[
+              
+              Solve[$CellContext`eqab$[$CellContext`x] == \
+$CellContext`ineqbic$[$CellContext`x], $CellContext`x], 1]]; 
+          Part[$CellContext`inintab$, 2] = $CellContext`eqab$[
+             Part[$CellContext`inintab$, 1]]; Null]; 
+        Part[$CellContext`incenter$, 1] = ReplaceAll[$CellContext`x, 
+           Part[
+            
+            Solve[$CellContext`ineqbia$[$CellContext`x] == \
+$CellContext`ineqbib$[$CellContext`x], $CellContext`x], 1]]; 
+        Part[$CellContext`incenter$, 2] = $CellContext`ineqbia$[
+           
+           Part[$CellContext`incenter$, 1]]; $CellContext`indsqab$ = (
+            Part[$CellContext`inintab$, 1] - 
+            Part[$CellContext`incenter$, 1])^2 + (
+            Part[$CellContext`inintab$, 2] - 
+            Part[$CellContext`incenter$, 2])^2; $CellContext`indsqbc$ = (
+            Part[$CellContext`inintbc$, 1] - 
+            Part[$CellContext`incenter$, 1])^2 + (
+            Part[$CellContext`inintbc$, 2] - 
+            Part[$CellContext`incenter$, 2])^2; $CellContext`indsqca$ = (
+            Part[$CellContext`inintca$, 1] - 
+            Part[$CellContext`incenter$, 1])^2 + (
+            Part[$CellContext`inintca$, 2] - 
+            Part[$CellContext`incenter$, 2])^2; $CellContext`inr$ = Sqrt[
+           
+           Min[$CellContext`indsqab$, $CellContext`indsqbc$, \
+$CellContext`indsqca$]]; Graphics[
+          Join[{Black, 
+            
+            Line[{$CellContext`a$$, $CellContext`b$$, $CellContext`c$$, \
+$CellContext`a$$}]}, 
+           If[
+            
+            And[$CellContext`eulershow$$ == 
+             True, $CellContext`orthocenter$ != $CellContext`circumcenter$], {
+             
+             InfiniteLine[{$CellContext`orthocenter$, \
+$CellContext`circumcenter$}]}, {}], {
+            PointSize[Large], Blue, 
+            Point[$CellContext`orthocenter$]}, 
+           If[$CellContext`orthshow$$ == True, {
+             InfiniteLine[{$CellContext`a$$, $CellContext`orthfoota$}], 
+             Point[$CellContext`orthfoota$], 
+             InfiniteLine[{$CellContext`b$$, $CellContext`orthfootb$}], 
+             Point[$CellContext`orthfootb$], 
+             InfiniteLine[{$CellContext`c$$, $CellContext`orthfootc$}], 
+             Point[$CellContext`orthfootc$]}, {}], {Green, 
+            Point[$CellContext`circumcenter$]}, 
+           If[$CellContext`circshow$$ == True, {
+             InfiniteLine[{$CellContext`midbc$, $CellContext`circumcenter$}], 
+             Point[$CellContext`midbc$], 
+             InfiniteLine[{$CellContext`midca$, $CellContext`circumcenter$}], 
+             Point[$CellContext`midca$], 
+             InfiniteLine[{$CellContext`midab$, $CellContext`circumcenter$}], 
+             Point[$CellContext`midab$]}, {}], 
+           If[$CellContext`circcircleshow$$ == True, {
+             Circle[$CellContext`circumcenter$, $CellContext`circr$]}, {}], {
+           Red, 
+            Point[$CellContext`centroid$]}, 
+           If[$CellContext`centshow$$ == True, {
+             InfiniteLine[{$CellContext`a$$, $CellContext`midbc$}], 
+             Point[$CellContext`midbc$], 
+             InfiniteLine[{$CellContext`b$$, $CellContext`midca$}], 
+             Point[$CellContext`midca$], 
+             InfiniteLine[{$CellContext`c$$, $CellContext`midab$}], 
+             Point[$CellContext`midab$]}, {}], {Orange, 
+            Point[$CellContext`incenter$]}, 
+           If[$CellContext`inshow$$ == True, {
+             InfiniteLine[{$CellContext`a$$, $CellContext`inintbc$}], 
+             Point[$CellContext`inintbc$], 
+             InfiniteLine[{$CellContext`b$$, $CellContext`inintca$}], 
+             Point[$CellContext`inintca$], 
+             InfiniteLine[{$CellContext`c$$, $CellContext`inintab$}], 
+             Point[$CellContext`inintab$]}, {}], 
+           If[$CellContext`insccircleshow$$ == True, {
+             Circle[$CellContext`incenter$, $CellContext`inr$]}, {}]], 
+          PlotRange -> 1]], 
+      "Specifications" :> {{{$CellContext`a$$, {-0.2, 0.7}}, Automatic, 
+         ControlType -> Locator}, {{$CellContext`b$$, {0.7, -0.1}}, Automatic,
+          ControlType -> Locator}, {{$CellContext`c$$, {-0.5, -0.3}}, 
+         Automatic, ControlType -> 
+         Locator}, {{$CellContext`eulershow$$, True, "Show Euler Line"}, {
+         True -> "On", False -> "Off"}}, {{$CellContext`orthshow$$, False, 
+          "Show Orthocenter Construction Lines"}, {
+         True -> "On", False -> "Off"}}, {{$CellContext`circshow$$, False, 
+          "Show Circumcenter Construction Lines"}, {
+         True -> "On", False -> "Off"}}, {{$CellContext`centshow$$, False, 
+          "Show Centroid Construction Lines"}, {
+         True -> "On", False -> "Off"}}, {{$CellContext`inshow$$, False, 
+          "Show Incenter Construction Lines"}, {
+         True -> "On", False -> "Off"}}, {{$CellContext`circcircleshow$$, 
+          False, "Show Circumscribed Circle"}, {
+         True -> "On", False -> "Off"}}, {{$CellContext`insccircleshow$$, 
+          False, "Show Inscribed Circle"}, {True -> "On", False -> "Off"}}}, 
+      "Options" :> {ControlType -> Checkbox}, "DefaultOptions" :> {}],
+     ImageSizeCache->{417., {276., 282.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.7770757181270256`*^9}]
+}, {2}]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{759, 833},
+WindowMargins->{{99, Automatic}, {Automatic, 70}},
+FrontEndVersion->"10.4 for Microsoft Windows (64-bit) (April 11, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 154, 2, 90, "Title"],
+Cell[737, 26, 151, 2, 30, "Text"],
+Cell[CellGroupData[{
+Cell[913, 32, 99, 1, 63, "Section"],
+Cell[1015, 35, 494, 8, 87, "Text"],
+Cell[CellGroupData[{
+Cell[1534, 47, 135, 1, 29, "Item"],
+Cell[1672, 50, 160, 3, 29, "Item"],
+Cell[1835, 55, 208, 4, 29, "Item"],
+Cell[2046, 61, 152, 3, 29, "Item"]
+}, Open  ]],
+Cell[2213, 67, 375, 6, 68, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[2625, 78, 91, 1, 63, "Section"],
+Cell[CellGroupData[{
+Cell[2741, 83, 105, 1, 43, "Subsection"],
+Cell[CellGroupData[{
+Cell[2871, 88, 38366, 1035, 3083, "Input"],
+Cell[41240, 1125, 20509, 381, 575, "Output"]
+}, {2}]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

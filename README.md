@@ -24,6 +24,8 @@ A large collection of Mathematica demonstrations written by Adam Rumpf, sorted a
   * [Comparison of Single-Winner Voting Systems](#comparison-of-single-winner-voting-systems)
   * [Duverger's Law](#duvergers-law)
   * [Winner-Take-All Distortion](#winner-take-all-distortion)
+* [Geometry](#geometry)
+  * [Triangle Centers](#triangle-centers)
 * [Just for Fun](#just-for-fun)
   * [Bézier Curves](#bézier-curves)
   * [Domino and Tromino Tiling](#domino-and-tromino-tiling)
@@ -230,13 +232,13 @@ Created 10/31/2017
 
 [Demonstration Link](http://demonstrations.wolfram.com/ComparingVotingSystemsForANormalDistributionOfVoters/)
 
-This demonstration is based on an [interactive Flash demonstration](http://zesty.ca/voting/voteline/) by Ka-Ping Yee, which is meant to show how different, reasonable-seeming methods of evaluating ballots can affect the outcomes of single-winner elections. It also shows some of the problems that certain systems can have, such as the [spoiler effect](https://en.wikipedia.org/wiki/Spoiler_effect) and non-monotonicity.
+This is based on an [interactive Flash demonstration](http://zesty.ca/voting/voteline/) by Ka-Ping Yee, which is meant to show how different, reasonable-seeming methods of evaluating ballots can affect the outcomes of single-winner elections. It also shows some of the problems that certain systems can have, such as the [spoiler effect](https://en.wikipedia.org/wiki/Spoiler_effect) and non-monotonicity.
 
 Most people do not think very much about election systems, and if you asked them to come up with a system for how to run a single-winner election they would probably just suggest the one method they are familiar with: everyone votes for a single candidate and the candidate with the most votes wins. This method is called [first-past-the-post](https://en.wikipedia.org/wiki/First-past-the-post_voting), and although it makes intuitive sense, it has a great many [problems](https://www.electionscience.org/voting-methods/spoiler-effect-top-5-ways-plurality-voting-fails/). Other election systems like [instant runoff voting](https://en.wikipedia.org/wiki/Instant-runoff_voting), [Borda count](https://en.wikipedia.org/wiki/Borda_count), and [approval voting](https://en.wikipedia.org/wiki/Approval_voting) are meant to avoid these problems, although they have varying degrees of success.
 
 ### Duverger's Law
 
-<img src="images/duvergers-law-1.png" alt="Duverger's Law Image 1" height="300"/> <img src="images/duvergers-law-2.png" alt="Duverger's Law Image 2" height="300"/>
+<img src="images/duvergers-law-1.png" alt="Duverger's Law Image 1" height="280"/> <img src="images/duvergers-law-2.png" alt="Duverger's Law Image 2" height="280"/>
 
 Created 7/22/2015
 
@@ -261,6 +263,24 @@ This can distort the actual preferences of the voters due to [wasted votes](http
 Incidentally, the Electoral College also distorts results by directly giving a disproportinately large amoung of weight to smaller states (and the Senate does the same thing to an even greater extent), but even if each state were to receive representation proportional to their population, the winner-take-all aspect of the election would still distort results. Among other things it tends to push out third party candidates, since the only way for a small party to win even a single seat would be to have a large enough amount of support concentrated in a single district to achieve a plurality there.
 
 The net effect of all of this is that the geographic distribution of a party's voters can determine the party's success in an election. This also makes the system susceptible to things like [gerrymandering](https://en.wikipedia.org/wiki/Gerrymandering), wherein electoral districts are drawn to intentionally distort results in favor of one party, but as this demonstration shows it can also occur even without intentional interference. There are different electoral systems, like [direct representation](https://en.wikipedia.org/wiki/Direct_representation) and [mixed-member proportional representation](https://en.wikipedia.org/wiki/Mixed-member_proportional_representation), which are immune to these issues, but at least within the United States a person's voting power is largely determined simply by where they happen to live.
+
+## Geometry
+
+As great as Mathematica is for visual demonstrations, I have surprisingly few projects related purely or even primarily to geometry. Obviously a lot of the files in this repository indirectly involve geometry, but the files listed in this section are ones most likely to be useful during a geometry class.
+
+### Triangle Centers
+
+<img src="images/triangle-centers-1.png" alt="Triangle Centers Image 1" height="300"/> <img src="images/triangle-centers-2.png" alt="Triangle Centers Image 2" height="300"/>
+
+Created 2/2/2016
+
+[Notebook Link](../master/geometry/triangle-centers.nb)
+
+If someone asks you to define where the "center" of a square is, there is a straightforward and unambiguous answer. The same is true for a rectangle, and for an equilateral triangle. For a general triangle, however, there are several different, reasonable responses that could all be considered a "center" in some way. The [Encyclopedia of Triangle Centers](https://faculty.evansville.edu/ck6/encyclopedia/ETC.html) defines over 38,000 different notions of what a triangle's center might be.
+
+This demonstration allows the user to click and drag the corners of a triangle to adjust its shape, and defines four different classical triangle centers: the orthocenter (intersection of altitudes), the circumcenter (center of circumscribed circle), the centroid (intersection of lines from vertices to opposite midpoints), and the incenter (center of inscribed circle). All coincide for equilateral triangles but generally differ for other triangles, and occasionally even lie outside of the triangle.
+
+The orthocenter, circumcenter, and centroid also possess the property of always being collinear. The line through them is called the Euler line. The incenter in general does not lie on the Euler line, unless the triangle is isosceles.
 
 ## Just for Fun
 
