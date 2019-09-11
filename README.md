@@ -10,6 +10,7 @@ A large collection of Mathematica demonstrations written by Adam Rumpf, sorted a
   * [Cobwebbing](#cobwebbing)
   * [Complex Newton's Method](#complex-newtons-method)
   * [Complex Operations](#complex-operations)
+  * [Continuous Versus Discrete Logistic Growth](#continuous-versus-discrete-logistic-growth)
   * [Crowd Escape Panic Model](#crowd-escape-panic-model)
   * [Karush-Kuhn-Tucker (KKT) Conditions](#karush-kuhn-tucker-kkt-conditions)
   * [Monte Carlo Method](#monte-carlo-method)
@@ -100,6 +101,18 @@ Created 3/20/2017
 [Notebook Link](../master/calc-diffeq-analysis/complex-operations.nb)
 
 This is a lightweight visual demonstration of how familiar mathematical operations (addition, multiplication, trigonometric functions, etc.) affect the complex numbers, displayed as vectors in the complex plane. The user can select an operation or function and then click and drag the input vector or vectors to see how this affects the output vector. In particular, it is interesting to look at how changing just the magnitude or just the angle of an input vector affects the output.
+
+### Continuous Versus Discrete Logistic Growth
+
+<img src="images/continuous-discrete-logistic-growth-1.png" alt="Continuous Versus Discrete Logistic Growth Image 1" height="200"/> <img src="images/continuous-discrete-logistic-growth-2.png" alt="Continuous Versus Discrete Logistic Growth Image 2" height="200"/>
+
+Created 11/4/2014
+
+[Notebook Link](../master/calc-diffeq-analysis/continuous-discrete-logistic-growth.nb)
+
+This demonstration serves as a good example of how continuous and discrete analogs of the same model can produce drastically different behaviors, and it involves one of the most famous examples from [chaos theory](https://en.wikipedia.org/wiki/Chaos_theory). The logistic growth model is a very simple dynamical systems model for population growth. There is both a [continuous version](https://en.wikipedia.org/wiki/Logistic_function) (taking the form of a differential equation) and a [discrete version](https://en.wikipedia.org/wiki/Logistic_map) (taking the form of a discrete map). Both attempt to model the situation of population being limited by finite resources.
+
+At first glance the two models seem very similar, and for many students first learning about differential and difference equations it may seem like there is no significant difference between the two approaches. They even produce similar results under certain circumstances, and if anything the discrete model may seem intuitively easier to understand. However, the discrete model begins to exhibit some very strange and chaotic behavior if the intrinsic growth rate becomes large enough. This behavior is unique to the discrete model, and nothing like it occurs in the continuous model.
 
 ### Crowd Escape Panic Model
 
