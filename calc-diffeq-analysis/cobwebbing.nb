@@ -1,0 +1,578 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.4' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     21974,        570]
+NotebookOptionsPosition[     20953,        529]
+NotebookOutlinePosition[     21296,        544]
+CellTagsIndexPosition[     21253,        541]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Cobwebbing", "Title",
+ CellChangeTimes->{{3.776600831050974*^9, 3.7766008318453026`*^9}, {
+  3.7771303814556313`*^9, 3.7771303897679653`*^9}, {3.777130431756935*^9, 
+  3.7771304426145535`*^9}, {3.7771538104310255`*^9, 3.7771538107522936`*^9}}],
+
+Cell["Adam Rumpf, 11/4/2014", "Text",
+ CellChangeTimes->{{3.7766008347881403`*^9, 3.776600838290375*^9}, {
+  3.7771303785432096`*^9, 3.7771303802837615`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section",
+ CellChangeTimes->{{3.7766008459498987`*^9, 3.776600848547045*^9}}],
+
+Cell[TextData[{
+ "The initialization code below defines a function called ",
+ StyleBox["cobweb[]", "Code"],
+ ", which accepts a pure function, a parameter ",
+ Cell[BoxData[
+  FormBox["r", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", an initial value, and a number of iterations. It then produces a cobweb \
+plot for the given function. This is used for the main Manipulate environment \
+at the end of the Notebook, which has a number of simple built-in discrete \
+dynamical systems, each of which depends on a single parameter ",
+ Cell[BoxData[
+  FormBox["r", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". Note that the meaning of the parameter is different in each system."
+}], "Text",
+ CellChangeTimes->{{3.776600856235587*^9, 3.776600860481224*^9}, {
+  3.7771601060172977`*^9, 3.777160276365533*^9}, {3.7771607213398085`*^9, 
+  3.7771607394812503`*^9}}],
+
+Cell["\<\
+Some of thesefunctions are arbitrary and only meant for showing off how \
+different shapes of function can behave, but a few have some significance:\
+\>", "Text",
+ CellChangeTimes->{{3.776600856235587*^9, 3.776600860481224*^9}, {
+  3.7771601060172977`*^9, 3.777160276365533*^9}, {3.7771607213398085`*^9, 
+  3.77716072716536*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[TextData[{
+ "The discrete logistic map, of the general form ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["x", 
+     RowBox[{"n", "+", "1"}]], "=", 
+    RowBox[{"r", " ", 
+     RowBox[{
+      SubscriptBox["x", "n"], "(", 
+      RowBox[{"1", "-", 
+       SubscriptBox["x", "n"]}], ")"}]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", is usually thought of as describing a population whose size is limited by \
+finite resources. ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["x", "n"], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " is the population at time step ",
+ Cell[BoxData[
+  FormBox["n", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ", scaled so that ",
+ Cell[BoxData[
+  FormBox["1", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " is the holding capacity. ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"r", ">", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " is the intrinsic growth rate. This system is famous for exhibiting chaotic \
+behavior when ",
+ Cell[BoxData[
+  FormBox["r", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " is sufficiently large. Try increasing the value of ",
+ Cell[BoxData[
+  FormBox["r", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " slowly to watch as the nonzero fixed point goes from being stable, to \
+being surrounded by periodic orbits, to complete chaos."
+}], "Item",
+ CellChangeTimes->{{3.777160287433982*^9, 3.7771604336737385`*^9}, {
+  3.777160482102011*^9, 3.7771605580480304`*^9}}],
+
+Cell[TextData[{
+ "The discrete logistic map with proportional harvesting has the general form \
+",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["x", 
+     RowBox[{"n", "+", "1"}]], "=", 
+    RowBox[{
+     RowBox[{"r", " ", 
+      RowBox[{
+       SubscriptBox["x", "n"], "(", 
+       RowBox[{"1", "-", 
+        SubscriptBox["x", "n"]}], ")"}]}], "-", 
+     RowBox[{"p", " ", 
+      SubscriptBox["x", "n"]}]}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". This is exactly the logistic growth model, but now a proportion ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"0", "<", "p", "<", "1"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " of the current population is removed each iteration."
+}], "Item",
+ CellChangeTimes->{{3.777160287433982*^9, 3.7771604336737385`*^9}, {
+  3.777160482102011*^9, 3.7771606279540477`*^9}, {3.777160744824355*^9, 
+  3.7771607448283534`*^9}}],
+
+Cell[TextData[{
+ "The discrete logistic map with constant harvesting has the general form ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{
+    SubscriptBox["x", 
+     RowBox[{"n", "+", "1"}]], "=", 
+    RowBox[{
+     RowBox[{"r", " ", 
+      RowBox[{
+       SubscriptBox["x", "n"], "(", 
+       RowBox[{"1", "-", 
+        SubscriptBox["x", "n"]}], ")"}]}], "-", "h"}]}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". This is similar to the proportional harvesting model, except that now a \
+constant amount of population ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"h", ">", "0"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " is removed each iteration."
+}], "Item",
+ CellChangeTimes->{{3.777160287433982*^9, 3.7771604336737385`*^9}, {
+  3.777160482102011*^9, 3.7771606279540477`*^9}, {3.777160744824355*^9, 
+  3.7771607963231335`*^9}}],
+
+Cell[TextData[{
+ "The linear map simply consists of a line passing through the point ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"(", 
+    RowBox[{
+     FractionBox["1", "2"], ",", 
+     FractionBox["1", "2"]}], ")"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " with a slope variable between ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"-", "1"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " and ",
+ Cell[BoxData[
+  FormBox["1", TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ ". It is meant to act as a clear demonstration of how the stability of a \
+fixed point depends on the slope of the function curve where it intersects \
+the ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"y", "=", "x"}], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ " line."
+}], "Item",
+ CellChangeTimes->{{3.777160287433982*^9, 3.7771604336737385`*^9}, {
+  3.777160482102011*^9, 3.7771606279540477`*^9}, {3.777160744824355*^9, 
+  3.7771608420031204`*^9}, {3.777160895152163*^9, 3.7771609378928003`*^9}}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Code", "Section",
+ CellChangeTimes->{{3.776600864408964*^9, 3.7766008650447807`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Initialization", "Subsection",
+ CellChangeTimes->{{3.776600871130811*^9, 3.776600873087188*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "generates", " ", "the", " ", "cobweb", " ", "plot", " ", "for", " ", "a",
+      " ", "given", " ", "pure", " ", "function", " ", "f"}], ",", " ", 
+    RowBox[{"parameter", " ", "r"}], ",", " ", 
+    RowBox[{"initial", " ", "value", " ", "x0"}], ",", " ", 
+    RowBox[{"and", " ", "number", " ", "of", " ", "iterations", " ", "n"}]}], 
+   " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"cobweb", "[", 
+    RowBox[{"f_", ",", "r_", ",", "x0_", ",", "n_"}], "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"pts", "=", 
+        RowBox[{"{", 
+         RowBox[{"{", 
+          RowBox[{"x0", ",", "0"}], "}"}], "}"}]}], ",", "y"}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{"(*", " ", 
+      RowBox[{"generate", " ", "sequence", " ", "of", " ", "points"}], " ", 
+      "*)"}], "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"Do", "[", "\[IndentingNewLine]", 
+       RowBox[{"(*", " ", 
+        RowBox[{"vertical", " ", "to", " ", "f"}], " ", "*)"}], 
+       "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"y", "=", 
+          RowBox[{"f", "[", 
+           RowBox[{
+            RowBox[{"pts", "[", 
+             RowBox[{"[", 
+              RowBox[{
+               RowBox[{"-", "1"}], ",", "1"}], "]"}], "]"}], ",", "r"}], 
+           "]"}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{"pts", "=", 
+          RowBox[{"Append", "[", 
+           RowBox[{"pts", ",", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"pts", "[", 
+               RowBox[{"[", 
+                RowBox[{
+                 RowBox[{"-", "1"}], ",", "1"}], "]"}], "]"}], ",", "y"}], 
+             "}"}]}], "]"}]}], ";", "\[IndentingNewLine]", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"y", "<", "0"}], "||", 
+            RowBox[{"y", ">", 
+             SuperscriptBox["10", "30"]}]}], ",", "\[IndentingNewLine]", 
+           RowBox[{"(*", " ", 
+            RowBox[{
+            "break", " ", "if", " ", "we", " ", "reach", " ", "a", " ", 
+             "negative", " ", "value", " ", "or", " ", "too", " ", "large", 
+             " ", "of", " ", "a", " ", "value"}], " ", "*)"}], 
+           "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"Break", "[", "]"}], ";"}]}], "\[IndentingNewLine]", 
+          "]"}], ";", "\[IndentingNewLine]", 
+         RowBox[{"(*", " ", 
+          RowBox[{
+           RowBox[{"horizontal", " ", "to", " ", "y"}], "=", "x"}], " ", 
+          "*)"}], "\[IndentingNewLine]", 
+         RowBox[{"pts", "=", 
+          RowBox[{"Append", "[", 
+           RowBox[{"pts", ",", 
+            RowBox[{"{", 
+             RowBox[{"y", ",", "y"}], "}"}]}], "]"}]}]}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"{", 
+         RowBox[{"i", ",", "1", ",", "n"}], "}"}]}], "]"}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"(*", " ", 
+       RowBox[{"draw", " ", "diagram"}], " ", "*)"}], "\[IndentingNewLine]", 
+      RowBox[{"Show", "[", 
+       RowBox[{
+        RowBox[{"Plot", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"x", ",", 
+            RowBox[{"f", "[", 
+             RowBox[{"x", ",", "r"}], "]"}]}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"x", ",", "0", ",", "1"}], "}"}], ",", 
+          RowBox[{"PlotStyle", "\[Rule]", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Directive", "[", 
+              RowBox[{"Thick", ",", "Black"}], "]"}], ",", "Blue"}], 
+            "}"}]}]}], "]"}], ",", 
+        RowBox[{"Graphics", "[", 
+         RowBox[{"{", 
+          RowBox[{"Red", ",", " ", 
+           RowBox[{"Line", "[", "pts", "]"}]}], "}"}], "]"}], ",", 
+        RowBox[{"PlotRange", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{"0", ",", "1"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"0", ",", "1"}], "}"}]}], "}"}]}], ",", 
+        RowBox[{"AspectRatio", "\[Rule]", "1"}], ",", 
+        RowBox[{"Axes", "\[Rule]", "True"}], ",", 
+        RowBox[{"AxesLabel", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{
+          "\"\<\!\(\*SubscriptBox[\(x\), \(n\)]\)\>\"", ",", 
+           "\"\<\!\(\*SubscriptBox[\(x\), \(n + 1\)]\)\>\""}], "}"}]}]}], 
+       "]"}]}]}], "\[IndentingNewLine]", "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.7766008761831923`*^9, 3.776600882799075*^9}, {
+  3.7771555265254726`*^9, 3.7771555956462235`*^9}, {3.777155660625909*^9, 
+  3.777155740927166*^9}, {3.77715578405746*^9, 3.7771559343330507`*^9}, {
+  3.777155999295798*^9, 3.7771561977500076`*^9}, {3.77715672559943*^9, 
+  3.77715676271062*^9}, {3.777157939775195*^9, 3.7771579539182663`*^9}, {
+  3.7771586587903957`*^9, 3.7771586589976068`*^9}}]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Demonstration", "Subsection",
+ CellChangeTimes->{{3.7766008885632277`*^9, 3.7766008904796133`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{"cobweb", "[", 
+      RowBox[{"f", ",", "r", ",", "x0", ",", "30"}], "]"}]}], 
+    "\[IndentingNewLine]", "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"f", ",", 
+       RowBox[{
+        RowBox[{"4", "#2", "#1", 
+         RowBox[{"(", 
+          RowBox[{"1", "-", "#1"}], ")"}]}], "&"}], ",", 
+       "\"\<\!\(\*SubscriptBox[\(x\), \(n + 1\)]\)\>\""}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{
+        RowBox[{
+         RowBox[{"4", "#2", "#1", 
+          RowBox[{"(", 
+           RowBox[{"1", "-", "#1"}], ")"}]}], "&"}], "\[Rule]", 
+        "\"\<4\!\(\*SubscriptBox[\(rx\), \(n\)]\)(1-\!\(\*SubscriptBox[\(x\), \
+\(n\)]\)) - logistic map\>\""}], ",", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"3", "#1", 
+           RowBox[{"(", 
+            RowBox[{"1", "-", "#1"}], ")"}]}], "-", 
+          RowBox[{"#2", "#1"}]}], "&"}], "\[Rule]", 
+        "\"\<3\!\(\*SubscriptBox[\(x\), \(n\)]\)(1-\!\(\*SubscriptBox[\(x\), \
+\(n\)]\))-\!\(\*SubscriptBox[\(rx\), \(n\)]\) - logistic w/ prop. \
+harvesting\>\""}], ",", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"2", "#1", 
+           RowBox[{"(", 
+            RowBox[{"1", "-", "#1"}], ")"}]}], "+", 
+          RowBox[{"0.5", "#2"}], "-", "0.25"}], "&"}], "\[Rule]", 
+        "\"\<2\!\(\*SubscriptBox[\(x\), \(n\)]\)(1-\!\(\*SubscriptBox[\(x\), \
+\(n\)]\))+0.5r-0.25 - logistic w/ const. harvesting\>\""}], ",", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"4", 
+           RowBox[{"(", 
+            RowBox[{"#2", "-", "0.5"}], ")"}], 
+           RowBox[{"(", 
+            RowBox[{"#1", "-", "0.5"}], ")"}]}], "+", "0.5"}], "&"}], 
+        "\[Rule]", 
+        "\"\<2(r-0.5)(\!\(\*SubscriptBox[\(x\), \(n\)]\)-0.5)+0.5 - \
+linear\>\""}], ",", 
+       RowBox[{
+        RowBox[{
+         RowBox[{
+          RowBox[{"5.6", 
+           SuperscriptBox["#1", "3"]}], "-", 
+          RowBox[{"7", 
+           SuperscriptBox["#1", "2"]}], "+", 
+          RowBox[{"2.5", "#1"}], "+", 
+          RowBox[{"0.4", "#2"}]}], "&"}], "\[Rule]", 
+        "\"\<5.6\!\(\*SuperscriptBox[SubscriptBox[\(x\), \(n\)], \(3\)]\)-7\!\
+\(\*SuperscriptBox[SubscriptBox[\(x\), \(n\)], \
+\(2\)]\)+2.5\!\(\*SubscriptBox[\(x\), \(n\)]\)+0.4r - cubic\>\""}]}], "}"}], 
+     ",", "PopupMenu"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"r", ",", "0.65", ",", "\"\<r\>\""}], "}"}], ",", "0", ",", 
+     "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "x0", ",", "0.25", ",", "\"\<\!\(\*SubscriptBox[\(x\), \(0\)]\)\>\""}], 
+      "}"}], ",", "0.01", ",", "0.99"}], "}"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.7766008920271177`*^9, 3.7766008970415297`*^9}, {
+   3.7771562414820786`*^9, 3.7771563442494297`*^9}, {3.7771563995143404`*^9, 
+   3.777156516567629*^9}, {3.7771565579644203`*^9, 3.7771566308395443`*^9}, {
+   3.7771566638834124`*^9, 3.7771567107130213`*^9}, {3.777156784185316*^9, 
+   3.777156786028338*^9}, {3.777156832919155*^9, 3.777156870190647*^9}, {
+   3.7771569076381054`*^9, 3.777156910114409*^9}, {3.7771569530182934`*^9, 
+   3.77715697366871*^9}, {3.77715700935042*^9, 3.7771570454786167`*^9}, {
+   3.7771571178308992`*^9, 3.7771571287366505`*^9}, {3.7771571818975186`*^9, 
+   3.7771571866982684`*^9}, {3.7771572231348476`*^9, 
+   3.7771572812355137`*^9}, {3.7771573628429117`*^9, 
+   3.7771574205793257`*^9}, {3.7771574629188404`*^9, 
+   3.7771574683729973`*^9}, {3.7771577370959873`*^9, 3.777157812798995*^9}, {
+   3.777157872216112*^9, 3.7771579054766293`*^9}, {3.7771580044952917`*^9, 
+   3.777158057902335*^9}, {3.777158151432196*^9, 3.7771581525935416`*^9}, {
+   3.7771581963046274`*^9, 3.777158237238636*^9}, {3.7771582732210417`*^9, 
+   3.777158299544817*^9}, {3.777158353884241*^9, 3.7771583694134836`*^9}, {
+   3.7771585371169043`*^9, 3.777158628695525*^9}, {3.77715873093116*^9, 
+   3.777158760363877*^9}, {3.777158804844178*^9, 3.7771589222902794`*^9}, {
+   3.7771589589736195`*^9, 3.777158994414666*^9}, {3.7771590629657545`*^9, 
+   3.777159081959144*^9}, {3.777159113553509*^9, 3.7771591154797077`*^9}, {
+   3.7771591503647776`*^9, 3.777159194511875*^9}, {3.7771592775912194`*^9, 
+   3.777159279203702*^9}, {3.777159347378621*^9, 3.7771593806264257`*^9}, {
+   3.7771600726679134`*^9, 3.7771600741784315`*^9}, {3.7771606474508095`*^9, 
+   3.777160692919137*^9}, 3.77716086758996*^9}],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`f$$ = 4 (#2 - 0.5) (# - 0.5) + 
+    0.5& , $CellContext`r$$ = 0.29, $CellContext`x0$$ = 0.25, Typeset`show$$ =
+     True, Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`f$$], 4 #2 # (1 - #)& , 
+       "\!\(\*SubscriptBox[\(x\), \(n + 1\)]\)"}, {(4 #2 # (1 - #)& ) -> 
+       "4\!\(\*SubscriptBox[\(rx\), \(n\)]\)(1-\!\(\*SubscriptBox[\(x\), \
+\(n\)]\)) - logistic map", (3 # (1 - #) - #2 #& ) -> 
+       "3\!\(\*SubscriptBox[\(x\), \(n\)]\)(1-\!\(\*SubscriptBox[\(x\), \
+\(n\)]\))-\!\(\*SubscriptBox[\(rx\), \(n\)]\) - logistic w/ prop. \
+harvesting", (2 # (1 - #) + 0.5 #2 - 0.25& ) -> 
+       "2\!\(\*SubscriptBox[\(x\), \(n\)]\)(1-\!\(\*SubscriptBox[\(x\), \
+\(n\)]\))+0.5r-0.25 - logistic w/ const. harvesting", (4 (#2 - 0.5) (# - 0.5) + 
+        0.5& ) -> 
+       "2(r-0.5)(\!\(\*SubscriptBox[\(x\), \(n\)]\)-0.5)+0.5 - linear", (
+        5.6 #^3 - 7 #^2 + 2.5 # + 0.4 #2& ) -> 
+       "5.6\!\(\*SuperscriptBox[SubscriptBox[\(x\), \(n\)], \
+\(3\)]\)-7\!\(\*SuperscriptBox[SubscriptBox[\(x\), \(n\)], \
+\(2\)]\)+2.5\!\(\*SubscriptBox[\(x\), \(n\)]\)+0.4r - cubic"}}, {{
+       Hold[$CellContext`r$$], 0.65, "r"}, 0, 1}, {{
+       Hold[$CellContext`x0$$], 0.25, "\!\(\*SubscriptBox[\(x\), \(0\)]\)"}, 
+      0.01, 0.99}}, Typeset`size$$ = {360., {172., 176.}}, Typeset`update$$ = 
+    0, Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    True, $CellContext`f$290522$$ = False, $CellContext`r$290523$$ = 
+    0, $CellContext`x0$290524$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`f$$ = 4 #2 # (1 - #)& , $CellContext`r$$ = 
+        0.65, $CellContext`x0$$ = 0.25}, "ControllerVariables" :> {
+        Hold[$CellContext`f$$, $CellContext`f$290522$$, False], 
+        Hold[$CellContext`r$$, $CellContext`r$290523$$, 0], 
+        Hold[$CellContext`x0$$, $CellContext`x0$290524$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> Module[{}, 
+        $CellContext`cobweb[$CellContext`f$$, $CellContext`r$$, \
+$CellContext`x0$$, 30]], 
+      "Specifications" :> {{{$CellContext`f$$, 4 #2 # (1 - #)& , 
+          "\!\(\*SubscriptBox[\(x\), \(n + 1\)]\)"}, {(4 #2 # (1 - #)& ) -> 
+          "4\!\(\*SubscriptBox[\(rx\), \(n\)]\)(1-\!\(\*SubscriptBox[\(x\), \
+\(n\)]\)) - logistic map", (3 # (1 - #) - #2 #& ) -> 
+          "3\!\(\*SubscriptBox[\(x\), \(n\)]\)(1-\!\(\*SubscriptBox[\(x\), \
+\(n\)]\))-\!\(\*SubscriptBox[\(rx\), \(n\)]\) - logistic w/ prop. \
+harvesting", (2 # (1 - #) + 0.5 #2 - 0.25& ) -> 
+          "2\!\(\*SubscriptBox[\(x\), \(n\)]\)(1-\!\(\*SubscriptBox[\(x\), \
+\(n\)]\))+0.5r-0.25 - logistic w/ const. harvesting", (4 (#2 - 0.5) (# - 0.5) + 
+           0.5& ) -> 
+          "2(r-0.5)(\!\(\*SubscriptBox[\(x\), \(n\)]\)-0.5)+0.5 - linear", (
+           5.6 #^3 - 7 #^2 + 2.5 # + 0.4 #2& ) -> 
+          "5.6\!\(\*SuperscriptBox[SubscriptBox[\(x\), \(n\)], \(3\)]\)-7\!\(\
+\*SuperscriptBox[SubscriptBox[\(x\), \(n\)], \
+\(2\)]\)+2.5\!\(\*SubscriptBox[\(x\), \(n\)]\)+0.4r - cubic"}, ControlType -> 
+         PopupMenu}, {{$CellContext`r$$, 0.65, "r"}, 0, 
+         1}, {{$CellContext`x0$$, 0.25, "\!\(\*SubscriptBox[\(x\), \(0\)]\)"},
+          0.01, 0.99}}, "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{411., {247., 253.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{{3.777159073259899*^9, 3.7771590827182055`*^9}, 
+   3.7771591166822023`*^9, {3.7771591663559117`*^9, 3.7771591948043566`*^9}, 
+   3.7771592797965126`*^9, {3.77715934801046*^9, 3.777159380865356*^9}, 
+   3.77716007487621*^9, {3.7771606504230127`*^9, 3.7771606937288465`*^9}, 
+   3.777160868560651*^9}]
+}, {2}]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{759, 833},
+WindowMargins->{{91, Automatic}, {Automatic, 84}},
+FrontEndVersion->"10.4 for Microsoft Windows (64-bit) (April 11, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 249, 3, 90, "Title"],
+Cell[832, 27, 158, 2, 30, "Text"],
+Cell[CellGroupData[{
+Cell[1015, 33, 99, 1, 63, "Section"],
+Cell[1117, 36, 879, 18, 106, "Text"],
+Cell[1999, 56, 339, 6, 49, "Text"],
+Cell[CellGroupData[{
+Cell[2363, 66, 1513, 45, 115, "Item"],
+Cell[3879, 113, 900, 26, 66, "Item"],
+Cell[4782, 141, 846, 24, 64, "Item"],
+Cell[5631, 167, 1005, 29, 75, "Item"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6685, 202, 91, 1, 63, "Section"],
+Cell[CellGroupData[{
+Cell[6801, 207, 102, 1, 43, "Subsection"],
+Cell[6906, 210, 4846, 121, 455, "Input"]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[11789, 336, 105, 1, 35, "Subsection"],
+Cell[CellGroupData[{
+Cell[11919, 341, 4593, 104, 228, "Input"],
+Cell[16515, 447, 4389, 76, 517, "Output"]
+}, {2}]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
