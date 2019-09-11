@@ -104,7 +104,7 @@ This is a lightweight visual demonstration of how familiar mathematical operatio
 
 ### Continuous Versus Discrete Logistic Growth
 
-<img src="images/continuous-discrete-logistic-growth-1.png" alt="Continuous Versus Discrete Logistic Growth Image 1" height="200"/> <img src="images/continuous-discrete-logistic-growth-2.png" alt="Continuous Versus Discrete Logistic Growth Image 2" height="200"/>
+<img src="images/continuous-discrete-logistic-growth-1.png" alt="Continuous Versus Discrete Logistic Growth Image 1" height="180"/> <img src="images/continuous-discrete-logistic-growth-2.png" alt="Continuous Versus Discrete Logistic Growth Image 2" height="180"/>
 
 Created 11/4/2014
 
