@@ -16,6 +16,8 @@ A large collection of Mathematica demonstrations written by Adam Rumpf, sorted a
   * [Monte Carlo Method](#monte-carlo-method)
   * [Taylor and Fourier Series Approximations](#taylor-and-fourier-series-approximations)
   * [Vector Kinematics](#vector-kinematics)
+* [Linear Algebra](#linear-algebra)
+  * [Linear Transformations](#linear-transformations)
 * [Number Theory](#number-theory)
   * [Continued Fraction Square Packing](#continued-fraction-square-packing)
   * [Pascal's Triangle Fractals](#pascals-triangle-fractals)
@@ -179,6 +181,22 @@ Created 8/28/2017
 [Notebook Link](../master/calc-diffeq-analysis/vector-kinematics.nb)
 
 This demonstration is meant for elementary Calculus students encountering the concept of position, velocity, and acceleration vectors for the first time. It includes a series of Manipulate environments which describe various kinematic systems such as ballistic motion and rotational orbiting. Within each system there is a time slider to animate the system, and there is a toggle to select whether to display the position vector (with its x- and y-components), the velocity vector (with its x- and y-components), the acceleration vector (with its x- and y-components), and the velocity vector along with the acceleration vector. The purpose of these animations is to give a visual demonstration of how the velocity vector describes where the position vector is "about" to move to, and how the acceleration vector does the same for the velocity vector.
+
+## Linear Algebra
+
+Ever since I was an undergraduate, linear algebra has been one of my favorite areas of mathematics. I think that this is due in large part to the fact that linear algebra serves as an introduction to how to think about objects in higher dimensions. It is also a topic that has repeatedly appeared throughout my graduate research, which was largely focused on linear optimization.
+
+### Linear Transformations
+
+<img src="images/linear-transformations-1.png" alt="Linear Transformations Image 1" height="200"/> <img src="images/linear-transformations-2.png" alt="Linear Transformations Image 2" height="200"/>
+
+Created 6/3/2020
+
+[Notebook Link](../master/linear-algebra/linear-transformations.nb)
+
+I wrote this demonstration while helping to teach a precalculus class that touched on linear algebra. One of the important observations that makes it possible to understand how a matrix acts as a linear transformation is to look at how multiplication by that matrix affects the standard unit vectors _i = (1,0)_ and _j = (0,1)_. Those two transformations correspond to the columns of the matrix, and define a linear transformation of the entire 2D plane by shearing, rotating, and reflecting everything in it. This can more clearly be seen by drawing the transformed version of the unit lattice, and possibly also including some images and showing how they are transformed by the matrix.
+
+All of this is a bit hard to visualize when you just look at still images on the screen, so I decided to make an interactive demonstration that allows the user to click and drag the two transformed unit vectors to see how it affects the rest of the 2D plane in real time. As a sample image the letter "F" is drawn (its lack of symmetry makes it more obvious when rotations and reflections have occurred). The determinant of the matrix is also displayed. Things to keep an eye on include when the determinant becomes 0 and when it becomes negative.
 
 ## Number Theory
 
