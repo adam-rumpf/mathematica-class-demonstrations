@@ -188,7 +188,7 @@ Ever since I was an undergraduate, linear algebra has been one of my favorite ar
 
 ### Linear Transformations
 
-<img src="images/linear-transformations-1.png" alt="Linear Transformations Image 1" height="200"/> <img src="images/linear-transformations-2.png" alt="Linear Transformations Image 2" height="200"/>
+<img src="images/linear-transformations-1.png" alt="Linear Transformations Image 1" height="300"/> <img src="images/linear-transformations-2.png" alt="Linear Transformations Image 2" height="300"/>
 
 Created 6/3/2020
 
