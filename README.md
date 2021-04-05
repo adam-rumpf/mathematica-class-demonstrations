@@ -1,4 +1,6 @@
 ﻿# Mathematica Class Demonstrations
+ 
+<img src="https://img.shields.io/badge/language-mathematica-blue?style=plastic&logo=wolfram-mathematica&logoColor=white"/> <img src="https://img.shields.io/github/v/release/adam-rumpf/mathematica-class-demonstrations?style=plastic"/> <img src="https://img.shields.io/github/license/adam-rumpf/mathematica-class-demonstrations?style=plastic"/> <img src="https://img.shields.io/maintenance/yes/2019?style=plastic"/>
 
 A large collection of Mathematica demonstrations written by Adam Rumpf, sorted according to the class that they are most likely to be useful for.
 
