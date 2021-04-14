@@ -1,8 +1,10 @@
 ﻿# Mathematica Class Demonstrations
  
-<a href="https://github.com/adam-rumpf/mathematica-class-demonstrations/search?l=mathematica"><img src="https://img.shields.io/badge/language-mathematica-blue?logo=wolfram-mathematica&logoColor=white"/></a> <a href="https://github.com/adam-rumpf/mathematica-class-demonstrations/releases"><img src="https://img.shields.io/github/v/release/adam-rumpf/mathematica-class-demonstrations"/></a> <a href="https://github.com/adam-rumpf/mathematica-class-demonstrations/blob/master/LICENSE"><img src="https://img.shields.io/github/license/adam-rumpf/mathematica-class-demonstrations"/></a> <a href="https://github.com/adam-rumpf/mathematica-class-demonstrations/commits/master"><img src="https://img.shields.io/maintenance/yes/2019"/></a>
+<a href="https://github.com/adam-rumpf/mathematica-class-demonstrations/search?l=mathematica"><img src="https://img.shields.io/badge/language-mathematica-blue?logo=wolfram-mathematica&logoColor=white"/></a> <a href="https://github.com/adam-rumpf/mathematica-class-demonstrations/releases"><img src="https://img.shields.io/github/v/release/adam-rumpf/mathematica-class-demonstrations"/></a> <a href="https://github.com/adam-rumpf/mathematica-class-demonstrations/blob/master/LICENSE"><img src="https://img.shields.io/github/license/adam-rumpf/mathematica-class-demonstrations"/></a> <a href="https://github.com/adam-rumpf/mathematica-class-demonstrations/commits/master"><img src="https://img.shields.io/maintenance/yes/2020"/></a>
 
 A large collection of Mathematica demonstrations written by Adam Rumpf, sorted according to the class that they are most likely to be useful for.
+
+This is the precursor to my Jupyter Notebook class demonstration project, which can be found [here](https://github.com/adam-rumpf/jupyter-class-demonstrations).
 
 ## Table of Contents
 
@@ -44,7 +46,9 @@ A large collection of Mathematica demonstrations written by Adam Rumpf, sorted a
 
 ## Overview
 
-This repository contains a large collection of Mathematica notebook files written during my time as a graduate student at Illinois Institute of Technology between 2014 and 2019, although I intend to add more over time. I originally started these projects as a way to teach myself Mathematica for use as a calculus teaching assistant, but eventually started making demonstrations for topics of personal interest or for use in my own classes.
+This repository contains a large collection of Mathematica notebook files written during my time as a graduate student at Illinois Institute of Technology between 2014 and 2020, although I intend to add more over time. I originally started these projects as a way to teach myself Mathematica for use as a calculus teaching assistant, but eventually started making demonstrations for topics of personal interest or for use in my own classes.
+
+Due to the fact that these demonstrations require the user to own Mathematica, in 2021 I began remaking some of them as Jupyter Notebooks in order to make them more easily accessible. That project can be found [here](https://github.com/adam-rumpf/jupyter-class-demonstrations). Individual demonstrations with a Jupyter Notebook version are marked below.
 
 Some of these projects have been uploaded to the [_Wolfram Demonstrations Project_](http://demonstrations.wolfram.com/). My creator page can be found at http://demonstrations.wolfram.com/author.html?author=Adam+Rumpf.
 
