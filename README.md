@@ -174,6 +174,8 @@ Created 11/6/2017
 
 [Notebook Link](../master/calc-diffeq-analysis/taylor-fourier-series.nb)
 
+[Jupyter Notebook Remake](https://github.com/adam-rumpf/jupyter-class-demonstrations#taylor-series-approximations)
+
 This demonstration shows how a [Taylor Series](https://en.wikipedia.org/wiki/Taylor_series) or a [Fourier Series](https://en.wikipedia.org/wiki/Fourier_series) approximation of a given function changes as more terms are added to the series. The Taylor and Fourier series' are both ways of representing functions as linear combinations of simpler functions (polynomial functions for Taylor and trigonometric functions for Fourier). They also have important applications in computational mathematics, since taking only the first few terms of the series can provide a simple approximation of a potentially complicated function within a small neighborhood.
 
 This program includes two Manipulate environments: one for Taylor series and one for Fourier series. Both include a dropdown menu of example functions and a slider to select the number of terms to include. The Taylor series also includes a slider to select the center of the approximation. These can be used to show how well the approximations model the original function near or far from the center, and how adding more terms changes things.
