@@ -50,7 +50,7 @@ This repository contains a large collection of Mathematica notebook files writte
 
 Due to the fact that these demonstrations require the user to own Mathematica, in 2021 I began remaking some of them as Jupyter Notebooks in order to make them more easily accessible. That project can be found [here](https://github.com/adam-rumpf/jupyter-class-demonstrations). Individual demonstrations with a Jupyter Notebook version are marked below.
 
-Some of these projects have been uploaded to the [_Wolfram Demonstrations Project_](http://demonstrations.wolfram.com/). My creator page can be found at http://demonstrations.wolfram.com/author.html?author=Adam+Rumpf.
+Some of these projects have been uploaded to the [_Wolfram Demonstrations Project_](http://demonstrations.wolfram.com/). My creator page can be found [here](http://demonstrations.wolfram.com/author.html?author=Adam+Rumpf).
 
 Most of these files are meant to be used by evaluating the entire notebook and then interacting with the resulting Manipulate environments or other functions. All of the individual notebook files are completely standalone and meant to be downloaded à la carte depending on your interests.
 
@@ -81,6 +81,8 @@ Bifurcation analysis highlights one of the major differences between a dynamical
 Created 11/4/2014
 
 [Notebook Link](../master/calc-diffeq-analysis/cobwebbing.nb)
+
+[Jupyter Notebook Remake](https://github.com/adam-rumpf/jupyter-class-demonstrations#cobwebbing)
 
 [Cobwebbing](https://en.wikipedia.org/wiki/Cobweb_plot) is a graphical technique for evaluating the long-term behavior of a discrete dynamical system. This demonstration automatically generates cobweb plots for a variety of test systems, although the method is meant to be used by hand to quickly analyze such a system without the need for a computer.
 
