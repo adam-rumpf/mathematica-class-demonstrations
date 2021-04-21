@@ -64,8 +64,7 @@ Many of the files in this folder are things that I wrote to show my calculus stu
 
 <img src="images/bifurcation-analysis-1.png" alt="Bifurcation Analysis Image 1" height="200"/> <img src="images/bifurcation-analysis-2.png" alt="Bifurcation Analysis Image 2" height="200"/>
 
-Created 2/23/2016
-
+Created 2/23/2016  
 [Notebook Link](../master/calc-diffeq-analysis/bifurcation-analysis.nb)
 
 This Notebook contains a collection of examples of common types of [bifurcation](https://en.wikipedia.org/wiki/Bifurcation_theory), including: [saddle-node bifurcation](https://en.wikipedia.org/wiki/Saddle-node_bifurcation), [transcritical bifurcation](https://en.wikipedia.org/wiki/Transcritical_bifurcation), [pitchfork bifurcation](https://en.wikipedia.org/wiki/Pitchfork_bifurcation), and [Hopf bifurcation](https://en.wikipedia.org/wiki/Hopf_bifurcation). For each type of bifurcation an example ODE system is given, the bifurcation analysis is presented, and finally a Manipulate environment is given to show how manipulating the parameter causes the equilibria to change.
@@ -78,10 +77,8 @@ Bifurcation analysis highlights one of the major differences between a dynamical
 
 <img src="images/cobwebbing-1.png" alt="Cobwebbing Image 1" height="300"/> <img src="images/cobwebbing-2.png" alt="Cobwebbing Image 2" height="300"/>
 
-Created 11/4/2014
-
-[Notebook Link](../master/calc-diffeq-analysis/cobwebbing.nb)
-
+Created 11/4/2014  
+[Notebook Link](../master/calc-diffeq-analysis/cobwebbing.nb)  
 [Jupyter Notebook Remake](https://github.com/adam-rumpf/jupyter-class-demonstrations#cobwebbing)
 
 [Cobwebbing](https://en.wikipedia.org/wiki/Cobweb_plot) is a graphical technique for evaluating the long-term behavior of a discrete dynamical system. This demonstration automatically generates cobweb plots for a variety of test systems, although the method is meant to be used by hand to quickly analyze such a system without the need for a computer.
@@ -94,8 +91,7 @@ The points where the function curve passes through the _y = x_ line are the fixe
 
 <img src="images/complex-newtons-method-1.png" alt="Complex Newton's Method Image 1" height="300"/> <img src="images/complex-newtons-method-2.png" alt="Complex Newton's Method Image 2" height="300"/>
 
-Created 2/23/2016
-
+Created 2/23/2016  
 [Notebook Link](../master/calc-diffeq-analysis/complex-newtons-method.nb)
 
 This is a demonstration of how [Newton's Method](https://en.wikipedia.org/wiki/Newton%27s_method) works for complex-valued functions. Most Calculus students will learn about Newton's Method for finding roots of real-valued functions, and may be surprised to learn that it also works for complex numbers. They may also learn that the method does not necessarily always converge to the root nearest the initial guess due to "overshooting" in unexpected ways. For real numbers this phenomenon is not very interesting to look at, but for the complex numbers we can generate fascinating and beautiful fractal basins of attraction.
@@ -106,8 +102,7 @@ The main function of this demonstration allows the user to specify a function an
 
 <img src="images/complex-operations-1.png" alt="Complex Operations Image 1" height="300"/> <img src="images/complex-operations-2.png" alt="Complex Operations Image 2" height="300"/>
 
-Created 3/20/2017
-
+Created 3/20/2017  
 [Notebook Link](../master/calc-diffeq-analysis/complex-operations.nb)
 
 This is a lightweight visual demonstration of how familiar mathematical operations (addition, multiplication, trigonometric functions, etc.) affect the complex numbers, displayed as vectors in the complex plane. The user can select an operation or function and then click and drag the input vector or vectors to see how this affects the output vector. In particular, it is interesting to look at how changing just the magnitude or just the angle of an input vector affects the output.
@@ -116,8 +111,7 @@ This is a lightweight visual demonstration of how familiar mathematical operatio
 
 <img src="images/continuous-discrete-logistic-growth-1.png" alt="Continuous Versus Discrete Logistic Growth Image 1" height="150"/> <img src="images/continuous-discrete-logistic-growth-2.png" alt="Continuous Versus Discrete Logistic Growth Image 2" height="150"/>
 
-Created 11/4/2014
-
+Created 11/4/2014  
 [Notebook Link](../master/calc-diffeq-analysis/continuous-discrete-logistic-growth.nb)
 
 This demonstration serves as a good example of how continuous and discrete analogs of the same model can produce drastically different behaviors, and it involves one of the most famous examples from [chaos theory](https://en.wikipedia.org/wiki/Chaos_theory). The logistic growth model is a very simple dynamical systems model for population growth. There is both a [continuous version](https://en.wikipedia.org/wiki/Logistic_function) (taking the form of a differential equation) and a [discrete version](https://en.wikipedia.org/wiki/Logistic_map) (taking the form of a discrete map). Both attempt to model the situation of population being limited by finite resources.
@@ -128,8 +122,7 @@ At first glance the two models seem very similar, and for many students first le
 
 <img src="images/crowd-escape-panic-1.png" alt="Crowd Fluid Dynamics Image 1" height="180"/> <img src="images/crowd-escape-panic-2.png" alt="Crowd Fluid Dynamics Image 2" height="180"/>
 
-Created 5/1/2018
-
+Created 5/1/2018  
 [Notebook Link](../master/calc-diffeq-analysis/crowd-escape-panic.nb)
 
 This is an interactive version of a model described in the following 2000 [article](https://www.nature.com/articles/35035023):
@@ -144,10 +137,8 @@ This demonstration implements the model and displays an animation of the crowd a
 
 <img src="images/kkt-conditions-1.png" alt="KKT Conditions Image 1" height="400"/> <img src="images/kkt-conditions-2.png" alt="KKT Conditions 2" height="400"/>
 
-Created 5/7/2018
-
-[Notebook Link](../master/calc-diffeq-analysis/kkt-conditions.nb)
-
+Created 5/7/2018  
+[Notebook Link](../master/calc-diffeq-analysis/kkt-conditions.nb)  
 [Demonstration Link](http://demonstrations.wolfram.com/KarushKuhnTuckerKKTConditionsForNonlinearProgrammingWithIneq/)
 
 This is a graphical demonstration of the [KKT conditions](https://en.wikipedia.org/wiki/Karush%E2%80%93Kuhn%E2%80%93Tucker_conditions) applied to a constrained nonlinear optimization problem. The KKT conditions generalize the method of [Lagrange multipliers](https://en.wikipedia.org/wiki/Lagrange_multipliers) to allow for inequality constraints as well as equality constraints. They provide a set of algebraic conditions involving the objective function, the constraint functions, and their derivatives, which give necessary (and under the right circumstances sufficient) conditions for optimality. This provides us with a solution method for the optimization problem, since we can simply solve the system of equations defined by the KKT conditions.
@@ -160,8 +151,7 @@ This demonstration shows a 2D constrained optimization problem with a single ine
 
 <img src="images/monte-carlo-method-1.png" alt="Monte Carlo Method Image 1" height="200"/> <img src="images/monte-carlo-method-2.png" alt="Monte Carlo Method Image 2" height="200"/>
 
-Created 9/13/2016
-
+Created 9/13/2016  
 [Notebook Link](../master/calc-diffeq-analysis/monte-carlo-method.nb)
 
 [Monte Carlo methods](https://en.wikipedia.org/wiki/Monte_Carlo_method) are a type of computational method for numerical integration based on random experiments. If the goal is to calculate the area within a particular curve, then a Monte Carlo method consists of randomly sampling points within a region of known area that surrounds the region of interest. In expectation, the ratio of points within the region of interest to points outside of the region of interest should equal the ratio of the two regions' areas, and because the surrounding region's area is known, this ratio can be used to calculate the unknown region's area. Due to the random nature of the experiment the ratio will not be exact, and may vary between realizations, but as the number of sample points increases the ratio should converge to the correct value.
@@ -172,10 +162,8 @@ This Notebook includes a visual demonstration of the Monte Carlo method applied 
 
 <img src="images/taylor-series-1.png" alt="Taylor Series Image 1" height="300"/> <img src="images/fourier-series-1.png" alt="Fourier Series Image 1" height="300"/>
 
-Created 11/6/2017
-
-[Notebook Link](../master/calc-diffeq-analysis/taylor-fourier-series.nb)
-
+Created 11/6/2017  
+[Notebook Link](../master/calc-diffeq-analysis/taylor-fourier-series.nb)  
 [Jupyter Notebook Remake](https://github.com/adam-rumpf/jupyter-class-demonstrations#taylor-series-approximations)
 
 This demonstration shows how a [Taylor Series](https://en.wikipedia.org/wiki/Taylor_series) or a [Fourier Series](https://en.wikipedia.org/wiki/Fourier_series) approximation of a given function changes as more terms are added to the series. The Taylor and Fourier series' are both ways of representing functions as linear combinations of simpler functions (polynomial functions for Taylor and trigonometric functions for Fourier). They also have important applications in computational mathematics, since taking only the first few terms of the series can provide a simple approximation of a potentially complicated function within a small neighborhood.
@@ -186,8 +174,7 @@ This program includes two Manipulate environments: one for Taylor series and one
 
 <img src="images/vector-kinematics-1.png" alt="Vector Kinematics Image 1" height="300"/> <img src="images/vector-kinematics-2.png" alt="Vector Kinematics Image 2" height="300"/>
 
-Created 8/28/2017
-
+Created 8/28/2017  
 [Notebook Link](../master/calc-diffeq-analysis/vector-kinematics.nb)
 
 This demonstration is meant for elementary Calculus students encountering the concept of position, velocity, and acceleration vectors for the first time. It includes a series of Manipulate environments which describe various kinematic systems such as ballistic motion and rotational orbiting. Within each system there is a time slider to animate the system, and there is a toggle to select whether to display the position vector (with its x- and y-components), the velocity vector (with its x- and y-components), the acceleration vector (with its x- and y-components), and the velocity vector along with the acceleration vector. The purpose of these animations is to give a visual demonstration of how the velocity vector describes where the position vector is "about" to move to, and how the acceleration vector does the same for the velocity vector.
@@ -200,8 +187,7 @@ Ever since I was an undergraduate, linear algebra has been one of my favorite ar
 
 <img src="images/linear-transformations-1.png" alt="Linear Transformations Image 1" height="300"/> <img src="images/linear-transformations-2.png" alt="Linear Transformations Image 2" height="300"/>
 
-Created 6/3/2020
-
+Created 6/3/2020  
 [Notebook Link](../master/linear-algebra/linear-transformations.nb)
 
 I wrote this demonstration while helping to teach a precalculus class that touched on linear algebra. One of the important observations that makes it possible to understand how a matrix acts as a linear transformation is to look at how multiplication by that matrix affects the standard unit vectors _i = (1,0)_ and _j = (0,1)_. Those two transformations correspond to the columns of the matrix, and define a linear transformation of the entire 2D plane by shearing, rotating, and reflecting everything in it. This can more clearly be seen by drawing the transformed version of the unit lattice, and possibly also including some images and showing how they are transformed by the matrix.
@@ -216,8 +202,7 @@ Number theory is not really my area, so most of the files in this folder are rel
 
 <img src="images/continued-fraction-boxes-1.png" alt="Continued Fraction Square Packing Image 1" height="180"/> <img src="images/continued-fraction-boxes-2.png" alt="Continued Fraction Square Packing Image 2" height="180"/>
 
-Created 5/23/2018
-
+Created 5/23/2018  
 [Notebook Link](../master/number-theory/continued-fraction-square-packing.nb)
 
 This is a program for constructing geometric pictures of [continued fractions](https://en.wikipedia.org/wiki/Continued_fraction). A continued fraction is a way to represent a real number as a sequence of integers, similar to how a decimal expansion is a way to represent a real number as a sequence of integers. The way to interpret a decimal expansion like "3.14159" is to recognize that each digit tells us the coefficient in a series of decreasing powers of 10, so the leading 3 should be multiplied by 1, then the 1 should be multiplied by 1/10, then the 4 should be multiplied by 1/100, and so on, and all of these values should be added together. Some numbers (like 2 and 564 and 5/8) can be represented exactly with finitely many decimal values, while others (like 1/3 and π and √2) cannot, but they can at least be approximated by specifying the first few terms and truncating the rest.
@@ -232,8 +217,7 @@ This box packing process is very much like the process for generating a [golden 
 
 <img src="images/pascals-triangle-fractal-1.png" alt="Pascal's Triangle Fractals Image 1" height="250"/> <img src="images/pascals-triangle-fractal-2.png" alt="Pascal's Triangle Fractals Image 2" height="250"/>
 
-Created 6/28/2015
-
+Created 6/28/2015  
 [Notebook Link](../master/number-theory/pascals-triangle-fractals.nb)
 
 [Pascal's Triangle](https://en.wikipedia.org/wiki/Pascal%27s_triangle) is a triangular array best known for the property that its rows consist of the [binomial coefficients](https://en.wikipedia.org/wiki/Binomial_coefficient). There are many other lesser-known properties of Pascal's triangle, including its relationship to the fractal [Sierpiński Triangle](https://en.wikipedia.org/wiki/Sierpi%C5%84ski_triangle). This is one of my favorite examples of a fractal appearing in an unexpected place.
@@ -246,8 +230,7 @@ This program generates an instance of Pascal's triangle with the specified numbe
 
 <img src="images/recaman-1.png" alt="Recamán's Sequence Image 1" height="150"/> <img src="images/recaman-2.png" alt="Recamán's Sequence Image 2" height="150"/>
 
-Created 8/25/2018
-
+Created 8/25/2018  
 [Notebook Link](../master/number-theory/recamans-sequence.nb)
 
 Recamán's Sequence (sequence [A005132](https://oeis.org/A005132) in the [OEIS](oeis.org)) is defined by an iterative process beginning at 0, at step _n=0_. In step _n_, we either take _n_ steps backward or _n_ steps forward. We go backward if doing so would take us to a nonnegative number that has not yet been visited, and otherwise we go forward. It is conjectured that this sequence includes every nonnegative integer exactly once.
@@ -258,10 +241,8 @@ This program is mostly meant for drawing pictures of Recamán's Sequence. Becaus
 
 <img src="images/remainder-graph-1.png" alt="Remainder Graph Image 1" height="300"/>
 
-Created 10/10/2017
-
-[Notebook Link](../master/number-theory/remainder-graph.nb)
-
+Created 10/10/2017  
+[Notebook Link](../master/number-theory/remainder-graph.nb)  
 [Demonstration Link](http://demonstrations.wolfram.com/AnimatedRemainderGraph/)
 
 I was inspired to write this program by an [article](https://mindyourdecisions.com/blog/2015/07/26/divisibility-by-7-test-using-a-graph-why-does-it-work-sunday-puzzle/) by Presh Talwalkar. It demonstrates a cool trick for determining remainders after dividing a large number by a small number. Because this also allows calculating remainders of 0, this also encompasses the topic of divisibility tests. Testing for divisibility by 7 is famously tricky compared to the other small numbers, but this graphical method gives a fairly easy solution.
@@ -280,10 +261,8 @@ Graph theory is close to my area of research. It is also a mathematical field th
 
 <img src="images/dijkstras-algorithm-astar-search-1.png" alt="Dijkstra's Algorithm and A* Search Image 1" height="300"/> <img src="images/dijkstras-algorithm-astar-search-2.png" alt="Dijkstra's Algorithm and A* Search Image 2" height="300"/>
 
-Created 11/8/2017
-
-[Notebook Link](../master/graph-theory/dijkstras-algorithm-astar-search.nb)
-
+Created 11/8/2017  
+[Notebook Link](../master/graph-theory/dijkstras-algorithm-astar-search.nb)  
 [Demonstration Link](http://demonstrations.wolfram.com/DijkstrasAndASearchAlgorithmsForPathfindingWithObstacles/)
 
 [Dijkstra's algorithm](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm) and [A* search](https://en.wikipedia.org/wiki/A*_search_algorithm) are two well-known graph search algorithms capable of finding the shortest path between two nodes. This demonstration shows how both work for the problem of navigating between two specified points on a 2D grid with obstacles. Searched and tentative nodes are highlighted as the algorithm moves forward and the final chosen path is drawn. There are controls to select the start and end nodes as well as the obstacle shapes. A step slider can be used to animate the search process, which ends as soon as a path between the two nodes has been found.
@@ -296,8 +275,7 @@ A* search is a modified version of Dijkstra's algorithm which explicitly attempt
 
 <img src="images/graph-untangler-1.png" alt="Graph Untangler Image 1" height="300"/> <img src="images/graph-untangler-2.png" alt="Graph Untangler Image 2" height="300"/>
 
-Created 2/5/2016
-
+Created 2/5/2016  
 [Notebook Link](../master/graph-theory/graph-untangler.nb)
 
 I wrote this as a tool for myself during my first graph theory course for the purposes of solving graph isomorphism problems. A common way to try to determine whether two different embeddings actually represent the same graph is to imagine that the vertices and edges can be moved around. If one graph can be manipulated to look like the other, then they must be isomorphic, and the physical movements which occurred are a physical representation of the bijection from one graph to the other.
@@ -314,10 +292,8 @@ For example, in the United States, why are there only two major political partie
 
 <img src="images/single-winner-voting-systems-1.png" alt="Single-Winner Voting Systems Image 1" height="220"/> <img src="images/single-winner-voting-systems-2.png" alt="Single-Winner Voting Systems Image 2" height="220"/>
 
-Created 10/31/2017
-
-[Notebook Link](../master/voting-theory/single-winner-voting-systems.nb)
-
+Created 10/31/2017  
+[Notebook Link](../master/voting-theory/single-winner-voting-systems.nb)  
 [Demonstration Link](http://demonstrations.wolfram.com/ComparingVotingSystemsForANormalDistributionOfVoters/)
 
 This is based on an [interactive Flash demonstration](http://zesty.ca/voting/voteline/) by Ka-Ping Yee, which is meant to show how different, reasonable-seeming methods of evaluating ballots can affect the outcomes of single-winner elections. It also shows some of the problems that certain systems can have, such as the [spoiler effect](https://en.wikipedia.org/wiki/Spoiler_effect) and non-monotonicity.
@@ -328,8 +304,7 @@ Most people do not think very much about election systems, and if you asked them
 
 <img src="images/duvergers-law-1.png" alt="Duverger's Law Image 1" height="280"/> <img src="images/duvergers-law-2.png" alt="Duverger's Law Image 2" height="280"/>
 
-Created 7/22/2015
-
+Created 7/22/2015  
 [Notebook Link](../master/voting-theory/duvergers-law.nb)
 
 [Duverger's law](https://en.wikipedia.org/wiki/Duverger%27s_law) is an empirical rule which holds that [first-past-the-post](https://en.wikipedia.org/wiki/First-past-the-post_voting) elections tend to result in a two-party system. This is the expected outcome from [tactical voting](https://en.wikipedia.org/wiki/Tactical_voting), wherein supporters of third-party candidates are coerced into abandoning their favorite candidate in favor of their preferred major party candidate in order to avoid the [spoiler effect](https://en.wikipedia.org/wiki/Spoiler_effect).
@@ -340,8 +315,7 @@ This demonstration implements a simple tactical voting model based on a sequence
 
 <img src="images/winner-take-all-distortion-1.png" alt="Winner-Take-All Distortion Image 1" height="450"/> <img src="images/winner-take-all-distortion-2.png" alt="Winner-Take-All Distortion Image 2" height="450"/>
 
-Created 11/26/2016
-
+Created 11/26/2016  
 [Notebook Link](../master/voting-theory/winner-take-all-distortion.nb)
 
 This is a demonstration of how the preferences of the voter base can be distorted when their results are aggregated across a series of winner-take-all elections. For a variety of purposes voters are usually grouped into electoral districts. Rather than simply tabulating all individual votes, instead a separate winner-take-all election is run within each district, and only the district-level results are used to determine the overall result. For example, in the United States, presidential elections are carried out using the [Electoral College](https://en.wikipedia.org/wiki/Electoral_college) where, in essence, each state runs its own statewide presidential election, and whomever wins in the state receives all of that state's support for the purposes of determining the overall result.
@@ -360,8 +334,7 @@ As great as Mathematica is for visual demonstrations, I have surprisingly few pr
 
 <img src="images/triangle-centers-1.png" alt="Triangle Centers Image 1" height="300"/> <img src="images/triangle-centers-2.png" alt="Triangle Centers Image 2" height="300"/>
 
-Created 2/2/2016
-
+Created 2/2/2016  
 [Notebook Link](../master/geometry/triangle-centers.nb)
 
 If someone asks you to define where the "center" of a square is, there is a straightforward and unambiguous answer. The same is true for a rectangle, and for an equilateral triangle. For a general triangle, however, there are several different, reasonable responses that could all be considered a "center" in some way. The [Encyclopedia of Triangle Centers](https://faculty.evansville.edu/ck6/encyclopedia/ETC.html) defines over 38,000 different notions of what a triangle's center might be.
@@ -378,8 +351,7 @@ The files in this folder were simply made out of personal interest. Many of them
 
 <img src="images/bezier-curves-1.png" alt="Bézier Curves Image 1" height="300"/> <img src="images/bezier-curves-2.png" alt="Bézier Curves Image 2" height="300"/>
 
-Created 9/8/2017
-
+Created 9/8/2017  
 [Notebook Link](../master/fun/bezier-curves.nb)
 
 [Bézier Curves](https://en.wikipedia.org/wiki/B%C3%A9zier_curve) are parametric curves defined by a sequence of control points. Most people would be familiar with them from simple graphics programs like MS Paint. They are commonly used for drawing smooth curves that are easily adjustable by clicking and dragging the control points. The process of drawing a Bézier curve can be imagined by moving points at constant speed between each pair of control points, defining a new, smaller set of moving control points. This process is then repeated with the new set of even fewer control points, repeating until reaching only a single control point. The path of this single control point is the curve.
@@ -390,10 +362,8 @@ There are some interesting mathematical properties and applications of Bézier c
 
 <img src="images/domino-tiling-1.png" alt="Domino Tiling Image 1" height="300"/> <img src="images/tromino-tiling-1.png" alt="Tromino Tiling Image 1" height="300"/>
 
-Created 10/16/2017
-
-[Notebook Link](../master/fun/domino-tromino-tiling.nb)
-
+Created 10/16/2017  
+[Notebook Link](../master/fun/domino-tromino-tiling.nb)  
 [Demonstration Link](http://demonstrations.wolfram.com/DominoAndTriominoTilingsOfAChessboard/)
 
 This file combines two related puzzles that involve tiling a chess board. The main purpose of the puzzles is to figure out for yourself whether tilings exist under certain circumstances, and how you could go about finding these tilings. The tromino puzzle, in particular, is often used as an introduction to proof by induction. This program makes use of the puzzles' solutions to compute tilings and display the results.
@@ -410,8 +380,7 @@ What if we remove a single square from the board? Then we would have 63 squares,
 
 <img src="images/dragon-curve-1.png" alt="Dragon Curve Image 1" height="180"/>
 
-Created 5/6/2016
-
+Created 5/6/2016  
 [Notebook Link](../master/fun/dragon-curve.nb)
 
 The [dragon curve](https://en.wikipedia.org/wiki/Dragon_curve) is my favorite fractal, and considering how much I love fractals that is really saying something. Like all fractals it looks cool and has some interesting properties, like being self-similar and tileable and being two-dimensional in the limit despite each finite iteration being one-dimensional. However, unlike many fractals it is fairly simple to approximate in real life, and the final shape is completely unexpected based only on the first few iterations.
@@ -424,8 +393,7 @@ This Notebook defines a function that applies a recursive algorithm to draw a sp
 
 <img src="images/fractal-angels-devils-1.png" alt="Fractal Shoulder Angels and Devils Image 1" height="200"/> <img src="images/fractal-angels-devils-2.png" alt="Fractal Shoulder Angels and Devils Image 2" height="200"/>
 
-Created 3/15/2016
-
+Created 3/15/2016  
 [Notebook Link](../master/fun/fractal-angels-devils.nb)
 
 This is a joke based on the shoulder angel/devil trope for representing a character's internal struggle over an ethical dilemma. Occasionally in films the idea of a shoulder angel is toyed with by giving the shoulder angel, itself, its own tiny shoulder angel and devil. I thought it would be funny to carry that out to its logical conclusion.
@@ -436,8 +404,7 @@ The program generates fractal arrangements of shoulder angels and devils with ad
 
 <img src="images/pythagoras-tree-1.png" alt="Pythagoras Tree Image 1" height="200"/> <img src="images/pythagoras-tree-2.png" alt="Pythagoras Tree Image 2" height="200"/>
 
-Created 1/6/2016
-
+Created 1/6/2016  
 [Notebook Link](../master/fun/pythagoras-tree.nb)
 
 This is a simple program containing a variety of Manipulate environments to generate [Pythagoras tree](https://en.wikipedia.org/wiki/Pythagoras_tree_(fractal)) fractals with various parameters. A Pythagoras tree is generated iteratively by beginning with a square and then stacking two smaller squares on top of it, leaning against each other and meeting at the corner. The same process is then repeated on top of the two new squares, and then on top of the four new squares, and so on. The relative sizes of the two squares (or equivalently the angle at which they meet) determines the shape of the tree.
@@ -448,8 +415,7 @@ There is not much mathematical content here. The main purpose of the program is 
 
 <img src="images/spirograph-1.png" alt="Spirograph Image 1" height="150"/> <img src="images/spirograph-2.png" alt="Spirograph Image 2" height="150"/> <img src="images/spirograph-3.png" alt="Spirograph Image 3" height="150"/> <img src="images/spirograph-4.png" alt="Spirograph Image 4" height="150"/>
 
-Created 10/27/2016
-
+Created 10/27/2016  
 [Notebook Link](../master/fun/spirograph.nb)
 
 This is an interactive version of a [Spirograph](https://en.wikipedia.org/wiki/Spirograph) which displays the path of a pen attached to a disk rolling around a larger disk. There are controls to adjust the relative sizes of the disks, whether the small disk is inside or outside the larger disk, and where the pen is positioned (even allowing it to be outside of the disk). There is also a feature that displays a disk rolling on its edge around in circles.
