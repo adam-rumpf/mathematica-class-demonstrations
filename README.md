@@ -2,7 +2,7 @@
  
 <a href="https://github.com/adam-rumpf/mathematica-class-demonstrations/search?l=mathematica"><img src="https://img.shields.io/badge/language-mathematica-blue?logo=wolfram-mathematica&logoColor=white"/></a> <a href="https://github.com/adam-rumpf/mathematica-class-demonstrations/releases"><img src="https://img.shields.io/github/v/release/adam-rumpf/mathematica-class-demonstrations"/></a> <a href="https://github.com/adam-rumpf/mathematica-class-demonstrations/blob/master/LICENSE"><img src="https://img.shields.io/github/license/adam-rumpf/mathematica-class-demonstrations"/></a> <a href="https://github.com/adam-rumpf/mathematica-class-demonstrations/commits/master"><img src="https://img.shields.io/maintenance/yes/2020"/></a>
 
-A large collection of Mathematica demonstrations written by Adam Rumpf, sorted according to the class that they are most likely to be useful for.
+A large collection of Mathematica demonstrations written by Adam Rumpf, sorted according to the class that they are most likely to be useful for. See the author's page [here](https://adam-rumpf.github.io/demos/mathematica.html).
 
 This is the precursor to my Jupyter Notebook class demonstration project, which can be found [here](https://github.com/adam-rumpf/jupyter-class-demonstrations).
 
