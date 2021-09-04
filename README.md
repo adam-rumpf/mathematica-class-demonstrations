@@ -1,6 +1,6 @@
 ﻿# Mathematica Class Demonstrations
  
-<a href="https://github.com/adam-rumpf/mathematica-class-demonstrations/search?l=mathematica"><img src="https://img.shields.io/badge/language-mathematica-blue?logo=wolfram-mathematica&logoColor=white"/></a> <a href="https://github.com/adam-rumpf/mathematica-class-demonstrations/releases"><img src="https://img.shields.io/github/v/release/adam-rumpf/mathematica-class-demonstrations"/></a> <a href="https://github.com/adam-rumpf/mathematica-class-demonstrations/blob/master/LICENSE"><img src="https://img.shields.io/github/license/adam-rumpf/mathematica-class-demonstrations"/></a> <a href="https://github.com/adam-rumpf/mathematica-class-demonstrations/commits/master"><img src="https://img.shields.io/maintenance/yes/2020"/></a>
+<a href="https://github.com/adam-rumpf/mathematica-class-demonstrations/search?l=mathematica"><img src="https://img.shields.io/badge/language-mathematica-blue?logo=wolfram-mathematica&logoColor=white"/></a> <a href="https://github.com/adam-rumpf/mathematica-class-demonstrations/releases"><img src="https://img.shields.io/github/v/release/adam-rumpf/mathematica-class-demonstrations"/></a> <a href="https://github.com/adam-rumpf/mathematica-class-demonstrations/blob/master/LICENSE"><img src="https://img.shields.io/github/license/adam-rumpf/mathematica-class-demonstrations"/></a> <a href="https://github.com/adam-rumpf/mathematica-class-demonstrations/commits/master"><img src="https://img.shields.io/maintenance/yes/2021"/></a>
 
 A large collection of Mathematica demonstrations written by Adam Rumpf, sorted according to the class that they are most likely to be useful for. See the author's page [here](https://adam-rumpf.github.io/demos/mathematica.html).
 
@@ -16,6 +16,7 @@ This is the precursor to my Jupyter Notebook class demonstration project, which 
   * [Complex Operations](#complex-operations)
   * [Continuous Versus Discrete Logistic Growth](#continuous-versus-discrete-logistic-growth)
   * [Crowd Escape Panic Model](#crowd-escape-panic-model)
+  * [Epsilon-Delta Limit Definition](#epsilon-delta-limit-definition)
   * [Karush-Kuhn-Tucker (KKT) Conditions](#karush-kuhn-tucker-kkt-conditions)
   * [Monte Carlo Method](#monte-carlo-method)
   * [Taylor and Fourier Series Approximations](#taylor-and-fourier-series-approximations)
@@ -117,6 +118,15 @@ Created 11/4/2014
 This demonstration serves as a good example of how continuous and discrete analogs of the same model can produce drastically different behaviors, and it involves one of the most famous examples from [chaos theory](https://en.wikipedia.org/wiki/Chaos_theory). The logistic growth model is a very simple dynamical systems model for population growth. There is both a [continuous version](https://en.wikipedia.org/wiki/Logistic_function) (taking the form of a differential equation) and a [discrete version](https://en.wikipedia.org/wiki/Logistic_map) (taking the form of a discrete map). Both attempt to model the situation of population being limited by finite resources.
 
 At first glance the two models seem very similar, and for many students first learning about differential and difference equations it may seem like there is no significant difference between the two approaches. They even produce similar results under certain circumstances, and if anything the discrete model may seem intuitively easier to understand. However, the discrete model begins to exhibit some very strange and chaotic behavior if the intrinsic growth rate becomes large enough. This behavior is unique to the discrete model, and nothing like it occurs in the continuous model.
+
+### Epsilon-Delta Limit Definition
+
+<img src="images/epsilon-delta-1.png" alt="Epsilon-Delta Limit Definition Image 1" height="300"/> <img src="images/epsilon-delta-2.png" alt="Epsilon-Delta Limit Definition Image 2" height="300"/>
+
+Created 9/3/2021
+[Notebook Link](../master/calc-diffeq-analysis/epsilon-delta-limit.nb)
+
+This is a demonstration meant for use in discussing the [epsilon-delta](https://en.wikipedia.org/wiki/Limit_of_a_function#(%CE%B5,_%CE%B4)-definition_of_limit) definition for the limit of a function. Most calculus courses begin by discussing the limits of functions, since the derivative is defined as the limit of a difference quotient. For the purposes of an elementary calculus class it is enough to have an intuitive understanding of what the limit represents (that the value of the function get "closer and closer" to the limit as the input gets "closer and closer" to some value) without really needing a mathematically precise definition, but the explanation given in most classes might seem uncharacteristically wishy-washy and hand-wavey for mathematics, at which point they may or may not be introduced to the _real_ definition of the limit.
 
 ### Crowd Escape Panic Model
 

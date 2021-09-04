@@ -1,0 +1,921 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.4' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     37190,        913]
+NotebookOptionsPosition[     34766,        864]
+NotebookOutlinePosition[     35169,        880]
+CellTagsIndexPosition[     35126,        877]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Epsilon-Delta Limit Definition", "Title",
+ CellChangeTimes->{{3.776600831050974*^9, 3.7766008318453026`*^9}, {
+  3.7766426784620457`*^9, 3.7766426815877647`*^9}, {3.839702275072767*^9, 
+  3.8397022805695057`*^9}},ExpressionUUID->"ee77a021-d451-43c5-a11b-\
+746431323a50"],
+
+Cell["Adam Rumpf, 9/3/2021", "Text",
+ CellChangeTimes->{{3.7766008347881403`*^9, 3.776600838290375*^9}, {
+  3.7766426868687086`*^9, 3.7766426894098773`*^9}, {3.8397022838409033`*^9, 
+  3.8397022863654995`*^9}},ExpressionUUID->"82b98d29-4932-4ead-8f1b-\
+bffbccd0d39f"],
+
+Cell[CellGroupData[{
+
+Cell["Introduction", "Section",
+ CellChangeTimes->{{3.7766008459498987`*^9, 
+  3.776600848547045*^9}},ExpressionUUID->"31f26c8c-54a2-43be-a947-\
+adb95eb4e57e"],
+
+Cell["\<\
+This Notebook contains a sequence of Manipulate environments for illustrating \
+the epsilon-delta definition for the limit of a function. The included \
+examples display a continuous function that approaches a well-defined limit, \
+a discontinuous function with two different one-sided limits, and a function \
+that oscillates infinitely and has no limit.\
+\>", "Text",
+ CellChangeTimes->{{3.776600856235587*^9, 3.776600860481224*^9}, {
+  3.776644532636685*^9, 3.7766446959608707`*^9}, {3.839702297777193*^9, 
+  3.8397024340792837`*^9}},ExpressionUUID->"f6dfd731-2536-4094-98d9-\
+6fb1878100b6"],
+
+Cell[TextData[{
+ "According to the epsilon-delta definition, a function ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"f", "(", "x", ")"}], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "e504b168-4c91-4f6b-a252-64c387f2ef51"],
+ " approaches a limit ",
+ Cell[BoxData[
+  FormBox["L", TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "16240a11-0975-4119-b5d7-c40eba6aef92"],
+ " as ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"x", "\[Rule]", "a"}], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "09621784-f5b6-4bbd-8da7-e21753b92fa0"],
+ " if and only if:"
+}], "Text",
+ CellChangeTimes->{{3.8397023898647413`*^9, 3.8397023905066338`*^9}, {
+  3.839702440926505*^9, 3.8397024745130615`*^9}, {3.8397025067988415`*^9, 
+  3.8397025507986345`*^9}},ExpressionUUID->"a1bab27f-a666-40b8-aba3-\
+0ee38daaf82e"],
+
+Cell[TextData[{
+ "For any ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[Epsilon]", ">", "0"}], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "f6558460-19cd-45a0-9faa-ab9a3539741c"],
+ " there exists a ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"\[Delta]", ">", "0"}], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "2d931a43-1d00-4c49-a4bf-3c35fd532ffb"],
+ " such that, for all ",
+ Cell[BoxData[
+  FormBox["x", TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "33c2fe2a-2085-4204-8ea8-73be9cd56788"],
+ " satisfying ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"0", 
+    RowBox[{"<|", 
+     RowBox[{
+      RowBox[{"x", "-", "a"}], "|", 
+      RowBox[{"<", "\[Delta]"}]}]}]}], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "87e7bfd0-f2fd-4b42-8f8a-c8e55cbb7847"],
+ ", we have ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"|", 
+    RowBox[{
+     RowBox[{"f", "(", "x", ")"}], "-", "L"}], "|", 
+    RowBox[{"<", "\[Epsilon]"}]}], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "c5ff76bf-4b9e-4d1a-816a-3f321609d2b2"],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.839702501671569*^9, 3.8397025028866653`*^9}, {
+  3.8397025544825335`*^9, 
+  3.839702653916195*^9}},ExpressionUUID->"cc31a397-40ad-426b-a119-\
+d46f148f97f4"],
+
+Cell[TextData[{
+ "This means that, for any tolerance value ",
+ Cell[BoxData[
+  FormBox["\[Epsilon]", TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "6395e9ee-b921-4e1c-8395-5d69609356fe"],
+ " we care to choose, no matter how small, it will always be possible to find \
+a small enough window ",
+ Cell[BoxData[
+  FormBox["\[Delta]", TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "267b2e5f-959e-436e-a39d-65f41ebf4d3a"],
+ " around ",
+ Cell[BoxData[
+  FormBox["a", TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "382a79a9-7259-476f-80da-b930de2c3781"],
+ " for the function value to remain within distance ",
+ Cell[BoxData[
+  FormBox["\[Epsilon]", TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "34416f13-33ce-4170-844b-f6c10f6bdbc6"],
+ " of ",
+ Cell[BoxData[
+  FormBox["L", TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "c804d5e3-cb17-4793-9383-c88f6790068b"],
+ " over that entire window. The colored bands in the demonstrations below \
+illustrate possible choices for these tolerances, with the horizontal bands \
+corresponding to ",
+ Cell[BoxData[
+  FormBox["\[Epsilon]", TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "a04e0af3-8e3a-493d-a407-f54cf41a7fa5"],
+ " and the vertical bands corresponding to ",
+ Cell[BoxData[
+  FormBox["\[Delta]", TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "10bf0586-d240-4fe7-944d-89c703a89be1"],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.839702657304428*^9, 
+  3.839702905643938*^9}},ExpressionUUID->"11b841de-b4bb-4f08-a284-\
+76a57546c4ba"],
+
+Cell[TextData[{
+ "The function value at ",
+ Cell[BoxData[
+  FormBox["a", TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "346419ab-6678-42f7-a887-54e90b5d8065"],
+ " as well as the centers of the color bands are left blank to illustrate \
+that we need not consider what happens exactly when ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"x", "=", "a"}], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "16f3d82d-70ac-4b2c-b24f-f4399da7a9e2"],
+ ", only what happens around ",
+ Cell[BoxData[
+  FormBox["a", TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "30f0463d-89b3-46de-80e1-e8c141412dac"],
+ ". Whether ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"f", "(", "a", ")"}], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "a70623d2-5016-4bc1-accc-acd3ddf409be"],
+ " is defined or undefined has no bearing on the existence of the limit."
+}], "Text",
+ CellChangeTimes->{{3.8397029097116785`*^9, 
+  3.8397029912764864`*^9}},ExpressionUUID->"bfcc5451-f013-4d04-8bda-\
+6247b1fceb13"],
+
+Cell[TextData[{
+ "The environment includes controls to change the proposed limit ",
+ Cell[BoxData[
+  FormBox["L", TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "656b53ed-dbe4-4260-a1e7-784e466f0543"],
+ ", the size of the ",
+ Cell[BoxData[
+  FormBox["\[Epsilon]", TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "0c86470e-04ec-4bec-b1ad-ce3c07ba4e19"],
+ "-band, the size of the ",
+ Cell[BoxData[
+  FormBox["\[Delta]", TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "c42922b6-a44e-4d43-b153-24875e423389"],
+ "-band, and whether to display one-sided bands. According to the above \
+definition, if ",
+ Cell[BoxData[
+  FormBox["L", TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "99b892c2-549c-4dd7-a24a-da1ad4e4da80"],
+ " is truly the limit of ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"f", "(", "x", ")"}], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "5e71a4c6-5a57-4534-b835-c878461be2c7"],
+ " as ",
+ Cell[BoxData[
+  FormBox[
+   RowBox[{"x", "\[Rule]", "a"}], TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "fc5b168e-6f88-4bcf-8b58-7532a43f9b45"],
+ ", then no matter how small ",
+ Cell[BoxData[
+  FormBox["\[Epsilon]", TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "0280f055-8c16-4c91-b104-f48a2ae5cbfd"],
+ " becomes it should always be possible to choose ",
+ Cell[BoxData[
+  FormBox["\[Delta]", TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "10dfd97d-3d02-4021-be2b-d7d0121b4ce5"],
+ " small enough for the entire curve to remain within the intersection of the \
+two bands, although in general smaller values of ",
+ Cell[BoxData[
+  FormBox["\[Epsilon]", TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "322392aa-9d3a-42f1-9abc-b023fa6911db"],
+ " may require smaller values of ",
+ Cell[BoxData[
+  FormBox["\[Delta]", TraditionalForm]],
+  FormatType->TraditionalForm,ExpressionUUID->
+  "779eb639-7acc-4e5b-8450-f6ec3a6689d9"],
+ "."
+}], "Text",
+ CellChangeTimes->{{3.8397032761427603`*^9, 
+  3.839703484574295*^9}},ExpressionUUID->"47ad3007-0f1f-427e-ada5-\
+9c833d3ddab9"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Code", "Section",
+ CellChangeTimes->{{3.776600864408964*^9, 
+  3.7766008650447807`*^9}},ExpressionUUID->"9d4c3441-9470-4b8f-8718-\
+76343bfef08f"],
+
+Cell[CellGroupData[{
+
+Cell["Initialization", "Subsection",
+ CellChangeTimes->{{3.776600871130811*^9, 
+  3.776600873087188*^9}},ExpressionUUID->"966b2a75-28de-4cc7-adf8-\
+1b384ae91a04"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"sample", " ", "functions"}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"f", "[", "x_", "]"}], ":=", 
+    RowBox[{
+     RowBox[{"0.15", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"2", 
+         SuperscriptBox["x", "2"]}], "-", 
+        RowBox[{"5", "x"}], "+", 
+        RowBox[{"4", 
+         RowBox[{"Cos", "[", 
+          RowBox[{
+           RowBox[{"2", "x"}], "+", "1"}], "]"}]}]}], ")"}]}], "+", "2"}]}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"g", "[", "x_", "]"}], ":=", 
+    RowBox[{"Piecewise", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"0.2", "x"}], "+", "2.5", "+", 
+          RowBox[{"0.25", 
+           RowBox[{"Sin", "[", 
+            RowBox[{"x", "-", "2"}], "]"}]}]}], ",", 
+         RowBox[{"x", "<", "2"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"Cos", "[", "x", "]"}], "+", 
+          RowBox[{"0.5", "x"}], "+", "1"}], ",", 
+         RowBox[{"x", "\[GreaterEqual]", "2"}]}], "}"}]}], "}"}], "]"}]}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"h", "[", "x_", "]"}], ":=", 
+    RowBox[{
+     RowBox[{"Sin", "[", 
+      RowBox[{"4", "/", 
+       RowBox[{"(", 
+        RowBox[{"x", "-", "2"}], ")"}]}], "]"}], "+", "2"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.7766008761831923`*^9, 3.776600882799075*^9}, {
+  3.776643176455269*^9, 3.7766432112313843`*^9}, {3.776643290931053*^9, 
+  3.7766433094408426`*^9}, {3.77664345883457*^9, 3.7766434660737004`*^9}, {
+  3.839703014971899*^9, 3.8397030507143693`*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"32796bc2-f4c4-472e-afda-ce5426e85d18"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"driver", " ", "to", " ", "display", " ", "the", " ", "epsilon"}],
+     "-", 
+    RowBox[{
+    "delta", " ", "demo", " ", "for", " ", "a", " ", "given", " ", 
+     "function"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"demo", "[", "func_", "]"}], ":=", 
+   RowBox[{"With", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"a", "=", "2"}], ",", 
+       RowBox[{"xl", "=", "0"}], ",", 
+       RowBox[{"xu", "=", "4"}], ",", 
+       RowBox[{"yl", "=", "0"}], ",", 
+       RowBox[{"yu", "=", "4"}], ",", 
+       RowBox[{"emin", "=", "0.1"}], ",", 
+       RowBox[{"emax", "=", "1.0"}]}], "}"}], ",", 
+     RowBox[{"Manipulate", "[", 
+      RowBox[{
+       RowBox[{"Module", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+          "gl", ",", "gr", ",", "hline", ",", "vline", ",", "hbar", ",", 
+           "vbar", ",", 
+           RowBox[{"blank", "=", 
+            RowBox[{"Graphics", "[", "]"}]}]}], "}"}], ",", 
+         "\[IndentingNewLine]", 
+         RowBox[{
+          RowBox[{"hline", "=", 
+           RowBox[{"Graphics", "[", 
+            RowBox[{"{", 
+             RowBox[{"Black", ",", "Dashed", ",", 
+              RowBox[{"InfiniteLine", "[", 
+               RowBox[{
+                RowBox[{"{", 
+                 RowBox[{"0", ",", "l"}], "}"}], ",", 
+                RowBox[{"{", 
+                 RowBox[{"1", ",", "0"}], "}"}]}], "]"}]}], "}"}], "]"}]}], 
+          ";", "\[IndentingNewLine]", 
+          RowBox[{"vline", "=", 
+           RowBox[{"Graphics", "[", 
+            RowBox[{"{", 
+             RowBox[{"Black", ",", "Dashed", ",", 
+              RowBox[{"InfiniteLine", "[", 
+               RowBox[{
+                RowBox[{"{", 
+                 RowBox[{"a", ",", "0"}], "}"}], ",", 
+                RowBox[{"{", 
+                 RowBox[{"0", ",", "1"}], "}"}]}], "]"}]}], "}"}], "]"}]}], 
+          ";", "\[IndentingNewLine]", 
+          RowBox[{"hbar", "=", 
+           RowBox[{"Graphics", "[", 
+            RowBox[{"{", 
+             RowBox[{"Yellow", ",", 
+              RowBox[{"Opacity", "[", "0.4", "]"}], ",", 
+              RowBox[{"Rectangle", "[", 
+               RowBox[{
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"xl", "-", "1"}], ",", 
+                  RowBox[{"l", "+", 
+                   RowBox[{"emin", "/", "2"}]}]}], "}"}], ",", 
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"xu", "+", "1"}], ",", 
+                  RowBox[{"l", "+", "\[Epsilon]"}]}], "}"}]}], "]"}], ",", 
+              RowBox[{"Rectangle", "[", 
+               RowBox[{
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"xl", "-", "1"}], ",", 
+                  RowBox[{"l", "-", "\[Epsilon]"}]}], "}"}], ",", 
+                RowBox[{"{", 
+                 RowBox[{
+                  RowBox[{"xu", "+", "1"}], ",", 
+                  RowBox[{"l", "-", 
+                   RowBox[{"emin", "/", "2"}]}]}], "}"}]}], "]"}]}], "}"}], 
+            "]"}]}], ";", "\[IndentingNewLine]", 
+          RowBox[{"vbar", "=", 
+           RowBox[{"Graphics", "[", 
+            RowBox[{"{", 
+             RowBox[{"Blue", ",", 
+              RowBox[{"Opacity", "[", "0.2", "]"}], ",", 
+              RowBox[{"If", "[", 
+               RowBox[{
+                RowBox[{"dir", "\[NotEqual]", "2"}], ",", 
+                RowBox[{"Rectangle", "[", 
+                 RowBox[{
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"a", "-", "\[Delta]"}], ",", 
+                    RowBox[{"yl", "-", "1"}]}], "}"}], ",", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"a", "-", 
+                    RowBox[{"emin", "/", "2"}]}], ",", 
+                    RowBox[{"yu", "+", "1"}]}], "}"}]}], "]"}], ",", 
+                "Nothing"}], "]"}], ",", 
+              RowBox[{"If", "[", 
+               RowBox[{
+                RowBox[{"dir", "\[NotEqual]", "1"}], ",", 
+                RowBox[{"Rectangle", "[", 
+                 RowBox[{
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"a", "+", 
+                    RowBox[{"emin", "/", "2"}]}], ",", 
+                    RowBox[{"yl", "-", "1"}]}], "}"}], ",", 
+                  RowBox[{"{", 
+                   RowBox[{
+                    RowBox[{"a", "+", "\[Delta]"}], ",", 
+                    RowBox[{"yu", "+", "1"}]}], "}"}]}], "]"}], ",", 
+                "Nothing"}], "]"}]}], "}"}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"gl", "=", 
+           RowBox[{"Plot", "[", 
+            RowBox[{
+             RowBox[{"func", "[", "x", "]"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"x", ",", "xl", ",", 
+               RowBox[{"a", "-", 
+                RowBox[{"emin", "/", "2"}]}]}], "}"}], ",", 
+             RowBox[{"PlotStyle", "\[Rule]", 
+              RowBox[{"{", 
+               RowBox[{"Thick", ",", "Black"}], "}"}]}]}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"gr", "=", 
+           RowBox[{"Plot", "[", 
+            RowBox[{
+             RowBox[{"func", "[", "x", "]"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"x", ",", 
+               RowBox[{"a", "+", 
+                RowBox[{"emin", "/", "2"}]}], ",", "xu"}], "}"}], ",", 
+             RowBox[{"PlotStyle", "\[Rule]", 
+              RowBox[{"{", 
+               RowBox[{"Thick", ",", "Black"}], "}"}]}]}], "]"}]}], ";", 
+          "\[IndentingNewLine]", 
+          RowBox[{"Show", "[", 
+           RowBox[{"hline", ",", "vline", ",", 
+            RowBox[{"If", "[", 
+             RowBox[{"\[Epsilon]s", ",", "hbar", ",", "blank"}], "]"}], ",", 
+            RowBox[{"If", "[", 
+             RowBox[{"\[Delta]s", ",", "vbar", ",", "blank"}], "]"}], ",", 
+            "gl", ",", "gr", ",", 
+            RowBox[{"PlotRange", "\[Rule]", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"{", 
+                RowBox[{"xl", ",", "xu"}], "}"}], ",", 
+               RowBox[{"{", 
+                RowBox[{"yl", ",", "yu"}], "}"}]}], "}"}]}], ",", 
+            RowBox[{"Axes", "\[Rule]", "True"}], ",", 
+            RowBox[{"AspectRatio", "\[Rule]", "Automatic"}]}], "]"}]}]}], 
+        "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"l", ",", "1", ",", "\"\<L\>\""}], "}"}], ",", "yl", ",", 
+         "yu"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"\[Epsilon]", ",", "0.25", ",", "\"\<\[Epsilon]\>\""}], 
+          "}"}], ",", "emin", ",", "emax"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"\[Delta]", ",", "0.25", ",", "\"\<\[Delta]\>\""}], "}"}], 
+         ",", "emin", ",", "emax"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+          "\[Epsilon]s", ",", "False", ",", "\"\<show \[Epsilon]-band\>\""}], 
+          "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"False", ",", "True"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+          "\[Delta]s", ",", "False", ",", "\"\<show \[Delta]-band\>\""}], 
+          "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"False", ",", "True"}], "}"}]}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"dir", ",", "0", ",", "\"\<side\>\""}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"0", "\[Rule]", "\"\<two-sided\>\""}], ",", 
+           RowBox[{"1", "\[Rule]", "\"\<left-hand\>\""}], ",", 
+           RowBox[{"2", "\[Rule]", "\"\<right-hand\>\""}]}], "}"}], ",", 
+         "RadioButton"}], "}"}]}], "]"}]}], "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.7766441747597384`*^9, 3.7766441951310043`*^9}, {
+  3.839703072553855*^9, 3.839703163608691*^9}, {3.8397032024678397`*^9, 
+  3.8397032231059465`*^9}, {3.839703588898226*^9, 3.8397036714210043`*^9}},
+ CellLabel->"In[19]:=",ExpressionUUID->"b15d38b4-bc57-433f-8960-037459359f70"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Demonstration", "Subsection",
+ CellChangeTimes->{{3.7766008885632277`*^9, 
+  3.7766008904796133`*^9}},ExpressionUUID->"2ca52739-5ca9-49c0-a475-\
+d66519db0d12"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"continuous", " ", "function"}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"demo", "[", "f", "]"}]}]], "Input",
+ CellChangeTimes->{{3.8397031819335504`*^9, 3.8397031902594824`*^9}},
+ CellLabel->"In[21]:=",ExpressionUUID->"5fe07b67-a985-4b6e-a824-8b78a13ff7e2"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`dir$$ = 0, $CellContext`l$$ = 
+    1, $CellContext`\[Delta]$$ = 0.25, $CellContext`\[Delta]s$$ = 
+    False, $CellContext`\[Epsilon]$$ = 0.25, $CellContext`\[Epsilon]s$$ = 
+    False, Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`l$$], 1, "L"}, 0, 4}, {{
+       Hold[$CellContext`\[Epsilon]$$], 0.25, "\[Epsilon]"}, 0.1, 1.}, {{
+       Hold[$CellContext`\[Delta]$$], 0.25, "\[Delta]"}, 0.1, 1.}, {{
+       Hold[$CellContext`\[Epsilon]s$$], False, "show \[Epsilon]-band"}, {
+      False, True}}, {{
+       Hold[$CellContext`\[Delta]s$$], False, "show \[Delta]-band"}, {
+      False, True}}, {{
+       Hold[$CellContext`dir$$], 0, "side"}, {
+      0 -> "two-sided", 1 -> "left-hand", 2 -> "right-hand"}}}, 
+    Typeset`size$$ = {360., {183., 188.}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = True}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`dir$$ = 0, $CellContext`l$$ = 
+        1, $CellContext`\[Delta]$$ = 0.25, $CellContext`\[Delta]s$$ = 
+        False, $CellContext`\[Epsilon]$$ = 0.25, $CellContext`\[Epsilon]s$$ = 
+        False}, "ControllerVariables" :> {}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`gl$, $CellContext`gr$, $CellContext`hline$, \
+$CellContext`vline$, $CellContext`hbar$, $CellContext`vbar$, \
+$CellContext`blank$ = Graphics[]}, $CellContext`hline$ = 
+         Graphics[{Black, Dashed, 
+            
+            InfiniteLine[{0, $CellContext`l$$}, {1, 
+             0}]}]; $CellContext`vline$ = Graphics[{Black, Dashed, 
+            InfiniteLine[{2, 0}, {0, 1}]}]; $CellContext`hbar$ = 
+         Graphics[{Yellow, 
+            Opacity[0.4], 
+            
+            Rectangle[{0 - 1, $CellContext`l$$ + 0.1/2}, {
+             4 + 1, $CellContext`l$$ + $CellContext`\[Epsilon]$$}], 
+            
+            Rectangle[{0 - 1, $CellContext`l$$ - $CellContext`\[Epsilon]$$}, {
+             4 + 1, $CellContext`l$$ - 0.1/2}]}]; $CellContext`vbar$ = 
+         Graphics[{Blue, 
+            Opacity[0.2], 
+            If[$CellContext`dir$$ != 2, 
+             
+             Rectangle[{2 - $CellContext`\[Delta]$$, 0 - 1}, {
+              2 - 0.1/2, 4 + 1}], Nothing], 
+            If[$CellContext`dir$$ != 1, 
+             
+             Rectangle[{2 + 0.1/2, 0 - 1}, {
+              2 + $CellContext`\[Delta]$$, 4 + 1}], 
+             Nothing]}]; $CellContext`gl$ = Plot[
+           $CellContext`f[$CellContext`x], {$CellContext`x, 0, 2 - 0.1/2}, 
+           PlotStyle -> {Thick, Black}]; $CellContext`gr$ = Plot[
+           $CellContext`f[$CellContext`x], {$CellContext`x, 2 + 0.1/2, 4}, 
+           PlotStyle -> {Thick, Black}]; 
+        Show[$CellContext`hline$, $CellContext`vline$, 
+          
+          If[$CellContext`\[Epsilon]s$$, $CellContext`hbar$, \
+$CellContext`blank$], 
+          
+          If[$CellContext`\[Delta]s$$, $CellContext`vbar$, \
+$CellContext`blank$], $CellContext`gl$, $CellContext`gr$, 
+          PlotRange -> {{0, 4}, {0, 4}}, Axes -> True, AspectRatio -> 
+          Automatic]], 
+      "Specifications" :> {{{$CellContext`l$$, 1, "L"}, 0, 
+         4}, {{$CellContext`\[Epsilon]$$, 0.25, "\[Epsilon]"}, 0.1, 
+         1.}, {{$CellContext`\[Delta]$$, 0.25, "\[Delta]"}, 0.1, 
+         1.}, {{$CellContext`\[Epsilon]s$$, False, "show \[Epsilon]-band"}, {
+         False, True}}, {{$CellContext`\[Delta]s$$, False, 
+          "show \[Delta]-band"}, {
+         False, True}}, {{$CellContext`dir$$, 0, "side"}, {
+         0 -> "two-sided", 1 -> "left-hand", 2 -> "right-hand"}, ControlType -> 
+         RadioButton}}, "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{411., {285., 291.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{
+  3.8397034902312274`*^9, {3.8397035808904285`*^9, 3.8397036744912405`*^9}, 
+   3.839703741577237*^9},
+ CellLabel->"Out[21]=",ExpressionUUID->"42cc7d55-3d62-4e81-b04b-17ce8972f92c"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"jump", " ", "discontinuity"}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{"demo", "[", "g", "]"}]}]], "Input",
+ CellChangeTimes->{{3.8397034960014052`*^9, 3.8397035004447584`*^9}},
+ CellLabel->"In[23]:=",ExpressionUUID->"8c88e835-5c3a-406e-aaab-80ded2c5bc38"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`dir$$ = 0, $CellContext`l$$ = 
+    1, $CellContext`\[Delta]$$ = 0.25, $CellContext`\[Delta]s$$ = 
+    False, $CellContext`\[Epsilon]$$ = 0.25, $CellContext`\[Epsilon]s$$ = 
+    False, Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`l$$], 1, "L"}, 0, 4}, {{
+       Hold[$CellContext`\[Epsilon]$$], 0.25, "\[Epsilon]"}, 0.1, 1.}, {{
+       Hold[$CellContext`\[Delta]$$], 0.25, "\[Delta]"}, 0.1, 1.}, {{
+       Hold[$CellContext`\[Epsilon]s$$], False, "show \[Epsilon]-band"}, {
+      False, True}}, {{
+       Hold[$CellContext`\[Delta]s$$], False, "show \[Delta]-band"}, {
+      False, True}}, {{
+       Hold[$CellContext`dir$$], 0, "side"}, {
+      0 -> "two-sided", 1 -> "left-hand", 2 -> "right-hand"}}}, 
+    Typeset`size$$ = {360., {183., 188.}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = True}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`dir$$ = 0, $CellContext`l$$ = 
+        1, $CellContext`\[Delta]$$ = 0.25, $CellContext`\[Delta]s$$ = 
+        False, $CellContext`\[Epsilon]$$ = 0.25, $CellContext`\[Epsilon]s$$ = 
+        False}, "ControllerVariables" :> {}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`gl$, $CellContext`gr$, $CellContext`hline$, \
+$CellContext`vline$, $CellContext`hbar$, $CellContext`vbar$, \
+$CellContext`blank$ = Graphics[]}, $CellContext`hline$ = 
+         Graphics[{Black, Dashed, 
+            
+            InfiniteLine[{0, $CellContext`l$$}, {1, 
+             0}]}]; $CellContext`vline$ = Graphics[{Black, Dashed, 
+            InfiniteLine[{2, 0}, {0, 1}]}]; $CellContext`hbar$ = 
+         Graphics[{Yellow, 
+            Opacity[0.4], 
+            
+            Rectangle[{0 - 1, $CellContext`l$$ + 0.1/2}, {
+             4 + 1, $CellContext`l$$ + $CellContext`\[Epsilon]$$}], 
+            
+            Rectangle[{0 - 1, $CellContext`l$$ - $CellContext`\[Epsilon]$$}, {
+             4 + 1, $CellContext`l$$ - 0.1/2}]}]; $CellContext`vbar$ = 
+         Graphics[{Blue, 
+            Opacity[0.2], 
+            If[$CellContext`dir$$ != 2, 
+             
+             Rectangle[{2 - $CellContext`\[Delta]$$, 0 - 1}, {
+              2 - 0.1/2, 4 + 1}], Nothing], 
+            If[$CellContext`dir$$ != 1, 
+             
+             Rectangle[{2 + 0.1/2, 0 - 1}, {
+              2 + $CellContext`\[Delta]$$, 4 + 1}], 
+             Nothing]}]; $CellContext`gl$ = Plot[
+           $CellContext`g[$CellContext`x], {$CellContext`x, 0, 2 - 0.1/2}, 
+           PlotStyle -> {Thick, Black}]; $CellContext`gr$ = Plot[
+           $CellContext`g[$CellContext`x], {$CellContext`x, 2 + 0.1/2, 4}, 
+           PlotStyle -> {Thick, Black}]; 
+        Show[$CellContext`hline$, $CellContext`vline$, 
+          
+          If[$CellContext`\[Epsilon]s$$, $CellContext`hbar$, \
+$CellContext`blank$], 
+          
+          If[$CellContext`\[Delta]s$$, $CellContext`vbar$, \
+$CellContext`blank$], $CellContext`gl$, $CellContext`gr$, 
+          PlotRange -> {{0, 4}, {0, 4}}, Axes -> True, AspectRatio -> 
+          Automatic]], 
+      "Specifications" :> {{{$CellContext`l$$, 1, "L"}, 0, 
+         4}, {{$CellContext`\[Epsilon]$$, 0.25, "\[Epsilon]"}, 0.1, 
+         1.}, {{$CellContext`\[Delta]$$, 0.25, "\[Delta]"}, 0.1, 
+         1.}, {{$CellContext`\[Epsilon]s$$, False, "show \[Epsilon]-band"}, {
+         False, True}}, {{$CellContext`\[Delta]s$$, False, 
+          "show \[Delta]-band"}, {
+         False, True}}, {{$CellContext`dir$$, 0, "side"}, {
+         0 -> "two-sided", 1 -> "left-hand", 2 -> "right-hand"}, ControlType -> 
+         RadioButton}}, "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{411., {285., 291.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{
+  3.839703500868904*^9, 3.8397035812733035`*^9, {3.8397037438884983`*^9, 
+   3.839703746307499*^9}, 3.839703777214744*^9},
+ CellLabel->"Out[23]=",ExpressionUUID->"f44b3c3d-e13e-46de-9abd-d23e07292d1d"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{"infinite", " ", "oscillation"}], " ", "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"demo", "[", "h", "]"}]}]], "Input",
+ CellChangeTimes->{{3.8397035078843565`*^9, 3.839703512704748*^9}},
+ CellLabel->"In[7]:=",ExpressionUUID->"6858bcb0-f439-4e2d-9ba0-e5ec7aa52b6c"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`dir$$ = 0, $CellContext`l$$ = 
+    1, $CellContext`\[Delta]$$ = 0.25, $CellContext`\[Delta]s$$ = 
+    False, $CellContext`\[Epsilon]$$ = 0.25, $CellContext`\[Epsilon]s$$ = 
+    False, Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`l$$], 1, "L"}, 0, 4}, {{
+       Hold[$CellContext`\[Epsilon]$$], 0.25, "\[Epsilon]"}, 0.1, 1.}, {{
+       Hold[$CellContext`\[Delta]$$], 0.25, "\[Delta]"}, 0.1, 1.}, {{
+       Hold[$CellContext`\[Epsilon]s$$], False, "show \[Epsilon]-band"}, {
+      False, True}}, {{
+       Hold[$CellContext`\[Delta]s$$], False, "show \[Delta]-band"}, {
+      False, True}}, {{
+       Hold[$CellContext`dir$$], 0, "side"}, {
+      0 -> "two-sided", 1 -> "left-hand", 2 -> "right-hand"}}}, 
+    Typeset`size$$ = {360., {183., 188.}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = True}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`dir$$ = 0, $CellContext`l$$ = 
+        1, $CellContext`\[Delta]$$ = 0.25, $CellContext`\[Delta]s$$ = 
+        False, $CellContext`\[Epsilon]$$ = 0.25, $CellContext`\[Epsilon]s$$ = 
+        False}, "ControllerVariables" :> {}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`gl$, $CellContext`gr$, $CellContext`hline$, \
+$CellContext`vline$, $CellContext`hbar$, $CellContext`vbar$, \
+$CellContext`blank$ = Graphics[]}, $CellContext`hline$ = 
+         Graphics[{Black, Dashed, 
+            
+            InfiniteLine[{0, $CellContext`l$$}, {1, 
+             0}]}]; $CellContext`vline$ = Graphics[{Black, Dashed, 
+            InfiniteLine[{2, 0}, {0, 1}]}]; $CellContext`hbar$ = 
+         Graphics[{LightRed, 
+            Opacity[0.4], 
+            
+            Rectangle[{0 - 1, $CellContext`l$$ + 0.1/2}, {
+             4 + 1, $CellContext`l$$ + $CellContext`\[Epsilon]$$}], 
+            
+            Rectangle[{0 - 1, $CellContext`l$$ - $CellContext`\[Epsilon]$$}, {
+             4 + 1, $CellContext`l$$ - 0.1/2}]}]; $CellContext`vbar$ = 
+         Graphics[{LightBlue, 
+            Opacity[0.5], 
+            If[$CellContext`dir$$ != 2, 
+             
+             Rectangle[{2 - $CellContext`\[Delta]$$, 0 - 1}, {
+              2 - 0.1/2, 4 + 1}], Nothing], 
+            If[$CellContext`dir$$ != 1, 
+             
+             Rectangle[{2 + 0.1/2, 0 - 1}, {
+              2 + $CellContext`\[Delta]$$, 4 + 1}], 
+             Nothing]}]; $CellContext`gl$ = Plot[
+           $CellContext`h[$CellContext`x], {$CellContext`x, 0, 2 - 0.1/2}, 
+           PlotStyle -> {Thick, Black}]; $CellContext`gr$ = Plot[
+           $CellContext`h[$CellContext`x], {$CellContext`x, 2 + 0.1/2, 4}, 
+           PlotStyle -> {Thick, Black}]; 
+        Show[$CellContext`hline$, $CellContext`vline$, 
+          
+          If[$CellContext`\[Epsilon]s$$, $CellContext`hbar$, \
+$CellContext`blank$], 
+          
+          If[$CellContext`\[Delta]s$$, $CellContext`vbar$, \
+$CellContext`blank$], $CellContext`gl$, $CellContext`gr$, 
+          PlotRange -> {{0, 4}, {0, 4}}, Axes -> True, AspectRatio -> 
+          Automatic]], 
+      "Specifications" :> {{{$CellContext`l$$, 1, "L"}, 0, 
+         4}, {{$CellContext`\[Epsilon]$$, 0.25, "\[Epsilon]"}, 0.1, 
+         1.}, {{$CellContext`\[Delta]$$, 0.25, "\[Delta]"}, 0.1, 
+         1.}, {{$CellContext`\[Epsilon]s$$, False, "show \[Epsilon]-band"}, {
+         False, True}}, {{$CellContext`\[Delta]s$$, False, 
+          "show \[Delta]-band"}, {
+         False, True}}, {{$CellContext`dir$$, 0, "side"}, {
+         0 -> "two-sided", 1 -> "left-hand", 2 -> "right-hand"}, ControlType -> 
+         RadioButton}}, "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{411., {285., 291.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{3.839703513061798*^9, 3.8397035817451553`*^9},
+ CellLabel->"Out[7]=",ExpressionUUID->"0637eb7d-4130-4708-a616-6ae9956c1488"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{760, 833},
+WindowMargins->{{115, Automatic}, {Automatic, 37}},
+FrontEndVersion->"12.2 for Microsoft Windows (64-bit) (December 12, 2020)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"6d740bb2-d484-48a0-a0b2-bf23517abfb4"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 276, 4, 96, "Title",ExpressionUUID->"ee77a021-d451-43c5-a11b-746431323a50"],
+Cell[859, 28, 267, 4, 34, "Text",ExpressionUUID->"82b98d29-4932-4ead-8f1b-bffbccd0d39f"],
+Cell[CellGroupData[{
+Cell[1151, 36, 159, 3, 67, "Section",ExpressionUUID->"31f26c8c-54a2-43be-a947-adb95eb4e57e"],
+Cell[1313, 41, 604, 10, 100, "Text",ExpressionUUID->"f6dfd731-2536-4094-98d9-6fb1878100b6"],
+Cell[1920, 53, 847, 23, 34, "Text",ExpressionUUID->"a1bab27f-a666-40b8-aba3-0ee38daaf82e"],
+Cell[2770, 78, 1297, 42, 34, "Text",ExpressionUUID->"cc31a397-40ad-426b-a119-d46f148f97f4"],
+Cell[4070, 122, 1620, 43, 122, "Text",ExpressionUUID->"11b841de-b4bb-4f08-a284-76a57546c4ba"],
+Cell[5693, 167, 1045, 28, 78, "Text",ExpressionUUID->"bfcc5451-f013-4d04-8bda-6247b1fceb13"],
+Cell[6741, 197, 2158, 59, 122, "Text",ExpressionUUID->"47ad3007-0f1f-427e-ada5-9c833d3ddab9"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8936, 261, 151, 3, 67, "Section",ExpressionUUID->"9d4c3441-9470-4b8f-8718-76343bfef08f"],
+Cell[CellGroupData[{
+Cell[9112, 268, 162, 3, 53, "Subsection",ExpressionUUID->"966b2a75-28de-4cc7-adf8-1b384ae91a04"],
+Cell[9277, 273, 1740, 50, 91, "Input",ExpressionUUID->"32796bc2-f4c4-472e-afda-ce5426e85d18"],
+Cell[11020, 325, 8235, 205, 390, "Input",ExpressionUUID->"b15d38b4-bc57-433f-8960-037459359f70"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[19292, 535, 165, 3, 53, "Subsection",ExpressionUUID->"2ca52739-5ca9-49c0-a475-d66519db0d12"],
+Cell[CellGroupData[{
+Cell[19482, 542, 325, 7, 48, "Input",ExpressionUUID->"5fe07b67-a985-4b6e-a824-8b78a13ff7e2"],
+Cell[19810, 551, 4737, 94, 595, "Output",ExpressionUUID->"42cc7d55-3d62-4e81-b04b-17ce8972f92c"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[24584, 650, 321, 6, 48, "Input",ExpressionUUID->"8c88e835-5c3a-406e-aaab-80ded2c5bc38"],
+Cell[24908, 658, 4757, 94, 595, "Output",ExpressionUUID->"f44b3c3d-e13e-46de-9abd-d23e07292d1d"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[29702, 757, 323, 7, 48, "Input",ExpressionUUID->"6858bcb0-f439-4e2d-9ba0-e5ec7aa52b6c"],
+Cell[30028, 766, 4686, 92, 595, "Output",ExpressionUUID->"0637eb7d-4130-4708-a616-6ae9956c1488"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
